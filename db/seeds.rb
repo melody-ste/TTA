@@ -115,9 +115,11 @@ degrees = [
     "https://img.freepik.com/photos-premium/details-jardin-luxe-moderne_1031776-159081.jpg",
     "https://img.freepik.com/photos-gratuite/petite-entree-style-moderne_23-2150713049.jpg",
     "https://img.freepik.com/photos-gratuite/interieur-design-cuisine-moderne_23-2150954758.jpg"
+
   ]
+
   # Multimédia pour le portfolio
-  3.times do
+  10.times do
     Multimedia.create!(
       portfolio: portfolio,
       type_media: medias.sample,
