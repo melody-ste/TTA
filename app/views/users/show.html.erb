@@ -1,4 +1,7 @@
 <h1><%= @user.first_name%></h1>
+<%=@user.email%>
+<%=@user.city%>
+
 
 <!--avatar actuel-->
 <%if @user.avatar.attached?%>
@@ -7,7 +10,7 @@
   <p>=== Ajouter image avatar ===</p>
 <%end%>
 
-
+<!--bouton ajout/modification photo : display: none pour écraser "choisir un fichier" dans le bouton par défaut-->
 <%= form_tag user_avatars_path(@user), multipart: true do %>
     <label for="avatar_input" class="custom-file-button">Modifier la photo</label>
   <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;"%>
@@ -15,12 +18,18 @@
   <%= submit_tag "mettre à jour", id: "submit_button", style: "display: none;" %>
 <% end %>
 
+<% @user.projects.each do |project|%>
+<%= project.description%>
+<%end%>
 
 
+
+
+<!-- JS pour afficher le bouton "mettre à jour" seulement lorsqu'un fichier est chargé-->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const fileInput = document.getElementById("avatar_input");
-    const submitButton = document.getElementById("submit_button");
+    let fileInput = document.getElementById("avatar_input");
+    let submitButton = document.getElementById("submit_button");
 
     fileInput.addEventListener("change", function () {
       if (fileInput.files.length > 0) {
