@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @architect %>
+
+<div>
+  <%= link_to "Edit this architect", edit_architect_path(@architect) %> |
+  <%= link_to "Back to architects", architects_path %>
+
+  <%= button_to "Destroy this architect", @architect, method: :delete %>
+</div>
