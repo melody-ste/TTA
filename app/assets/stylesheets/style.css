@@ -229,3 +229,26 @@ nav {
   color: var(--color-dark-gray);
   font-weight: bold;
 }
+
+/* --------------------------------- */
+/*               FORM                */
+/* --------------------------------- */
+
+.form-control {
+  background-color: var(--color-primary-color); 
+  border-radius: 0; 
+}
+
+.form-control:focus {
+  border-color: var(--color-primary-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+.custom-link {
+  color: var(--color-dark-gray); 
+  text-decoration: none;
+}
+
+.custom-link:hover {
+  text-decoration: underline;
+}
