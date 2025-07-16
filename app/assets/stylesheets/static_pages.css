@@ -1,0 +1,31 @@
+
+    .sp-container h1, .sp-container h2{
+      color: #333;
+    }
+
+    .sp-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1rem 2rem;
+      background-color: #E5E2D9;
+      color: #333;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .faq-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .faq-item h2 {
+      color: #72827F;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-item p {
+      line-height: 1.6;
+      font-size: 1rem;
+      margin: 0;
+    }
+
