@@ -106,11 +106,23 @@ degrees = [
     project_description: Faker::Lorem.paragraph(sentence_count: 5)
   )
 
+  medias = [
+    "https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg",
+    "https://img.freepik.com/vecteurs-libre/conception-fond-architecture_1168-209.jpg",
+    "https://img.freepik.com/photos-premium/dessin-salle-sejour-vue-ville_337384-123322.jpg",
+    "https://img.freepik.com/photos-premium/maison-minimaliste-moderne-paysage-naturel_62754-4317.jpg",
+    "https://img.freepik.com/photos-gratuite/fond-herbe_1127-3417.jpg",
+    "https://img.freepik.com/photos-premium/details-jardin-luxe-moderne_1031776-159081.jpg",
+    "https://img.freepik.com/photos-gratuite/petite-entree-style-moderne_23-2150713049.jpg",
+    "https://img.freepik.com/photos-gratuite/interieur-design-cuisine-moderne_23-2150954758.jpg"
+
+  ]
+
   # Multimédia pour le portfolio
-  3.times do
+  10.times do
     Multimedia.create!(
       portfolio: portfolio,
-      type_media: ["Image", "Video"].sample,
+      type_media: medias.sample,
       description: Faker::Lorem.sentence
     )
   end
