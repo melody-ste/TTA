@@ -8,7 +8,7 @@
         <div class="carousel-image <%= 'active' if index === 0 %>">
           <%= image_tag(media.type_media, alt: "Image ##{media.id}") %>
           <% architect = media.portfolio.architect %>
-          <%= link_to "Voir plus", architect_path(architect) %>
+          <%= link_to "Voir plus", architect_path(architect), class: "btn btn-more" %>
         </div>
         <% end %>
         

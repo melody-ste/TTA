@@ -7,7 +7,7 @@
         <% specialization.multimedias.each_with_index do |media, index| %>
         <div class="carousel-image <%= 'active' if index == 0 %>">
           <%= image_tag(media.type_media, alt: "Image ##{media.id}") %>
-          <%= link_to "Voir plus", specialization_path(specialization)%>
+          <%= link_to "Voir plus", specialization_path(specialization), class: "btn btn-more"%>
         </div>
         <% end %>
       </div>
