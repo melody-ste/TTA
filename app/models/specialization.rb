@@ -3,10 +3,11 @@ class Specialization < ApplicationRecord
     has_many :architects, through: :architect_specializations
 
     def multimedias 
-        # jointure des tables Multimedias, Portfolios , Architects
-        # grace à jointure, cela donne les médias dont le portfolio appartient à un architecte qui a cette spécialisation
-        # on utilise pluck pour récupérer les ids des architectes
-        # et on les utilise pour filtrer les medias
-        Multimedia.joins(portfolio: :architect).where(architects: {id: self.architects.pluck(:id)})
+        # Récupérer les médias des portfolios dont le nom contient cette spécialisation
+        # OU utiliser la jointure pour être plus précis
+        Multimedia.joins(portfolio: { architect: :specializations })
+                  .where(specializations: { id: self.id })
+                  .joins(:portfolio)
+                  .where("portfolios.project_title LIKE ?", "%#{self.name}%")
     end
 end
