@@ -2,15 +2,16 @@
 
 <% content_for :title, "Architects" %>
 
-<h1>Architects</h1>
+<h1>Nos architectes</h1>
 
 <div id="architects">
   <% @architects.each do |architect| %>
     <%= render architect %>
+    <%= architect.user.first_name%> <br>
+    <%= truncate(architect.description, length: 100)%>
     <p>
-      <%= link_to "Show this architect", architect %>
+      <%= button_to "Voir plus", architect %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New architect", new_architect_path %>
