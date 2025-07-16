@@ -61,3 +61,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "faker"
+gem "devise"
+gem "stripe"
+gem "dotenv-rails"
