@@ -1,7 +1,7 @@
 :root {
   --color-primary-color: #e5e2d9;
-  --color-dark-gray: #373d3b;
-  --color-medium-gray: #5e6a68;
+  --color-dark-gray: #536059;
+  --color-medium-gray: #72827f;
   --color-light-gray: #849994;
   --color-danger: #916868;
   --color-warning: #a7977c;
@@ -90,4 +90,70 @@ nav {
   flex-grow: 1;
   font-size: 1rem;
   border-radius: 25px;
+}
+
+/* --------------------------------- */
+/*              BOUTONS              */
+/* --------------------------------- */
+
+.btn {
+  border-radius: 0;
+  font-size: 1.2rem;        
+  padding: 8px 18px;
+  border: none;
+}
+
+.btn.btn-primary {
+  background-color: var(--color-light-gray);        
+  color: var(--color-primary-color);               
+ 
+}
+
+.btn.btn-danger {
+  background-color: var(--color-danger);       
+  color: var(--color-primary-color);                  
+}
+
+.btn.btn-warning {
+  background-color: var(--color-warning);       
+  color: var(--color-primary-color);                  
+}
+
+.btn.btn-success {
+  background-color: var(--color-success);       
+  color: var(--color-primary-color);                  
+}
+
+.btn.btn-outline {
+  border-radius: 25px; 
+  color: var(--color-light-gray); 
+  border: 3px solid var(--color-light-gray);
+  background: transparent;
+}
+
+.btn.btn-lg {
+   
+  font-size: 1.4rem;        
+  padding: 12px 26px;
+}
+
+.btn.btn-sm {
+   
+  font-size: 1rem;        
+  padding: 6px 18px;
+}
+
+.btn:hover {
+  filter: brightness(105%);
+  box-shadow: 
+    4px 4px 0 0 var(--color-medium-gray); 
+      
+  transform: translateX(-5px);
+}
+
+.btn:active {
+  background-color: var(--color-dark-gray)!important; 
+  color: var(--color-primary-color)!important; 
+  box-shadow: none; 
+  transform: translateX(0); 
 }
