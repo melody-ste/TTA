@@ -45,12 +45,13 @@ a {
     to bottom,
      rgba(0,0,0,0) 50%,
      var(--color-primary-color) ),
-      url('hero.jpg');
+     url('hero.jpg');
   background-size: cover;
   background-position: center 10%;
   background-repeat: no-repeat;
   z-index: 1;
-  padding-top: 100px; 
+  padding-top: 170px; 
+  padding-bottom: 500px; 
 }
 
 
