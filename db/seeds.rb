@@ -115,6 +115,24 @@ degrees = [
     "https://img.freepik.com/photos-premium/details-jardin-luxe-moderne_1031776-159081.jpg",
     "https://img.freepik.com/photos-gratuite/petite-entree-style-moderne_23-2150713049.jpg",
     "https://img.freepik.com/photos-gratuite/interieur-design-cuisine-moderne_23-2150954758.jpg"
+    "https://www.architecte-interieur-montpellier.com/static/33a25ff011f72777301a6550bca783cb/bfeed/di-01.jpg",
+    "https://www.artmeta.fr/wp-content/uploads/2024/03/verriere-Atelier-4-acier-sur-mesure-C-1024x682.jpg",
+    "https://cdn1.eminza.com/uploads/cache/blog_mea_mobile_retina/uploads/media/5cd143c44d0ce/astuce-decointerieure-blog-mea-1960x1228.jpg",
+    "https://s3.eu-west-3.amazonaws.com/cdn.kipli/blog/deco-interieur/comment-choisir-accessoires-indispensables-decoration-interieur-1.jpg",
+    "https://edwardgeorgelondon.com/wp-content/uploads/2024/10/Striking-modern-house-exterior-blending-white-stucco-glass-metal-and-wood-with-clean-lines-and-contrasting-textures.webp",
+    "https://www.eyrc.com/hubfs/Imported_Blog_Media/EYRC%20Architects%20Irvine%20Cove%20Residence%20Interior%20Courtyards%202-3.jpg",
+    "https://sdg-migration-id.s3.amazonaws.com/Interior-Design-Aidlin-Darling-Design-idx210101_boy_CountryHouse_Desert01-01.21.jpg",
+    "https://mariakillam.com/wp-content/uploads/2020/09/step-one-design-1024x768.jpg",
+     "https://s-media-cache-ak0.pinimg.com/originals/f4/ce/87/f4ce879682c7f161c12465cbd06dd02f.jpg",
+      "https://cdn.home-designing.com/wp-content/uploads/2017/05/wood-white-and-charcoal-modern-exterior-paint-themes.jpg",
+       "https://images.adsttc.com/media/images/6099/9ead/f91c/812c/b300/000a/newsletter/%28c%29_Paul_Dyer_Tierwelthaus_%2815%29.jpg?1620680355=",
+        "https://images.adsttc.com/media/images/6099/9983/f91c/812c/b300/0007/newsletter/%28c%29_Frans_Parthesius__-_02_Villa_Fifty-Fifty_Design_Studioninedots_Photography_Frans_Parthesius.jpg?1620679031=",
+         "https://www.outsideinfluencedesign.com/wp-content/uploads/2021/01/Residential_Landscape2.jpg",
+          "https://images.squarespace-cdn.com/content/v1/5987c76cf5e231e93c7abd43/6d1a378c-54c0-477a-85d4-dbcfcf2864aa/9.jpg",
+           "https://c8.alamy.com/comp/2D6GMXX/building-project-blueprint-plans-and-house-model-real-estate-construction-concept-architecture-design-3d-illustration-2D6GMXX.jpg",
+            "https://images.ctfassets.net/s4ybdu2ld1ox/7KoNH8PR71vjj6zKJ2klLO/0ef16a934b9095f429392dfe0e9f16e3/home-blueprints.jpeg?bg=transparent&fl=progressive&fm=jpg&h=683&q=70&w=1000",
+  "https://archmodeler.com/wp-content/uploads/2023/02/Interior-model-7.jpg",
+  "https://cdn.bluent.com/images/architectural-construction-drawing-portfolio-5-2.jpg"
 
   ]
 
