@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :projects
   resources :cities
   resources :architects
+  resources :specializations
   devise_for :users
   root 'home#home'
 
