@@ -1,0 +1,48 @@
+<section class="home_body">
+  <div>
+    <h2>Nos Architectes</h2>
+    <div class="carousel">
+      <button class="prev">&#10094;</button>
+      <div class="carousel-images">
+        <% random_media.each_with_index do |media, index| %>
+        <div class="carousel-image <%= 'active' if index === 0 %>">
+          <%= image_tag(media.type_media, alt: "Image ##{media.id}") %>
+        </div>
+        <% end %>
+        <button>Voir plus</button>
+      </div>
+      <button class="next">&#10095;</button>
+    </div>
+  </div>
+  <div>
+    <h2>Nos Architectes d'intérieur</h2>
+    <div class="carousel">
+      <button class="prev">&#10094;</button>
+      <div class="carousel-images">
+        <% random_media.each_with_index do |media, index| %>
+        <div class="carousel-image <%= 'active' if index === 0 %>">
+          <%= image_tag(media.type_media, alt: "Image ##{media.id}") %>
+          <button>Voir plus</button>
+        </div>
+        <% end %>
+        <button>Voir plus</button>
+      </div>
+      <button class="next">&#10095;</button>
+    </div>
+    <div>
+      <h2>Nos Architectes paysagistes</h2>
+    <div class="carousel">
+      <button class="prev">&#10094;</button>
+      <div class="carousel-images">
+        <% random_media.each_with_index do |media, index| %>
+        <div class="carousel-image <%= 'active' if index === 0 %>">
+          <%= image_tag(media.type_media, alt: "Image ##{media.id}") %>
+        </div>
+        <% end %>
+        <button>Voir plus</button>
+      </div>
+      <button class="next">&#10095;</button>
+    </div>
+    </div>
+  </div>
+</section>

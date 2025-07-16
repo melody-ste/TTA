@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :cities
   resources :architects
   devise_for :users
-  # root 'static_pages#cgv'
+  root 'home#home'
 
   get 'legal_notice', to: 'static_pages#legal_notice'
   get 'rgpd', to: 'static_pages#rgpd'

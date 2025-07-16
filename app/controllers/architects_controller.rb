@@ -8,6 +8,7 @@ class ArchitectsController < ApplicationController
 
   # GET /architects/1 or /architects/1.json
   def show
+    @multimedias = @architect.portfolio.multimedias if @architect.portfolio
   end
 
   # GET /architects/new
