@@ -3,10 +3,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  belongs_to :city, optional: true
+  has_one :city, dependent: :destroy
   has_one :architect, dependent: :destroy
 
-  enum role: {
+  enum :role, {
     admin: 0,
     client: 1,
     architect: 2
