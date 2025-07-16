@@ -1,0 +1,12 @@
+<% content_for :title, "Editing architect" %>
+
+<h1>Editing architect</h1>
+
+<%= render "form", architect: @architect %>
+
+<br>
+
+<div>
+  <%= link_to "Show this architect", @architect %> |
+  <%= link_to "Back to architects", architects_path %>
+</div>
