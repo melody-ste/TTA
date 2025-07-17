@@ -25,6 +25,8 @@ class ArchitectsController < ApplicationController
   def show
     # si architecte a un portfolio, on récupères ses medias
     @multimedias = @architect.portfolio.multimedias if @architect.portfolio
+    # récupérer la ville de l'architecte
+    @city = @architect.user.city
   end
 
   # GET /architects/new

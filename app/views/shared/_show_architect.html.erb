@@ -1,3 +1,18 @@
   <h2><%= @architect.fullname %></h2>
 
-  <%= image_tag "https://img.freepik.com/photos-gratuite/avatar-androgyne-personne-queer-non-binaire_23-2151100226.jpg" %>
+  <%= image_tag "https://img.freepik.com/photos-gratuite/avatar-androgyne-personne-queer-non-binaire_23-2151100226.jpg", style:"width: 10rem; border-radius: 50%;"%>
+
+  <h2>Spécialités</h2>
+  <ul>
+    <% @architect.specializations.each do |specialization| %>
+      <li><%= specialization.name %></li>
+    <% end %>
+  </ul>
+
+  <h2>Ville: </h2>
+  <% if @city %>
+    <p><%= @city.name %> (<%= @city.zip_code %>)</p>
+    <p>Département: <%= @city.department %></p>
+  <% else %>
+    <p>Aucune ville renseignée</p>
+  <% end %>
