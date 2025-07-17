@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   has_one :city, dependent: :destroy
   has_one :architect, dependent: :destroy
+  has_many :projects
   has_one_attached :avatar
   
   enum :role, {

@@ -1,6 +1,20 @@
 <h1><%= @user.first_name%></h1>
-<%=@user.email%>
-<%=@user.city%>
+
+<% if @user.role == "architect"%>
+  <% @user.architect.specializations.each do |specialization|%>
+    <%=specialization.name %>
+    <%end%>
+<%end%>
+
+<%=@user.email%> <br>
+<%=@user.city%><br>
+<%=@user.role%><br>
+
+<% if @user.role == "architect"%>
+  <%= @user.architect.degree_name%><br>
+  <%= @user.architect.description%>
+  
+<%end%>
 
 
 <!--avatar actuel-->
@@ -19,7 +33,6 @@
 <% end %>
 
 
-<%= link_to "Modifier", edit_user_path(@user) %> |
 
 
 <% @user.projects.each do |project|%>
