@@ -1,42 +1,66 @@
-<h1><%= @user.first_name%></h1>
+<h1><%= current_user.first_name%></h1>
 
-<% if @user.role == "architect"%>
-  <% @user.architect.specializations.each do |specialization|%>
+<!--info user en fonction du rôle-->
+<% if current_user.role == "architect"%>
+  <% current_user.architect.specializations.each do |specialization|%>
     <%=specialization.name %>
     <%end%>
 <%end%>
 
-<%=@user.email%> <br>
-<%=@user.city%><br>
-<%=@user.role%><br>
+<%=current_user.email%> <br>
+<%=current_user.city%><br>
+<%=current_user.role%><br>
 
-<% if @user.role == "architect"%>
-  <%= @user.architect.degree_name%><br>
-  <%= @user.architect.description%>
+<% if current_user.role == "architect"%>
+  <%= current_user.architect.degree_name%><br>
+  <%= current_user.architect.description%>
   
 <%end%>
 
 
 <!--avatar actuel-->
-<%if @user.avatar.attached?%>
-  <%= image_tag @user.avatar, alt: 'avatar' %>
+<%if current_user.avatar.attached?%>
+  <%= image_tag current_user.avatar, alt: 'avatar' %>
 <%else%>
   <p>=== Ajouter image avatar ===</p>
 <%end%>
 
 <!--bouton ajout/modification photo : display: none pour écraser "choisir un fichier" dans le bouton par défaut-->
-<%= form_tag user_avatars_path(@user), multipart: true do %>
+<%= form_tag user_avatars_path(current_user), multipart: true do %>
     <label for="avatar_input" class="custom-file-button">Modifier la photo</label>
   <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;"%>
 
   <%= submit_tag "mettre à jour", id: "submit_button", style: "display: none;" %>
 <% end %>
 
+<!--modifier ou supprimer son compte-->
+<%= link_to "Modifier", edit_user_registration_path %>
+
+<%= form_with url: user_registration_path, method: :delete, local: true do %>
+  <%= submit_tag "Supprimer mon compte", data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
+<% end %>
 
 
 
-<% @user.projects.each do |project|%>
-<%= project.description%>
+<h3> Projets en cours </h3>
+<% current_user.projects.each do |project|%>
+<%if project.status == "en_cours"%>
+  <%= project.description%>
+  <%end%>
+<%end%>
+
+<h3> Historique des projets </h3>
+
+<% current_user.projects.each do |project|%>
+<%if project.status == "terminé"%>
+  <%= project.description%>
+  <%end%>
+<%end%>
+
+<h3> Portfolio</h3>
+<%current_user.architect.portfolios.sample(rand(3)).each do |project|%>
+<%=project.project_title%><br>
+<%= truncate(project.project_description, length: 100)%>
 <%end%>
 
 
