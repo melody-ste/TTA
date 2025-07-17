@@ -3,13 +3,19 @@
 
   <% content_for :title, "Architects" %>
 
-  <h1 class="mt-5 mb-5">Nos architectes</h1>
+  <h1 class="mt-100 mb-100">Nos architectes</h1>
 
   <div class="d-flex flex-wrap justify-content-start gap-3">
     <% @architects.each do |architect| %>
       <div class="custom-card me-3 mb-4">
-        
-        
+
+        <% multimedia = architect.portfolios.first&.multimedias&.first %>
+        <% if multimedia&.file&.attached? %>
+          <%= image_tag url_for(multimedia.file), class: "card-image" %>
+        <% else %>
+          <%= image_tag "placeholder.jpg", class: "card-image" %>
+        <% end %>
+
         <div class="card-body">
           <h6 class="card-name"><%= architect.user.fullname %></h6>
           <p><%= truncate(architect.description, length: 100) %></p>
