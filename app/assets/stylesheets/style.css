@@ -281,3 +281,19 @@ nav {
 .custom-link:hover {
   text-decoration: underline;
 }
+
+.carousel-inner {
+  height: 400px;
+}
+
+.carousel-inner img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-item {
+  height: 400px; /* Même hauteur que carousel-inner */
+  overflow: hidden;
+}
