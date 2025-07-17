@@ -1,0 +1,22 @@
+<h2>Projets</h2>
+  <ul>
+    <% @architect.projects.each do |project| %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Date de début</th>
+      <th>Description</th>
+      <th>Statut</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+      <tr>
+      <td><%= image_tag(project.random_project_image, alt: "Image du projet", style: "width: 100px; height: 70px; object-fit: cover;") %></td>
+        <td><%= project.start_date %></td>
+        <td><%= project.description %></td>
+        <td><%= project.status %></td>
+        <td><%= link_to 'Voir le projet', project_path(project), class: 'btn btn-primary' %></td>
+      </tr>
+    <% end %>
+  </ul>
