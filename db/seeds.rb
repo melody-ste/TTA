@@ -2,13 +2,14 @@ require 'faker'
 
 puts "🧹 Nettoyage de la base..."
 Multimedia.destroy_all
-Project.destroy_all
 Portfolio.destroy_all
+Project.destroy_all
 ArchitectSpecialization.destroy_all
 Architect.destroy_all
-Specialization.destroy_all
 City.destroy_all
 User.destroy_all
+Specialization.destroy_all
+
 
 # === CITIES ===
 puts "🏙️ Création des villes..."
@@ -175,7 +176,8 @@ medias_by_specialization = {
       architect: architect,
       start_date: Faker::Date.backward(days: 1000),
       description: Faker::Lorem.paragraph,
-      status: %w[en_cours terminé annulé].sample
+      # status: Project.statuses.keys.sample
+      status: %w[en_validation accepte refuse en_cours termine annule].sample
     )
   end
 end
