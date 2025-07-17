@@ -81,12 +81,6 @@ end
 # === ARCHITECTS + PORTFOLIOS + PROJECTS ===
 puts "🏗️ Création des architectes, portfolios et projets..."
 
-degrees = [
-  { name: "Diplôme d'État d'Architecte", acronym: "DEA", years: 5 },
-  { name: "Diplôme d'Architecte de l'École Spéciale", acronym: "DESA", years: 6 },
-  { name: "Master en Architecture", acronym: "MA", years: 5 }
-]
-
 medias_by_specialization = {
   "Architecture Résidentielle" => [
     "https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg",
@@ -130,7 +124,17 @@ puts "🏗️ Création des architectes, portfolios et projets..."
 degrees = [
   { name: "Diplôme d'État d'Architecte", acronym: "DEA", years: 5 },
   { name: "Diplôme d'Architecte de l'École Spéciale", acronym: "DESA", years: 6 },
-  { name: "Master en Architecture", acronym: "MA", years: 5 }
+  { name: "Master en Architecture", acronym: "MA", years: 5 },
+  { name: "Master Architecture et Habitat", acronym: "MAH", years: 5 },
+  { name: "Master Architecture Résidentielle", acronym: "MAR", years: 5 },
+  { name: "Diplôme Supérieur d'Arts Appliqués Architecture d'Intérieur", acronym: "DSAA-AI", years: 5 },
+  { name: "Master Design d'Espace et Architecture d'Intérieur", acronym: "MDEAI", years: 5 },
+  { name: "BTS Design d'Espace", acronym: "BTS-DE", years: 2 },
+  { name: "Diplôme National d'Arts et Techniques Architecture d'Intérieur", acronym: "DNAT-AI", years: 3 },
+  { name: "Master Architecture du Paysage", acronym: "MAP", years: 5 },
+  { name: "Diplôme d'Ingénieur Paysagiste", acronym: "DIP", years: 5 },
+  { name: "Master Urbanisme et Aménagement Paysager", acronym: "MUAP", years: 5 },
+  { name: "Licence Professionnelle Aménagement Paysager", acronym: "LP-AP", years: 3 }
 ]
 
 medias_by_specialization = {
@@ -187,14 +191,21 @@ medias_by_specialization = {
   user.create_city!(architect_city_data)
   puts "🏙️ Ville créée pour l'architecte #{user.fullname}: #{architect_city_data[:name]}"
 
-  # Architect Profile
-  degree = degrees.sample
+  # Architect Profile - 1 à 2 diplômes aléatoires
+  selected_degrees = degrees.sample(rand(1..2))
+  
+  # Concaténer les informations de diplômes s'il y en a plusieurs
+  degree_names = selected_degrees.map { |d| d[:name] }.join(" | ")
+  degree_acronyms = selected_degrees.map { |d| d[:acronym] }.join(" | ")
+  
+  puts "📜 Architecte #{user.fullname} aura #{selected_degrees.size} diplôme(s): #{degree_names}"
+  
   architect = Architect.create!(
     user: user,
     description: Faker::Lorem.paragraph(sentence_count: 3),
-    degree_name: degree[:name],
-    degree_acronym: degree[:acronym],
-    years_study: degree[:years]
+    degree_name: degree_names,
+    degree_acronym: degree_acronyms,
+    years_study: 0  # Sera calculé dynamiquement par le helper
   )
 
   # Spécialisations (1 à 2 par architecte)

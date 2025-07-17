@@ -10,9 +10,33 @@
   </ul>
 
   <h2>Ville: </h2>
-  <% if @architect.user && @architect.user.city %>
+  <% if @architect.user %>
     <p><%= @architect.user.city.name %> (<%= @architect.user.city.zip_code %>)</p>
     <p>Département: <%= @architect.user.city.department %></p>
   <% else %>
     <p>Aucune ville renseignée</p>
+  <% end %>
+
+  <h2>Diplomes</h2>
+  <% if @architect.degree_name.present? %>
+    <div class="degrees-info">
+      <% if @architect.degree_name.include?("|") %>
+        <% degree_names = @architect.degree_name.split(" | ") %>
+        <% degree_acronyms = @architect.degree_acronym.split(" | ") %>
+        <ul>
+          <% degree_names.each_with_index do |name, index| %>
+            <li><%= name %> (<%= degree_acronyms[index] %>)</li>
+          <% end %>
+        </ul>
+        <p><em>Nombre de diplômes: <%= degree_names.size %></em></p>
+        <p><em>Années d'études moyennes: <%= calculate_average_study_years(@architect) %> ans</em></p>
+      <% else %>
+        <ul>
+          <li><%= @architect.degree_name %> (<%= @architect.degree_acronym %>)</li>
+        </ul>
+        <p><em>Années d'études: <%= calculate_average_study_years(@architect) %> ans</em></p>
+      <% end %>
+    </div>
+  <% else %>
+    <p>Aucun diplôme renseigné</p>
   <% end %>
