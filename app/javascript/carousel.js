@@ -1,4 +1,4 @@
-console.log("chargé")
+
 
 const blocCarousels = document.querySelectorAll(".carousel");
 
@@ -11,6 +11,7 @@ blocCarousels.forEach((carousel) => {
   function activeImg(index) {
     images.forEach((img, i) => {
       img.classList.toggle("active", i === index);
+      // console.log(`Image ${i} is now ${i === index ? 'active' : 'inactive'}`);
     });
   }
   activeImg(currentIndex);
