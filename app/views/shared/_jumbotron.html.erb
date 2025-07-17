@@ -5,7 +5,7 @@
       <p >Trouvez l'architecte idéal pour vos projets de construction, rénovation ou décoration.</p>
       <div>
   
-  <%= form_with(url: architects_path, method: :get, class: "searchForm", data: {turbo_frame: "architects", turbo_action: "advance"}) do |form| %>
+  <%= form_with(url: search_path, method: :get, class: "searchForm", data: {turbo_frame: "search_results", turbo_action: "advance"}) do |form| %>
 
   <div class="flex space-x-3">
     <%= form.text_field :query, class: "searchInput py-3 px-4 rounded border ring-0 focus:ring-4 focus:ring-orange-100 focus:shadow-none focus:border-orange-500 focus:outline-none", placeholder:"Rechercher un architecte, une ville..." %>
