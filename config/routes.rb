@@ -3,11 +3,16 @@ Rails.application.routes.draw do
   resources :cities
   resources :architects
   resources :specializations
-  devise_for :users
-  resources :specializations
   resources :multimedias
-  get "search", to: "search#index"
-  root "home#home"
+
+  devise_for :users
+  resources :users, only: [:show] do
+    resources :avatars, only: [:create]
+  end
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+ 
+  get 'search', to: 'search#index'
+  root 'home#home'
 
   get "legal_notice", to: "static_pages#legal_notice"
   get "rgpd", to: "static_pages#rgpd"
