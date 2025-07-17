@@ -1,20 +1,73 @@
-<% @specializations.limit(3).each do |specialization| %>
+<div class="mt-5 mb-5">
+  <% @specializations.limit(3).each_with_index do |specialization, i| %>
     <% specialization_medias = specialization.multimedias %>
     <% if specialization_medias.any? %>
-      <div>
-        <h2><%= specialization.name %></h2>
-        <div class="carousel">
-          <button class="prev">&#10094;</button>
-          <div class="carousel-images">
-            <% specialization_medias.limit(5).each_with_index do |media, index| %>
-            <div class="carousel-image <%= 'active' if index === 0 %>">
-              <%= image_tag(media.type_media, alt: "Image ##{media.id}") %>
-              <%= link_to "Voir plus", specialization_path(specialization), class: "btn btn-more" %>
-            </div>
+      
+      <%# ---------- SPÉCIALITÉ 1 : en cards ---------- %>
+
+      <% if i == 0 %>
+        <div class="card-layout">
+          <h2 class="mt-100 mb-100"><%= specialization.name %></h2>
+          <div class="card-row">
+            <% specialization_medias.limit(3).each do |media| %>
+              <div class="custom-sm-card">
+                <%= image_tag(media.type_media, alt: "Image ##{media.id}", class: "card-sm-image") %>
+                <div class="card-sm-body">
+                  <span class="card-name"><%= media.portfolio.architect.user.fullname %></span>
+                  <%= link_to "Voir", specialization_path(specialization), class: "btn btn-primary btn-sm" %>
+                </div>
+              </div>
             <% end %>
           </div>
-          <button class="next">&#10095;</button>
         </div>
-      </div>
+      
+
+      <%# ---------- SPÉCIALITÉ 2 : deux carrousels côte à côte ---------- %>
+
+      <% elsif i == 1 %>
+        <div class="carousel-double">
+          <h2 class="mt-100 mb-100"><%= specialization.name %></h2>
+          <div class="d-flex justify-content-between gap-4">
+            <%# Divise en deux groupes %>
+            <% medias1 = specialization_medias.limit(5) %>
+            <% medias2 = specialization_medias.offset(5).limit(5) %>
+
+            <% [medias1, medias2].each do |group| %>
+              <div class="carousel">
+                <button class="prev">&#10094;</button>
+                <div class="carousel-images">
+                  <% group.each_with_index do |media, index| %>
+                    <div class="carousel-image <%= 'active' if index == 0 %>">
+                      <%= image_tag(media.type_media, alt: "Image ##{media.id}") %>
+                      <%= link_to "Voir plus", specialization_path(specialization), class: "btn btn-more" %>
+                    </div>
+                  <% end %>
+                </div>
+                <button class="next">&#10095;</button>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+      <%# ---------- SPÉCIALITÉ 3 : en cards de nouveau ---------- %>
+
+     <% elsif i == 2 %>
+        <div class="card-layout">
+          <h2 class="mt-100 mb-100"><%= specialization.name %></h2>
+          <div class="card-row">
+            <% specialization_medias.limit(3).each do |media| %>
+              <div class="custom-sm-card">
+                <%= image_tag(media.type_media, alt: "Image ##{media.id}", class: "card-sm-image") %>
+                <div class="card-sm-body">
+                  <span class="card-name"><%= media.portfolio.architect.user.fullname %></span>
+                  <%= link_to "Voir", specialization_path(specialization), class: "btn btn-primary btn-sm" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
     <% end %>
   <% end %>
+</div>
