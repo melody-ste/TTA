@@ -2,13 +2,22 @@ require 'faker'
 
 puts "🧹 Nettoyage de la base..."
 Multimedia.destroy_all
+puts "multimédia supprimés"
 Portfolio.destroy_all
+puts "portfolio supprimé"
 Project.destroy_all
+puts "projets supprimés"
 ArchitectSpecialization.destroy_all
+puts "spécialisations architectes supprimés"
 Architect.destroy_all
-User.destroy_all
-Specialization.destroy_all
+puts "Nombre d'architectes : #{Architect.count}"
 City.destroy_all
+puts "villes supprimées"
+User.destroy_all
+puts "Nombre de users : #{User.count}"
+Specialization.destroy_all
+puts "specialisation suppriméees"
+
 
 # === CITIES ===
 puts "🏙️ Création des villes..."
@@ -122,7 +131,8 @@ degrees = [
       architect: architect,
       start_date: Faker::Date.backward(days: 1000),
       description: Faker::Lorem.paragraph,
-      status: %w[en_cours terminé annulé].sample
+      # status: Project.statuses.keys.sample
+      status: %w[en_validation accepte refuse en_cours termine annule].sample
     )
   end
 end

@@ -41,19 +41,29 @@
 <% end %>
 
 
+<h3> Nouvelles demandes </h3>
+<% current_user.projects.each do |project|%>
+<%if project.status == "en_validation"%>
+  <%= project.description%>
+  <%= project.status%>
+
+  <%end%>
+<%end%>
 
 <h3> Projets en cours </h3>
 <% current_user.projects.each do |project|%>
-<%if project.status == "en_cours"%>
+<%if project.status == "en_cours" %>
   <%= project.description%>
+  <%= project.status%>
   <%end%>
 <%end%>
 
 <h3> Historique des projets </h3>
 
 <% current_user.projects.each do |project|%>
-<%if project.status == "terminé"%>
+<%if project.status == "termine"%>
   <%= project.description%>
+  <%= project.status%>
   <%end%>
 <%end%>
 
