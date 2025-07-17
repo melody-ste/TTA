@@ -8,3 +8,7 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+body {
+  font-family: 'Roboto', sans-serif!important;
+  background-color: var(--color-primary-color)!important;
+}
