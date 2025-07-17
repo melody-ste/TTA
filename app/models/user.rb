@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -15,7 +14,7 @@ class User < ApplicationRecord
   validates :role, presence: true
   validates :first_name, :last_name, presence: true
   validates :email, presence: true, uniqueness: true
-  
+
   # Validation conditionnelle : les architectes doivent avoir une ville
   # Sauf lors des seeds (attribut temporaire skip_city_validation)
   validates :city, presence: true, if: :should_validate_city?

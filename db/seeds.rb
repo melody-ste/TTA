@@ -57,7 +57,7 @@ admin = User.create!(
 # Créer une ville pour l'admin
 admin_city_data = cities_data.sample
 admin.create_city!(admin_city_data)
-puts "🏙️ Ville créée pour l'admin: #{admin_city_data[:name]}"
+
 
 # === CLIENTS ===
 puts "👤 Création des clients..."
@@ -69,12 +69,11 @@ clients = 10.times.map do |i|
     password: "password",
     role: 1 # enum :client
   )
-  
+
   # Créer une ville pour chaque client
   client_city_data = cities_data.sample
   client.create_city!(client_city_data)
-  puts "🏙️ Ville créée pour le client #{client.fullname}: #{client_city_data[:name]}"
-  
+
   client
 end
 
@@ -108,7 +107,7 @@ medias_by_specialization = {
   ],
 
   "Architecture Paysagère" => [
-    
+
     "https://img.freepik.com/photos-gratuite/fond-herbe_1127-3417.jpg",
     "https://img.freepik.com/photos-premium/details-jardin-luxe-moderne_1031776-159081.jpg",
     "https://www.outsideinfluencedesign.com/wp-content/uploads/2021/01/Residential_Landscape2.jpg",
@@ -118,8 +117,6 @@ medias_by_specialization = {
   ]
 }
 
-# === ARCHITECTS + PORTFOLIOS + PROJECTS ===
-puts "🏗️ Création des architectes, portfolios et projets..."
 
 degrees = [
   { name: "Diplôme d'État d'Architecte", acronym: "DEA", years: 5 },
@@ -176,7 +173,7 @@ medias_by_specialization = {
 10.times do |i|
   # Architect User et sa ville
   architect_city_data = cities_data.sample
-  
+
   user = User.new(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -189,20 +186,19 @@ medias_by_specialization = {
 
   # Créer la ville pour l'architecte immédiatement après la création de l'utilisateur
   user.create_city!(architect_city_data)
-  puts "🏙️ Ville créée pour l'architecte #{user.fullname}: #{architect_city_data[:name]}"
+
 
   # Architect Profile - 1 à 2 diplômes aléatoires
   selected_degrees = degrees.sample(rand(1..2))
-  
+
   # Concaténer les informations de diplômes s'il y en a plusieurs
   degree_names = selected_degrees.map { |d| d[:name] }.join(" | ")
   degree_acronyms = selected_degrees.map { |d| d[:acronym] }.join(" | ")
-  
-  puts "📜 Architecte #{user.fullname} aura #{selected_degrees.size} diplôme(s): #{degree_names}"
-  
+
+
   architect = Architect.create!(
     user: user,
-    description: Faker::Lorem.paragraph(sentence_count: 3),
+    description: Faker::Lorem.paragraph(sentence_count: 10),
     degree_name: degree_names,
     degree_acronym: degree_acronyms,
     years_study: 0  # Sera calculé dynamiquement par le helper
@@ -216,8 +212,6 @@ medias_by_specialization = {
 
   # Créer un portfolio par spécialisation avec les médias correspondants
   architect_specializations.each do |specialization|
-    puts "📸 Création portfolio pour #{specialization.name}..."
-    
     # Portfolio spécifique à cette spécialisation
     portfolio = Portfolio.create!(
       architect: architect,
@@ -230,12 +224,11 @@ medias_by_specialization = {
     next unless media_urls
 
     # Créer 3-5 médias pour cette spécialisation en s'assurant qu'on utilise des URLs uniques
-    max_media_count = [media_urls.length, 5].min # Ne pas dépasser le nombre d'URLs disponibles
+    max_media_count = [ media_urls.length, 5 ].min # Ne pas dépasser le nombre d'URLs disponibles
     media_count = rand(3..max_media_count)
     selected_urls = media_urls.sample(media_count) # Sample sans répétition
-    
-    puts "   → #{media_count} médias pour #{specialization.name}"
-    
+
+
     selected_urls.each_with_index do |url, index|
       Multimedia.create!(
         portfolio: portfolio,
@@ -258,9 +251,3 @@ medias_by_specialization = {
 end
 
 puts "✅ Seed terminé avec succès !"
-puts "📊 Résumé:"
-puts "   - Utilisateurs: #{User.count}"
-puts "   - Villes: #{City.count}"
-puts "   - Architectes: #{Architect.count}"
-puts "   - Clients: #{User.where(role: :client).count}"
-puts "   - Utilisateurs avec ville: #{User.joins(:city).count}"

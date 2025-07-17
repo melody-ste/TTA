@@ -9,11 +9,11 @@ class ArchitectsController < ApplicationController
       @architects = Architect.joins(:user)
                              .left_joins(user: :city)
                              .left_joins(:specializations)
-                             .where("LOWER(users.first_name) LIKE ? OR 
-                                     LOWER(users.last_name) LIKE ? OR 
-                                     LOWER(architects.description) LIKE ? OR 
-                                     LOWER(cities.name) LIKE ? OR 
-                                     LOWER(specializations.name) LIKE ?", 
+                             .where("LOWER(users.first_name) LIKE ? OR
+                                     LOWER(users.last_name) LIKE ? OR
+                                     LOWER(architects.description) LIKE ? OR
+                                     LOWER(cities.name) LIKE ? OR
+                                     LOWER(specializations.name) LIKE ?",
                                     "%#{normalized_query}%", "%#{normalized_query}%", "%#{normalized_query}%", "%#{normalized_query}%", "%#{normalized_query}%")
                              .distinct
     else
