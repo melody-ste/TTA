@@ -1,17 +1,21 @@
-<p style="color: green"><%= notice %></p>
+<div class="container mt-5 mb-5">
+  <p style="color: #618866"><%= notice %></p>
 
-<% content_for :title, "Architects" %>
+  <% content_for :title, "Architects" %>
 
-<h1>Nos architectes</h1>
+  <h1 class="mt-5 mb-5">Nos architectes</h1>
 
-<div id="architects">
-  <% @architects.each do |architect| %>
-    <%= render architect %>
-    <%= architect.user.first_name%> <br>
-    <%= truncate(architect.description, length: 100)%>
-    <p>
-      <%= button_to "Voir plus", architect %>
-    </p>
-  <% end %>
+  <div class="custom-card">
+    <div id="architects">
+      <% @architects.each do |architect| %>
+        <%= render architect %>
+        <%= architect.user.first_name%> <br>
+        <%= truncate(architect.description, length: 100)%>
+        <p>
+          <%= button_to "Voir plus", architect, class:"btn btn-primary" %>
+        </p>
+      <% end %>
+    </div>
+  </div>
 </div>
 
