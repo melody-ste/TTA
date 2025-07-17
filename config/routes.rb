@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   resources :architects
   resources :specializations
   devise_for :users
+  resources :specializations
+  resources :multimedias
+  get 'search', to: 'search#index'
   root 'home#home'
 
   get 'legal_notice', to: 'static_pages#legal_notice'

@@ -35,9 +35,9 @@ cities = cities_data.map { |data| City.create!(data.merge(user_id: temp_user.id)
 # === SPECIALIZATIONS ===
 puts "🧱 Création des spécialités..."
 specializations = [
-  "Architecture Résidentielle",
-  "Architecture Intérieure", 
-  "Architecture Paysagère"
+  "Résidentielle",
+  "Intérieur",
+  "Paysagère"
 ].map { |name| Specialization.create!(name: name) }
 
 # === ADMIN ===
