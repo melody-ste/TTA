@@ -4,8 +4,16 @@
       <h1>Trouve Ton Archi</h1>
       <p >Trouvez l'architecte idéal pour vos projets de construction, rénovation ou décoration.</p>
       <div>
-        <input type="text" placeholder="Rechercher un architecte, une ville..."/>
-        <span >🔍</span>
+  
+  <%= form_with(url: architects_path, method: :get, class: "searchForm", data: {turbo_frame: "architects", turbo_action: "advance"}) do |form| %>
+
+  <div class="flex space-x-3">
+    <%= form.text_field :query, class: "searchInput py-3 px-4 rounded border ring-0 focus:ring-4 focus:ring-orange-100 focus:shadow-none focus:border-orange-500 focus:outline-none", placeholder:"Rechercher un architecte, une ville..." %>
+
+    <%= form.submit '🔍', class: "px-4 py-3 font-medium
+  bg-orange-300 text-neutal-900 rounded flex items-center cursor-pointer hover:bg-orange-400 focus:ring-4 ring-0 focus:ring-orange-100" %>
+  </div>
+<% end %>
       </div>
     </div>
   </div>

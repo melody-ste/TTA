@@ -3,6 +3,7 @@ import "@hotwired/turbo-rails"
 import "controllers"
 // Import carousel functionality
 import "carousel"
+import "search"
 
 
 

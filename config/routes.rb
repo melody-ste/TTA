@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :cities
   resources :architects
   devise_for :users
+  resources :specializations
+  resources :multimedias
   root 'home#home'
 
   get 'legal_notice', to: 'static_pages#legal_notice'

@@ -1,4 +1,4 @@
-console.log("chargé")
+
 
 const blocCarousels = document.querySelectorAll(".carousel");
 

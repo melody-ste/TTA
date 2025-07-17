@@ -3,7 +3,11 @@ class ArchitectsController < ApplicationController
 
   # GET /architects or /architects.json
   def index
-    @architects = Architect.all
+    if params[:query].present?
+      @architects = Architect.where("first_name LIKE ? OR last_name LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+    else
+      @architects = Architect.all
+    end
   end
 
   # GET /architects/1 or /architects/1.json
