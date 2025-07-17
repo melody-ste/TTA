@@ -10,9 +10,9 @@
   </ul>
 
   <h2>Ville: </h2>
-  <% if @city %>
-    <p><%= @city.name %> (<%= @city.zip_code %>)</p>
-    <p>Département: <%= @city.department %></p>
+  <% if @architect.user && @architect.user.city %>
+    <p><%= @architect.user.city.name %> (<%= @architect.user.city.zip_code %>)</p>
+    <p>Département: <%= @architect.user.city.department %></p>
   <% else %>
     <p>Aucune ville renseignée</p>
   <% end %>
