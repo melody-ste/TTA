@@ -198,7 +198,7 @@ medias_by_specialization = {
 
   architect = Architect.create!(
     user: user,
-    description: Faker::Lorem.paragraph(sentence_count: 10),
+    description: Faker::Lorem.paragraph(sentence_count: 20),
     degree_name: degree_names,
     degree_acronym: degree_acronyms,
     years_study: 0  # Sera calculé dynamiquement par le helper
@@ -216,7 +216,7 @@ medias_by_specialization = {
     portfolio = Portfolio.create!(
       architect: architect,
       project_title: "#{specialization.name} - #{Faker::Construction.material}",
-      project_description: "Portfolio spécialisé en #{specialization.name}. #{Faker::Lorem.paragraph(sentence_count: 3)}"
+      project_description: "Portfolio spécialisé en #{specialization.name}. #{Faker::Lorem.paragraph(sentence_count: 20)}"
     )
 
     # Médias correspondant à cette spécialisation uniquement
