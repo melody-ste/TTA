@@ -5,17 +5,18 @@
 
   <h1 class="mt-5 mb-5">Nos architectes</h1>
 
-  <div class="custom-card">
-    <div id="architects">
-      <% @architects.each do |architect| %>
-        <%= render architect %>
-        <%= architect.user.first_name%> <br>
-        <%= truncate(architect.description, length: 100)%>
-        <p>
-          <%= button_to "Voir plus", architect, class:"btn btn-primary" %>
-        </p>
-      <% end %>
-    </div>
+  <div class="d-flex flex-wrap justify-content-start gap-3">
+    <% @architects.each do |architect| %>
+      <div class="custom-card me-3 mb-4">
+        
+        
+        <div class="card-body">
+          <span class="card-name"><%= architect.user.first_name %></span>
+          <p><%= truncate(architect.description, length: 100) %></p>
+          <%= link_to "Voir plus", architect_path(architect), class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
 
