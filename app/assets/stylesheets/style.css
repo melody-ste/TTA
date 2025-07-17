@@ -28,6 +28,14 @@ a {
 /*              HEADER               */
 /* --------------------------------- */
 
+nav {
+  position: absolute; /* ou fixed si tu veux qu'elle reste en haut au scroll */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; /* au-dessus du header */
+}
+
 .hero-header {
   position: relative;
   height: 100vh; 
@@ -65,23 +73,29 @@ nav {
   border: 2px solid var(--color-light-gray);
   border-radius: 25px; 
   padding: 0.4rem 1rem;
-  max-width: 450px;
+  max-width: 500px;
   background-color: white;
   margin-left: auto;
 }
 
 .search-container .iconify {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: var(--color-light-gray);
   margin-right: 0.5rem;
 }
 
-.search-container input {
+.search-container .search-form {
+  width: 100%;
+}
+
+.search-container .search-input {
   border: none;
   outline: none;
   flex-grow: 1;
   font-size: 1rem;
   border-radius: 25px;
+  padding: 0.4rem 0.8rem;
+  width: 100%;
 }
 
 /* --------------------------------- */
