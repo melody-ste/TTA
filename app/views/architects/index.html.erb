@@ -8,7 +8,7 @@
   <%= turbo_frame_tag "architects" do %>
     <% @architects.each do |architect| %>
       <%= render architect %>
-      <%= architect.user.first_name%> <br>
+      <%= architect.user.fullname%> <br>
       <%= truncate(architect.description, length: 100)%>
       <p>
         <%= button_to "Voir plus", architect %>
