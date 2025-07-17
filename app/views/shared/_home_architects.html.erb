@@ -4,7 +4,7 @@
     <div class="carousel">
       <button class="prev">&#10094;</button>
       <div class="carousel-images">
-        <% all_media.each_with_index do |media, index| %>
+        <% random_media.each_with_index do |media, index| %>
         <div class="carousel-image <%= 'active' if index === 0 %>">
           <%= image_tag(media.type_media, alt: "Image ##{media.id}") %>
           <% architect = media.portfolio.architect %>
@@ -17,26 +17,3 @@
     </div>
   </div>
 
-  <!-- Carousels par spécialisation -->
-  <% @specializations.limit(3).each do |specialization| %>
-    <% specialization_medias = specialization.multimedias %>
-    <% if specialization_medias.any? %>
-      <div>
-        <h2><%= specialization.name %></h2>
-        <div class="carousel">
-          <button class="prev">&#10094;</button>
-          <div class="carousel-images">
-            <% specialization_medias.limit(5).each_with_index do |media, index| %>
-            <div class="carousel-image <%= 'active' if index === 0 %>">
-              <%= image_tag(media.type_media, alt: "Image ##{media.id}") %>
-              <%= link_to "Voir plus", specialization_path(specialization), class: "btn btn-more" %>
-            </div>
-            <% end %>
-          </div>
-          <button class="next">&#10095;</button>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-
-</section>
