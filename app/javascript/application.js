@@ -4,7 +4,7 @@ import "controllers"
 // Import carousel functionality
 import "carousel"
 import "search"
-
+import "filter_toggle"
 
 
 
