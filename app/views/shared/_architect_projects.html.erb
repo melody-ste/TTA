@@ -1,28 +1,21 @@
 <h2>Projets</h2>
 
+<div>
 <% if @architect.projects.any? %>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Date de début</th>
-        <th>Description</th>
-        <th>Statut</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @architect.projects.each do |project| %>
-        <tr>
-          <td><%= image_tag(project.random_project_image, alt: "Image du projet", style: "width: 100px; height: 70px; object-fit: cover;") %></td>
-          <td><%= project.start_date %></td>
-          <td><%= project.description %></td>
-          <td><%= project.status %></td>
-          <td><%= link_to 'Voir le projet', project_path(project), class: 'btn btn-primary' %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <% @architect.projects.each do |project| %>
+  <% random_images = random_img %>
+  <% if random_images[0].present? %>
+    <%= image_tag random_images[0], alt: "image1" %>
+  <% end %>
+  <% if random_images[1].present? %>
+    <%= image_tag random_images[1], alt: "image2" %>
+  <% end %>
+  <div>
+    <h3>Description - <span><%= format_french_date(project.start_date) %> </span></h3>
+    <p><%= project.description %></p>
+  </div>
+   <% end %>
 <% else %>
   <p class="text-muted">Aucun projet pour cet architecte.</p>
 <% end %>
+</div>
