@@ -5,8 +5,8 @@ import "controllers"
 import "carousel"
 import "search"
 
-import "popper"
 import "bootstrap"
+
 
 
 

@@ -26,35 +26,36 @@
 
      <% elsif i == 1 %>
         <div class="carousel-double mt-5">
-          <h2 class="mb-100"><%= specialization.name %></h2>
+          <h2 class="mb-100 mt-100"><%= specialization.name %></h2>
           <div class="row">
             <% medias1 = specialization_medias.limit(5) %>
             <% medias2 = specialization_medias.offset(5).limit(5) %>
 
             <% [medias1, medias2].each_with_index do |group, idx| %>
               <div class="col-12 col-md-6">
-                <div id="carouselSpeciality2_<%= idx %>" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
-                  <div class="carousel-inner">
-                    <% group.each_with_index do |media, media_index| %>
-                      <div class="carousel-item <%= 'active' if media_index == 0 %>">
-                        <%= image_tag(media.type_media, class: "d-block w-100", alt: "Image ##{media.id}") %>
+                <div class="carousel carousel-double__carousel" id="carouselSpeciality_<%= idx %>">
+                  <button class="prev">&#10094;</button>
+                  <div class="carousel-images">
+                    <% group.each_with_index do |media, index| %>
+                      <div class="carousel-image <%= 'active' if index == 0 %>">
+                        <%= image_tag(media.type_media, alt: "Image ##{media.id}") %>
                         <% architect = media.portfolio.architect %>
-                          <%= link_to "Voir plus", architect_path(architect), class: "btn btn-more" %>
+                        <%= link_to "Voir plus", architect_path(architect), class: "btn btn-more" %>
                       </div>
                     <% end %>
                   </div>
+                  <button class="next">&#10095;</button>
                 </div>
               </div>
             <% end %>
           </div>
         </div>
 
-
        <!------------ SPÉCIALITÉ 3 : en cards de nouveau ------------>
 
      <% elsif i == 2 %>
         <div class="card-layout">
-          <h2 class="mb-100"><%= specialization.name %></h2>
+          <h2 class="mb-100 mt-100"><%= specialization.name %></h2>
           <div class="card-row">
             <% specialization_medias.limit(3).each do |media| %>
               <div class="custom-sm-card">

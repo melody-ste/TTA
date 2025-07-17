@@ -44,11 +44,11 @@
 }
 
 .prev {
-  left: -50px;
+  left: -45px;
 }
 
 .next {
-  right: -50px;
+  right: -45px;
 }
 
 .btn-more {
@@ -85,4 +85,18 @@
   .btn-more {
     padding: 4px 8px;
   }
+}
+
+/* Carousel double  */
+
+.carousel-double .carousel-double__carousel {
+  max-width: 570px; /* réduit la largeur max pour ces deux carousels */
+  height: 370px; /* réduit aussi la hauteur */
+  margin: 0 auto; /* centre ces carousels réduits */
+}
+
+.carousel-double .carousel-double__carousel .carousel-image img {
+  object-fit: cover; /* ou cover selon ce que tu préfères */
+  height: 100%;
+  width: 100%;
 }
