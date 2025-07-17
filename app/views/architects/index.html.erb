@@ -1,19 +1,22 @@
-<p style="color: green"><%= notice %></p>
+<div class="container mt-5 mb-5">
+  <p style="color: #618866"><%= notice %></p>
 
-<% content_for :title, "Architects" %>
+  <% content_for :title, "Architects" %>
 
-<h1>Nos architectes</h1>
+  <h1 class="mt-5 mb-5">Nos architectes</h1>
 
-<div id="architects">
-  <%= turbo_frame_tag "architects" do %>
+  <div class="d-flex flex-wrap justify-content-start gap-3">
     <% @architects.each do |architect| %>
-      <%= render architect %>
-      <%= architect.user.fullname%> <br>
-      <%= truncate(architect.description, length: 100)%>
-      <p>
-        <%= button_to "Voir plus", architect %>
-      </p>
+      <div class="custom-card me-3 mb-4">
+        
+        
+        <div class="card-body">
+          <h6 class="card-name"><%= architect.user.fullname %></h6>
+          <p><%= truncate(architect.description, length: 100) %></p>
+          <%= link_to "Voir plus", architect_path(architect), class: "btn btn-primary" %>
+        </div>
+      </div>
     <% end %>
-  <% end %>
+  </div>
 </div>
 

@@ -219,6 +219,7 @@ nav {
 .card-name {
   color: var(--color-dark-gray);
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 /* --------------------------------- */
