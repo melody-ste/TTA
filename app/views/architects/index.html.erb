@@ -11,7 +11,7 @@
         
         
         <div class="card-body">
-          <span class="card-name"><%= architect.user.first_name %></span>
+          <h6 class="card-name"><%= architect.user.fullname %></h6>
           <p><%= truncate(architect.description, length: 100) %></p>
           <%= link_to "Voir plus", architect_path(architect), class: "btn btn-primary" %>
         </div>
