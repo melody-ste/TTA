@@ -1,0 +1,123 @@
+<% content_for :title, "Résultats de recherche" %>
+
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6">Résultats de recherche</h1>
+  
+  <!-- Formulaire de recherche -->
+  <div class="mb-8">
+    <%= form_with(url: search_path, method: :get, class: "searchForm max-w-2xl", data: {turbo_frame: "search_results", turbo_action: "advance"}) do |form| %>
+      <div class="flex space-x-3">
+        <%= form.text_field :query, class: "searchInput flex-1 py-3 px-4 rounded border ring-0 focus:ring-4 focus:ring-orange-100 focus:shadow-none focus:border-orange-500 focus:outline-none", 
+                            placeholder: "Rechercher un architecte, une spécialité, une ville...", 
+                            value: @query %>
+        <%= form.submit '🔍', class: "px-6 py-3 font-medium bg-orange-300 text-neutral-900 rounded flex items-center cursor-pointer hover:bg-orange-400 focus:ring-4 ring-0 focus:ring-orange-100" %>
+      </div>
+    <% end %>
+  </div>
+  
+  <div id="search_results">
+    <% if @query.present? %>
+      <p class="text-gray-600 mb-6">Résultats pour : "<strong><%= @query %></strong>"</p>
+    
+    <!-- Section Architectes -->
+    <% if @architects.any? %>
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-orange-600">Architectes (<%= @architects.count %>)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <% @architects.each do |architect| %>
+            <div class="bg-white p-4 rounded-lg shadow border">
+              <h3 class="text-lg font-semibold">
+                <%= architect.user.first_name %> <%= architect.user.last_name %>
+              </h3>
+              <% if architect.user.city %>
+                <p class="text-gray-600 text-sm">📍 <%= architect.user.city.name %></p>
+              <% end %>
+              <% if architect.description.present? %>
+                <p class="text-gray-700 mt-2">
+                  <%= truncate(architect.description, length: 100) %>
+                </p>
+              <% end %>
+              <% if architect.specializations.any? %>
+                <div class="mt-2">
+                  <% architect.specializations.each do |spec| %>
+                    <span class="inline-block bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded mr-1">
+                      <%= spec.name %>
+                    </span>
+                  <% end %>
+                </div>
+              <% end %>
+              <div class="mt-4">
+                <%= link_to "Voir le profil", architect_path(architect), 
+                    class: "bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition-colors" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+    
+    <!-- Section Spécialisations -->
+    <% if @specializations.any? %>
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Spécialisations (<%= @specializations.count %>)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <% @specializations.each do |specialization| %>
+            <div class="bg-white p-4 rounded-lg shadow border">
+              <h3 class="text-lg font-semibold"><%= specialization.name %></h3>
+              <p class="text-gray-600 text-sm mt-1">
+                <%= specialization.architects.count %> architecte(s)
+              </p>
+              <div class="mt-4">
+                <%= link_to "Voir les architectes", specialization_path(specialization), 
+                    class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+    
+    <!-- Section Villes -->
+    <% if @cities.any? %>
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-green-600">Villes (<%= @cities.count %>)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <% @cities.each do |city| %>
+            <div class="bg-white p-4 rounded-lg shadow border">
+              <h3 class="text-lg font-semibold">📍 <%= city.name %></h3>
+              <div class="mt-4">
+                <%= link_to "Voir les architectes", city_path(city), 
+                    class: "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+    
+    <!-- Message si aucun résultat -->
+    <% if @architects.empty? && @specializations.empty? && @cities.empty? %>
+      <div class="text-center py-12">
+        <div class="text-6xl mb-4">🔍</div>
+        <h2 class="text-2xl font-semibold text-gray-600 mb-2">Aucun résultat trouvé</h2>
+        <p class="text-gray-500">
+          Essayez avec d'autres mots-clés ou vérifiez l'orthographe.
+        </p>
+        <div class="mt-6">
+          <%= link_to "Voir tous les architectes", architects_path, 
+              class: "bg-orange-500 text-white px-6 py-3 rounded hover:bg-orange-600 transition-colors" %>
+        </div>
+      </div>
+    <% end %>
+    
+  <% else %>
+    <div class="text-center py-12">
+      <div class="text-6xl mb-4">🔍</div>
+      <h2 class="text-2xl font-semibold text-gray-600 mb-2">Recherchez un architecte</h2>
+      <p class="text-gray-500">
+        Utilisez la barre de recherche pour trouver des architectes, spécialisations ou villes.
+      </p>
+    </div>
+  <% end %>
+  </div>
+</div>

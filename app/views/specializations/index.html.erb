@@ -1,0 +1,32 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Specialités" %>
+
+<h1>Specialités</h1>
+
+<!-- Formulaire de recherche -->
+<div class="mb-6">
+  <%= form_with(url: specializations_path, method: :get, class: "searchForm", data: {turbo_frame: "specializations", turbo_action: "advance"}) do |form| %>
+    <div class="flex space-x-3">
+      <%= form.text_field :query, class: "searchInput py-3 px-4 rounded border ring-0 focus:ring-4 focus:ring-orange-100 focus:shadow-none focus:border-orange-500 focus:outline-none", 
+                          placeholder: "Rechercher une spécialité...", 
+                          value: params[:query] %>
+      <%= form.submit '🔍', class: "px-4 py-3 font-medium bg-orange-300 text-neutral-900 rounded flex items-center cursor-pointer hover:bg-orange-400 focus:ring-4 ring-0 focus:ring-orange-100" %>
+    </div>
+  <% end %>
+</div>
+
+<div id="specializations">
+  <%= turbo_frame_tag "specializations" do %>
+    <% @specializations.each do |specialization| %>
+      <%= render specialization %>
+      <%= specialization.name %> <br>
+      <ul><% specialization.architects.each do |architect| %>
+        <li><%= architect.name %></li>
+      <% end %></ul>
+      <p>
+        <%= button_to "Voir plus", specialization  %>
+      </p>
+    <% end %>
+  <% end %>
+</div>
