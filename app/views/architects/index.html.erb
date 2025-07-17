@@ -1,22 +1,22 @@
 <div class="container mt-5 mb-5">
   <p style="color: #618866"><%= notice %></p>
 
-  <% content_for :title, "Architects" %>
-
   <h1 class="mt-100 mb-100">Nos architectes</h1>
 
   <div class="mb-4 d-flex align-items-center gap-3">
     <button id="toggle-filter-btn" class="btn btn-primary">Filtrer</button>
   </div>
 
-  <div id="filter-form-container" style="display: none;">
-    <%= form_with url: architects_path, method: :get, local: true do |f| %>
-      <div class="d-flex align-items-center gap-3">
-        <%= f.label :specialization_id, "Filtrer par spécialité", class: "form-label mb-0" %>
-        <%= f.select :specialization_id, options_from_collection_for_select(Specialization.all, :id, :name, params[:specialization_id]), { include_blank: "Toutes les spécialités" }, class: "form-control" %>
-        <%= f.submit "Appliquer", class: "btn btn-primary" %>
-      </div>
-    <% end %>
+  <div id="filter-form-container" class="<%= params[:specialization_id].present? ? '' : 'd-none'%>">
+    <div class="card p-5 me-5 mb-5">
+      <%= form_with url: architects_path, method: :get, local: true do |f| %>
+        <div class="d-flex align-items-center gap-3">
+          <%= f.label :specialization_id, "Filtrer par spécialité", class: "form-label mb-0" %>
+          <%= f.select :specialization_id, options_from_collection_for_select(Specialization.all, :id, :name, params[:specialization_id]), { include_blank: "Toutes les spécialités" }, class: "form-select" %>
+          <%= f.submit "Appliquer", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <div class="d-flex flex-wrap justify-content-start gap-3">
