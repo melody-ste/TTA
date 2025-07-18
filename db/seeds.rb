@@ -171,6 +171,7 @@ puts "🏗️ Création des architectes et projets..."
       title: "#{Faker::Construction.material} #{Faker::Address.city} #{rand(100..999)}",
       start_date: Faker::Date.backward(days: 1000),
       description: Faker::Lorem.paragraph(sentence_count: 10),
+      status: Project.statuses.keys.sample
       # status: %w[en_validation accepte refuse en_cours termine annule].sample
     )
 
