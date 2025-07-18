@@ -1,10 +1,14 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_user
+  before_action :authenticate_user!  
+  before_action :set_user, only: %i[ show edit update destroy ]
 
-  def show
-    # Rediriger vers le profil de l'utilisateur connecté si l'ID ne correspond pas
+    
+    def show
+    @user = User.find(params[:id])
+    @portfolio_projects = @user.projects.where(portfolio: true).sample(3)
     redirect_to user_path(current_user) if params[:id].to_i != current_user.id
+
+
   end
 
   def edit

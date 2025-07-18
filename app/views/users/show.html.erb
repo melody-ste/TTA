@@ -80,37 +80,43 @@
 <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
 <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
 <% end %>
+
 <% if current_user.role == "architect" && current_user.architect.present? %>
+
 <h3> Nouvelles demandes </h3>
-<% validation_projects = current_user.projects.select { |project| project.status == "en_validation" } %>
-<% if validation_projects.any? %>
-  <% validation_projects.each do |project|%>
-    <%= project.description%>
-    <%= project.status%>
-  <% end %>
-<% else %>
-  <p>Aucune nouvelle demande pour le moment.</p>
-<% end %>
+<% current_user.projects.each do |project|%>
+<%if project.status == "en_validation"%>
+  <%= project.description%>
+  <%= project.status%>
+
+  <%end%>
+<%end%>
 
 <h3> Projets en cours </h3>
-<% ongoing_projects = current_user.projects.select { |project| project.status == "en_cours" } %>
-<% if ongoing_projects.any? %>
-  <% ongoing_projects.each do |project|%>
-    <%= project.description%>
-    <%= project.status%>
-  <% end %>
-<% else %>
-  <p>Aucun projet en cours pour le moment.</p>
-<% end %>
+<% current_user.projects.each do |project|%>
+<%if project.status == "en_cours" %>
+  <%= project.description%>
+  <%= project.status%>
+  <%end%>
+<%end%>
 
-<h3> Portfolio</h3>
-<% if current_user.architect.portfolio.present? %>
-  <% current_user.architect.portfolio.each do |project| %>
-    <%= project.project_title %><br>
-    <%= truncate(project.project_description, length: 100) %><br>
-  <% end %>
-<% else %>
-  <p>Votre portfolio est vide. Ajoutez vos réalisations en modifiant votre profil.</p>
-<% end %>
-<% end %>
-</section>
+<h3> Historique des projets </h3>
+
+<% current_user.projects.each do |project|%>
+<%if project.status == "termine"%>
+  <%= project.description%>
+  <%= project.status%>
+  <%end%>
+<%end%>
+
+<!--fonctionnalité archi-->
+<% if current_user.role == "architect"%>
+  <h3> Portfolio</h3>
+  <%@portfolio_projects.each do |project|%>
+  <%=project.title%><br>
+  <%= truncate(project.description, length: 100)%>
+  <%end%>
+<%end%>
+
+
+
