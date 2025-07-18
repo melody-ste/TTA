@@ -4,7 +4,12 @@ class UsersController < ApplicationController
 
     
     def show
-    @user = User.find(params[:id])
+    # Rediriger vers le profil de l'utilisateur connecté si l'ID ne correspond pas
+    if params[:id].to_i != current_user.id
+      redirect_to user_path(current_user)
+    else
+      @user = current_user
+    end
   end
 
   def edit

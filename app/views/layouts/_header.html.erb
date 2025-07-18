@@ -9,7 +9,17 @@
       </ul>
 
       <ul class="list-unstyled d-flex gap-4 px-4 py-2">
-        <li><%= link_to new_user_session_path do %><iconify-icon icon="bxs:user" width="24" height="24"></iconify-icon><% end %></li>
+        <li>
+          <% if user_signed_in? %>
+            <%= link_to user_path(current_user) do %>
+              <iconify-icon icon="bxs:user" width="24" height="24"></iconify-icon>
+            <% end %>
+          <% else %>
+            <%= link_to new_user_session_path do %>
+              <iconify-icon icon="bxs:user" width="24" height="24"></iconify-icon>
+            <% end %>
+          <% end %>
+        </li>
         <li><a href=""> <iconify-icon icon="fluent:heart-32-filled" width="24" height="24"></iconify-icon></a></li>
       </ul>
 
