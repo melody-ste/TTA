@@ -300,3 +300,7 @@ nav {
   border-radius: 50%;
   object-fit: cover;
 }
+
+.project-block {
+  margin-bottom: 10rem; 
+}

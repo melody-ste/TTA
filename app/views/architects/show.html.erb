@@ -3,30 +3,14 @@
 
   
 
-<<<<<<< HEAD
   <!-- <div>
     <%= link_to "Edit this architect", edit_architect_path(@architect) %> |
     <%= link_to "Back to architects", architects_path %>
     <%= button_to "Destroy this architect", @architect, method: :delete %>
   </div> -->
 
-  <section class="architects_show">
+  <section>
   <%= render 'shared/show_architect' %>
   <%= render 'shared/architect_projects' %>
   </section>
 </div>
-=======
-<div>
-  <%= link_to "Back to architects", architects_path %>
-  <!--fonctionnalités admin-->
-  <% if current_user && current_user.role == "admin" %>
-    <%= link_to "Edit this architect", edit_architect_path(@architect) %> |
-    <%= button_to "Destroy this architect", @architect, method: :delete %>
-  </div>
-  <%end%>
-
-<section class="architects_show">
-<%= render 'shared/show_architect' %>
-<%= render 'shared/architect_projects' %>
-</section>
->>>>>>> dev
