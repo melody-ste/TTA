@@ -13,7 +13,11 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
-  end
+    @project.architect_id = params[:architect_id]
+    @project.user = current_user
+    @project.status = "en_validation"
+end
+
 
   # GET /projects/1/edit
   def edit
@@ -22,7 +26,8 @@ class ProjectsController < ApplicationController
   # POST /projects or /projects.json
   def create
     @project = Project.new(project_params)
-
+    @project.user = current_user
+    @project.status ||= "en_validation"
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: "Project was successfully created." }
@@ -60,11 +65,12 @@ class ProjectsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @project = Project.find(params.expect(:id))
+      @project = Project.find(params.fetch(:id))
     end
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.fetch(:project, {})
+      params.require(:project).permit(:architect_id, :start_date, :description)
+
     end
 end
