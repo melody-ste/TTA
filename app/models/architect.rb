@@ -13,13 +13,67 @@ class Architect < ApplicationRecord
 
     # Attribut virtuel pour gérer les spécialisations dans le formulaire
     attr_accessor :specialization_names
+    
+    # Attributs virtuels pour gérer plusieurs diplômes
+    attr_accessor :selected_degrees
 
     def fullname
         user.fullname
     end
 
+    # Méthodes pour gérer les diplômes multiples
+    def degree_acronyms_array
+        return [] if degree_acronym.blank?
+        degree_acronym.split(' | ')
+    end
+
+    def degree_names_array
+        return [] if degree_name.blank?
+        degree_name.split(' | ')
+    end
+
+    def selected_degrees=(degree_acronyms)
+        return if degree_acronyms.blank?
+        
+        # Filtrer les valeurs vides
+        valid_acronyms = degree_acronyms.reject(&:blank?)
+        
+        if valid_acronyms.any?
+            # Trouver les noms correspondants
+            degree_data = degree_mapping
+            selected_names = valid_acronyms.map { |acronym| degree_data[acronym] }.compact
+            
+            # Assembler les chaînes
+            self.degree_acronym = valid_acronyms.join(' | ')
+            self.degree_name = selected_names.join(' | ')
+        else
+            self.degree_acronym = nil
+            self.degree_name = nil
+        end
+    end
+
     # Callback pour gérer les spécialisations après la sauvegarde
     after_save :update_specializations
+
+    private
+
+    def degree_mapping
+        {
+            'DEA' => 'Diplôme d\'État d\'Architecte',
+            'DESA' => 'Diplôme d\'Architecte de l\'École Spéciale',
+            'MA' => 'Master en Architecture',
+            'MAH' => 'Master Architecture et Habitat',
+            'MAR' => 'Master Architecture Résidentielle',
+            'DSAA-AI' => 'Diplôme Supérieur d\'Arts Appliqués Architecture d\'Intérieur',
+            'MDEAI' => 'Master Design d\'Espace et Architecture d\'Intérieur',
+            'BTS-DE' => 'BTS Design d\'Espace',
+            'DNAT-AI' => 'Diplôme National d\'Arts et Techniques Architecture d\'Intérieur',
+            'MAP' => 'Master Architecture du Paysage',
+            'DIP' => 'Diplôme d\'Ingénieur Paysagiste',
+            'MUAP' => 'Master Urbanisme et Aménagement Paysager',
+            'LP-AP' => 'Licence Professionnelle Aménagement Paysager'
+        }
+    end
 
     private
 

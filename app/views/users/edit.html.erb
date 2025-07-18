@@ -33,21 +33,16 @@
 
       <div>
         <p><strong>Diplômes</strong></p>
-        <div>
-          <%= architect_fields.label :degree_name, "Nom du diplôme" %>
-          <%= architect_fields.text_field :degree_name %>
-        </div>
-        
-        <div>
-          <%= architect_fields.label :degree_acronym, "Sigle du diplôme" %>
-          <%= architect_fields.select :degree_acronym, 
-              options_for_select(degree_options, @user.architect&.degree_acronym), 
-              { prompt: "Sélectionnez un diplôme" }, 
-              { id: "degree_select" } %>
-        </div>
+        <% existing_degrees = @user.architect&.degree_acronyms_array || [] %>
+        <% degree_options.each do |degree_name, degree_acronym| %>
+          <div>
+            <%= check_box_tag "user[architect_attributes][selected_degrees][]", degree_acronym, existing_degrees.include?(degree_acronym) %>
+            <%= label_tag "user_architect_attributes_selected_degrees_#{degree_acronym}", degree_name %>
+          </div>
+        <% end %>
 
         <div>
-          <%= architect_fields.label :years_study, "Années d'études" %>
+          <%= architect_fields.label :years_study, "Années d'études en moyenne" %>
           <%= architect_fields.number_field :years_study, min: 1, step: 1 %>
         </div>
       </div>

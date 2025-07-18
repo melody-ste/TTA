@@ -16,8 +16,13 @@
       <% end %>
     </div>
     
-    <% if current_user.architect.degree_name.present? %>
-      <p><strong>Diplôme :</strong> <%= current_user.architect.degree_name %></p>
+    <% if current_user.architect.degree_names_array.any? %>
+      <div class="degrees">
+        <p><strong>Diplômes :</strong></p>
+        <% current_user.architect.degree_names_array.each do |degree| %>
+          <span class="degree-tag"><%= degree %></span>
+        <% end %>
+      </div>
     <% end %>
     
     <% if current_user.architect.description.present? %>
