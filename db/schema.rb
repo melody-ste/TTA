@@ -81,6 +81,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_18_131850) do
   create_table "projects", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "architect_id", null: false
+    t.string "title"
+    t.boolean "portfolio", default: false
     t.date "start_date"
     t.text "description"
     t.string "status"
