@@ -23,7 +23,8 @@
     <% @architects.each do |architect| %>
       <div class="custom-card me-3 mb-4">
 
-        <% multimedia = architect.projects&.multimedias&.first %>
+        <% multimedia = architect.projects.flat_map(&:multimedias).first %>
+
         <% if multimedia&.file&.attached? %>
           <%= image_tag url_for(multimedia.file), class: "card-image" %>
         <% else %>

@@ -3,14 +3,14 @@
       <% if @architect.degree_name.include?("|") %>
         <% degree_names = @architect.degree_name.split(" | ") %>
         <% degree_acronyms = @architect.degree_acronym.split(" | ") %>
-        <ul>
+        <ul class="list-unstyled">
           <% degree_names.each_with_index do |name, index| %>
             <li><%= name %> (<%= degree_acronyms[index] %>)</li>
           <% end %>
         </ul>
         <p><em>Années d'études moyennes: <%= calculate_average_study_years(@architect) %> ans</em></p>
       <% else %>
-        <ul>
+        <ul class="list-unstyled">
           <li><%= @architect.degree_name %> (<%= @architect.degree_acronym %>)</li>
         </ul>
         <p><em>Années d'études: <%= calculate_average_study_years(@architect) %> ans</em></p>
