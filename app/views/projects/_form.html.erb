@@ -11,6 +11,25 @@
     </div>
   <% end %>
 
+    <div>
+    <%= form.label :architect_id %><br>
+    <%= form.hidden_field :architect_id %>
+  </div>
+
+  <div>
+    <%= form.label :start_date %><br>
+    <%= form.date_field :start_date %>
+  </div>
+
+  <div>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </div>
+
+  <%= form.hidden_field :status, value: "en_validation" %>
+
+  <div>
+
   <div>
     <%= form.submit %>
   </div>

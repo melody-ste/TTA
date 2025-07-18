@@ -3,6 +3,8 @@ class CreateProjects < ActiveRecord::Migration[8.0]
     create_table :projects do |t|
       t.references :user, null: false, foreign_key: true
       t.references :architect, null: false, foreign_key: true
+      t.string :title
+      t.boolean :portfolio, default: false
       t.date :start_date
       t.text :description
       t.string :status

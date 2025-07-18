@@ -26,7 +26,8 @@ class ArchitectsController < ApplicationController
   # GET /architects/1 or /architects/1.json
   def show
     # si architecte a un portfolio, on récupères ses medias
-    @multimedias = @architect.portfolio.multimedias if @architect.portfolio
+    # @multimedias = @architect.project.multimedias if @architect.project
+    @multimedias = @architect.projects.includes(:multimedias).map(&:multimedias).flatten
     
   end
 
@@ -80,7 +81,7 @@ class ArchitectsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_architect
-      @architect = Architect.includes(:specializations, user: :city, portfolio: :multimedias).find(params.expect(:id))
+      @architect = Architect.includes(:specializations, user: :city, projects: :multimedias).find(params.expect(:id))
     rescue ActiveRecord::RecordNotFound
       redirect_to architects_path, alert: "Architecte non trouvé."
     end
