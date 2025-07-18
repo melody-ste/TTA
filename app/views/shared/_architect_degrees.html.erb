@@ -10,7 +10,7 @@
         </ul>
         <p><em>Années d'études moyennes: <%= calculate_average_study_years(@architect) %> ans</em></p>
       <% else %>
-        <ul>
+        <ul class="list-unstyled">
           <li><%= @architect.degree_name %> (<%= @architect.degree_acronym %>)</li>
         </ul>
         <p><em>Années d'études: <%= calculate_average_study_years(@architect) %> ans</em></p>

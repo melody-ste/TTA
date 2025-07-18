@@ -9,7 +9,6 @@
 }
 
 
-
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-dark-gray)!important;
   font-weight: bold;
@@ -24,9 +23,18 @@ a {
   color: var(--color-dark-gray);
 }
 
+li {
+  color: var(--color-dark-gray);
+}
+
+.lead {
+  font-size: 1.7rem;
+}
+
 .mt-100 {
   margin-top: 100px;
 }
+
 .mb-100 {
   margin-bottom: 100px;
 }
@@ -36,7 +44,7 @@ a {
 /* --------------------------------- */
 
 nav {
-  position: absolute; /* ou fixed si tu veux qu'elle reste en haut au scroll */
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -280,4 +288,14 @@ nav {
 
 .custom-link:hover {
   text-decoration: underline;
+}
+
+/* --------------------------------- */
+/*              AVATAR               */
+/* --------------------------------- */
+
+.avatar {
+  width: 25rem;
+  border-radius: 50%;
+  object-fit: cover;
 }
