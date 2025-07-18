@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
   belongs_to :user
   belongs_to :architect
+  has_many :multimedias, dependent: :destroy
 
   # Méthode temporaire pour récupérer une image aléatoire depuis les médias
   # En attendant l'implémentation d'Active Storage
