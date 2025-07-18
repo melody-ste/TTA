@@ -71,7 +71,7 @@
 <% end %>
 
 <!-- Portfolio pour les architectes -->
-<% if user_is_architect_with_data? && current_user.architect.portfolios.present? %>
+<% if user_is_architect_with_data? && current_user.architect.portfolio.present? %>
   <div class="profil-section">
     <h3>Portfolio</h3>
     <% current_user.architect.portfolios.sample(rand(1..3)).each do |project| %>

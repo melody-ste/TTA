@@ -17,8 +17,8 @@ class User < ApplicationRecord
   validates :role, presence: true
 
   # Nested attributes
-  accepts_nested_attributes_for :city, allow_destroy: true
-  accepts_nested_attributes_for :architect, allow_destroy: true
+  accepts_nested_attributes_for :city, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :architect, allow_destroy: true, reject_if: :all_blank
 
   # attribut virtuel(pas stocké sur db) pour le formulaire d'inscription
   attr_accessor :skip_city_validation

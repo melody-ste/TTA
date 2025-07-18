@@ -11,12 +11,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    # Gérer les spécialisations pour les architectes
-    handle_architect_specializations if architect_with_specializations?
+    # Gérer les spécialisations et diplômes pour les architectes
+    handle_architect_data if architect_params_present?
     
     if @user.update(user_params)
       redirect_to user_path(@user), notice: "Votre profil a été mis à jour avec succès."
     else
+      # Ajouter les erreurs dans flash pour le débogage
+      flash.now[:alert] = "Erreur lors de la mise à jour : #{@user.errors.full_messages.join(', ')}"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -32,15 +34,27 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
-  def architect_with_specializations?
-    @user.role == "architect" && 
-    params[:user][:architect_attributes] && 
-    params[:user][:architect_attributes][:specialization_names]
+  def architect_params_present?
+    @user.role == "architect" && params[:user][:architect_attributes]
   end
 
-  def handle_architect_specializations
-    @user.architect ||= @user.build_architect
-    @user.architect.specialization_names = params[:user][:architect_attributes][:specialization_names]
+  def handle_architect_data
+    return unless @user.architect || @user.build_architect
+    
+    architect_attrs = params[:user][:architect_attributes]
+    
+    # Gérer les spécialisations
+    if architect_attrs[:specialization_names]
+      @user.architect.specialization_names = architect_attrs[:specialization_names]
+    end
+    
+    # Gérer les diplômes
+    if architect_attrs[:selected_degrees]
+      @user.architect.selected_degrees = architect_attrs[:selected_degrees]
+    end
+    
+    # Sauvegarder explicitement l'architecte
+    @user.architect.save if @user.architect.changed?
   end
 
   def user_params
