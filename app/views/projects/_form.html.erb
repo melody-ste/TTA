@@ -1,36 +1,45 @@
-<%= form_with(model: project) do |form| %>
-  <% if project.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+<div class="card position-relative m-5 p-5">
+  <%= form_with(model: project) do |form| %>
+    <% if project.errors.any? %>
+      <div style="color: #916868">
+        <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
 
-      <ul>
-        <% project.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% project.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="m-5">
+      <div class="field">
+        <%= form.label :architect_id, "Architecte", class: "form-label" %>
+        <p class="form-control"><%= project.architect&.user&.fullname || "Architecte inconnu" %></p>
+        <%= form.hidden_field :architect_id %>
+      </div>
+    </div>
+
+    <div class="m-5">
+      <div class="field">
+        <%= form.label :start_date, class: "form-label" %><br>
+        <%= form.date_field :start_date %>
+      </div>
+    </div>
+
+    <div class="m-5">
+      <div class="field">
+        <%= form.label :description %><br>
+        <%= form.text_area :description, class:"form-control" %>
+      </div>
+    </div>
+
+    <%= form.hidden_field :status, value: "en_validation" %>
+
+    <div class="d-flex flex-column align-items-center">
+      <div>
+        <%= form.submit "Contacter", class: "btn btn-primary" %>
+      </div>
     </div>
   <% end %>
-
-    <div>
-    <%= form.label :architect_id %><br>
-    <%= form.hidden_field :architect_id %>
-  </div>
-
-  <div>
-    <%= form.label :start_date %><br>
-    <%= form.date_field :start_date %>
-  </div>
-
-  <div>
-    <%= form.label :description %><br>
-    <%= form.text_area :description %>
-  </div>
-
-  <%= form.hidden_field :status, value: "en_validation" %>
-
-  <div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
