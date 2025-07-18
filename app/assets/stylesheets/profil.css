@@ -1,8 +1,14 @@
   /* profil formulaire */
+
   .profil-form {
     margin-top: 5rem;
   }
   
+
+  .profil-section {
+    margin-top: 5rem;
+    margin-left: 5rem;
+  }
   /* Bouton modifier avatar */
   .avatar-button {
     background-color: #007bff;
