@@ -1,15 +1,15 @@
-  <h2><%= @architect.fullname %></h2>
+<h1 class="mt-100 mb-100"><%= @architect.fullname %></h1>
 
-  <%= image_tag "https://img.freepik.com/photos-gratuite/avatar-androgyne-personne-queer-non-binaire_23-2151100226.jpg", style:"width: 10rem; border-radius: 50%;"%>
+<%= image_tag "https://img.freepik.com/photos-gratuite/avatar-androgyne-personne-queer-non-binaire_23-2151100226.jpg", style:"width: 10rem; border-radius: 50%;"%>
 
-  <h2>Spécialités</h2>
-  <ul>
+<div>
+  <h3>Spécialités</h3>
+  <ul class="list-unstyled">
     <% @architect.specializations.each do |specialization| %>
       <li><%= specialization.name %></li>
     <% end %>
   </ul>
 
-  <h2>Ville: </h2>
   <% if @architect.user %>
     <p><%= @architect.user.city.name %> (<%= @architect.user.city.zip_code %>)</p>
     <p>Département: <%= @architect.user.city.department %></p>
@@ -17,14 +17,14 @@
     <p>Aucune ville renseignée</p>
   <% end %>
 
-  <h2>Diplomes</h2>
+  <h4>Diplômes</h4>
   <%= render 'shared/architect_degrees' %>
 
-  <h2>Description</h2>
+  <h4>Description</h4>
   <p><%= @architect.description %></p>
   <p><%= render 'shared/ratings' %></p>
 
-  <%= link_to 'Contacter', cgv_path, class: "btn btn-more" %>
-  
+  <%= link_to 'Contacter', cgv_path, class: "btn btn-primary" %>
+</div>
 
 
