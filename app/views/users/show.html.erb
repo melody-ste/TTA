@@ -1,131 +1,140 @@
-<section class="profil-section">
-<h1 ><%= current_user.first_name %></h1>
+<div class="container mt-100 mb-5">
+  <h1 class="mb-5"><%= current_user.fullname %></h1>
 
-<!--avatar actuel-->
-<div class="user-avatar-section">
-  <%= user_avatar_or_default %>
-</div>
+  <div class="card p-5 mb-5">
+    <div class="d-flex align-items-start gap-2">
 
-<!--bouton ajout/modification photo : display: none pour écraser "choisir un fichier" dans le bouton par défaut-->
-<div class="profil-photo-actions">
-  <%= form_tag user_avatars_path(current_user), multipart: true do %>
-    <label for="avatar_input" class="avatar-button">Modifier l'avatar</label>
-    <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;" %>
-    <%= submit_tag "mettre à jour", id: "profil-submit_button", style: "display: none;" %>
-  <% end %>
-</div>
+      <div>
+        <!--avatar actuel-->
+        <div class= "avatar">
+          <%= user_avatar_or_default %>
+        </div>
 
-
-<!-- Informations utilisateur -->
-<div class="user-info">
-  <%= current_user.email %><br>
-  <% if current_user.city.present? %>
-    <%= current_user.city.name %> (<%= current_user.city.zip_code %>)<br>
-  <% end %>
-  <%= current_user.role %><br>
-</div>
-
-<!-- Informations spécifiques aux architectes -->
-<% if current_user.role == "architect" && current_user.architect.present? %>
-  <div class="architect-info">
-
-    <% if current_user.architect.specializations.any? %>
-      <div class="specializations">
-        <ul>
-          <% current_user.architect.specializations.each do |specialization| %>
-            <li class="specialization-tag"><%= specialization.name %></li>
+        <!--bouton ajout/modification photo : display: none pour écraser "choisir un fichier" dans le bouton par défaut-->
+        <div class="profil-photo-actions">
+          <%= form_tag user_avatars_path(current_user), multipart: true do %>
+            <label for="avatar_input" class="btn btn-warning btn-sm">Modifier l'avatar</label>
+            <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;" %>
+            <%= submit_tag "mettre à jour", id: "profil-submit_button", style: "display: none;" %>
           <% end %>
-        </ul>
+        </div>
       </div>
-    <% end %>
 
-    <% if current_user.architect.degree_names_array.any? %>
-      <div class="degrees">
-        <p><strong>Diplômes :</strong></p>
-        <ul>
-          <% current_user.architect.degree_names_array.each do |degree| %>
-            <li class="degree-tag"><%= degree %></li>
+      <div>
+        <!-- Informations utilisateur -->
+        <div class="user-info">
+          <p><%= current_user.email %></p>
+          <p><% if current_user.city.present? %>
+            <%= current_user.city.name %> (<%= current_user.city.zip_code %>)<br>
           <% end %>
-        </ul>
+          </p>
+          <p><%= current_user.role %></p>
+        </div>
+
+        <!-- Informations spécifiques aux architectes -->
+        <% if current_user.role == "architect" && current_user.architect.present? %>
+          <div class="architect-info">
+
+            <% if current_user.architect.specializations.any? %>
+              <div class="specializations">
+                <ul class="list-unstyled">
+                  <% current_user.architect.specializations.each do |specialization| %>
+                    <li class="lead"><%= specialization.name %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <% if current_user.architect.degree_names_array.any? %>
+              <div class="degrees">
+                <p><strong>Diplômes :</strong></p>
+                <ul>
+                  <% current_user.architect.degree_names_array.each do |degree| %>
+                    <li class="degree-tag"><%= degree %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <% if current_user.architect.description.present? %>
+              <p><strong>Description :</strong> <%= current_user.architect.description %></p>
+            <% end %>
+
+          </div>
+        <% end %> 
+
+
+        <!--modifier ou supprimer son compte-->
+        <div class="d-flex gap-3 mt-4">
+          <%= link_to "Modifier", edit_user_path(@user), class: "btn btn-warning" %>
+          <%= form_with url: user_registration_path, method: :delete, local: true do %>
+            <%= submit_tag "Supprimer mon compte", class: "btn btn-danger", 
+                data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
+          <% end %>
+        </div>
       </div>
-    <% end %>
-
-    <% if current_user.architect.description.present? %>
-      <p><strong>Description :</strong> <%= current_user.architect.description %></p>
-    <% end %>
-
+    </div>
   </div>
-<% end %> 
 
-
-<!--modifier ou supprimer son compte-->
-<div class="profil-actions">
-  <%= link_to "Modifier", edit_user_path(@user) %>
-  <%= form_with url: user_registration_path, method: :delete, local: true do %>
-    <%= submit_tag "Supprimer mon compte", class: "profil-delete-account", 
-        data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
-  <% end %>
-</div>
-
-<!--fonctionnalité archi-->
-<% if current_user.role == "architect" && current_user.architect.present? %>
-
-  <h3> Nouvelles demandes </h3>
-  <% if @incoming_request.present? %>
-    <% @incoming_request.each do |request|%>
-    <%=project.title%><br>
-    <%= request.description%>
-    <%= request.status%>
-    <%end%>
-  <%else%>
-    <p> Pas de nouvelle demande </p>
-  <%end%>
-<%end%>
-
-
-
-<h3> Projet en cours </h3>
-  <% if @current_projects.present? %>
-    <% @current_projects.each do |project|%>
-    <%=project.title%><br>
-    <%= project.description%>
-    <%= project.status%>
-    <%end%>
-  <%else%>
-    <p> Pas de nouvelle demande </p>
-  <%end%>
-
-<!--Fonctionnalité client-->
-  <% if current_user.role == "client" %>
-    <h3> favoris </h3>
-    <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
-    <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
-    <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
-<% end %>
-
-<h3> Historique des projets </h3>
-  <% if @completed_projects.present? %>
-    <% @completed_projects.each do |project|%>
-    <%=project.title%><br>
-    <%= project.description%>
-    <%= project.status%>
-    <%end%>
-  <%else%>
-    <p> Pas de projet terminé </p>
-  <%end%>
-
-<!--fonctionnalité archi-->
+  <!--fonctionnalité archi-->
   <% if current_user.role == "architect" && current_user.architect.present? %>
 
-    <h3> Portfolio <h3>
-    <% if @portfolio_projects.present? %>
-      <% @portfolio_projects.each do |project|%>
-      <%=project.title%> <br>
-      <%= truncate(project.description, length: 100)%> <br>
+    <h3> Nouvelles demandes </h3>
+    <% if @incoming_request.present? %>
+      <% @incoming_request.each do |request|%>
+      <%=project.title%><br>
+      <%= request.description%>
+      <%= request.status%>
+      <%end%>
+    <%else%>
+      <p> Pas de nouvelle demande </p>
+    <%end%>
+  <%end%>
+
+
+
+  <h3> Projet en cours </h3>
+    <% if @current_projects.present? %>
+      <% @current_projects.each do |project|%>
+      <%=project.title%><br>
+      <%= project.description%>
       <%= project.status%>
       <%end%>
     <%else%>
-      <p> Pas de projet dans le portfolio </p>
+      <p> Pas de nouvelle demande </p>
     <%end%>
 
-  <%end%>
+  <!--Fonctionnalité client-->
+    <% if current_user.role == "client" %>
+      <h3> favoris </h3>
+      <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
+      <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
+      <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
+  <% end %>
+
+  <h3> Historique des projets </h3>
+    <% if @completed_projects.present? %>
+      <% @completed_projects.each do |project|%>
+      <%=project.title%><br>
+      <%= project.description%>
+      <%= project.status%>
+      <%end%>
+    <%else%>
+      <p> Pas de projet terminé </p>
+    <%end%>
+
+  <!--fonctionnalité archi-->
+    <% if current_user.role == "architect" && current_user.architect.present? %>
+
+      <h3> Portfolio <h3>
+      <% if @portfolio_projects.present? %>
+        <% @portfolio_projects.each do |project|%>
+        <%=project.title%> <br>
+        <%= truncate(project.description, length: 100)%> <br>
+        <%= project.status%>
+        <%end%>
+      <%else%>
+        <p> Pas de projet dans le portfolio </p>
+      <%end%>
+
+    <%end%>
