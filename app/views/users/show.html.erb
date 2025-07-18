@@ -76,10 +76,11 @@
     </div>
   </div>
 
+  
   <!--fonctionnalité archi-->
   <% if current_user.role == "architect" && current_user.architect.present? %>
 
-    <h3> Nouvelles demandes </h3>
+    <h2 class="mt-5 mb-5"> Nouvelles demandes </h2>
     <% if @incoming_request.present? %>
       <% @incoming_request.each do |request|%>
       <%=project.title%><br>
@@ -93,32 +94,36 @@
 
 
 
-  <h3> Projet en cours </h3>
+  <h2 class="mt-100 mb-5"> Projet en cours </h2>
     <% if @current_projects.present? %>
-      <% @current_projects.each do |project|%>
-      <%=project.title%><br>
-      <%= project.description%>
-      <%= project.status%>
-      <%end%>
+      <div class="card p-5">
+        <% @current_projects.each do |project|%>
+        <%=project.title%><br>
+        <%= project.description%>
+        <%= project.status%>
+        <%end%>
+      </div>
     <%else%>
       <p> Pas de nouvelle demande </p>
     <%end%>
 
   <!--Fonctionnalité client-->
-    <% if current_user.role == "client" %>
+    <!-- <% if current_user.role == "client" %>
       <h3> favoris </h3>
       <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
       <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
       <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
-  <% end %>
+  <% end %> -->
 
-  <h3> Historique des projets </h3>
+  <h2 class="mt-100 mb-5"> Historique des projets </h2>
     <% if @completed_projects.present? %>
-      <% @completed_projects.each do |project|%>
-      <%=project.title%><br>
-      <%= project.description%>
-      <%= project.status%>
-      <%end%>
+      <div class="card p-5">
+        <% @completed_projects.each do |project|%>
+        <%=project.title%><br>
+        <%= project.description%>
+        <%= project.status%>
+        <%end%>
+      </div>
     <%else%>
       <p> Pas de projet terminé </p>
     <%end%>
@@ -126,7 +131,7 @@
   <!--fonctionnalité archi-->
     <% if current_user.role == "architect" && current_user.architect.present? %>
 
-      <h3> Portfolio <h3>
+      <h2 class="mt-100 mb-5"> Portfolio <h2>
       <% if @portfolio_projects.present? %>
         <% @portfolio_projects.each do |project|%>
         <%=project.title%> <br>
