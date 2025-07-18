@@ -1,7 +1,7 @@
 <h1><%= current_user.first_name%></h1>
 
 <!--info user en fonction du rôle-->
-<% if current_user.role == "architect"%>
+<% if current_user.role == "architect" && current_user.architect.present? %>
   <% current_user.architect.specializations.each do |specialization|%>
     <%=specialization.name %>
     <%end%>
@@ -11,7 +11,7 @@
 <%=current_user.city%><br>
 <%=current_user.role%><br>
 
-<% if current_user.role == "architect"%>
+<% if current_user.role == "architect" && current_user.architect.present? %>
   <%= current_user.architect.degree_name%><br>
   <%= current_user.architect.description%>
   
@@ -22,74 +22,72 @@
 <%if current_user.avatar.attached?%>
   <%= image_tag current_user.avatar, alt: 'avatar' %>
 <%else%>
-  <p>=== Ajouter image avatar ===</p>
+  <p><%= image_tag "https://img.freepik.com/photos-gratuite/avatar-androgyne-personne-queer-non-binaire_23-2151100226.jpg", style:"width: 10rem; border-radius: 50%;"%></p>
 <%end%>
 
 <!--bouton ajout/modification photo : display: none pour écraser "choisir un fichier" dans le bouton par défaut-->
-<%= form_tag user_avatars_path(current_user), multipart: true do %>
-    <label for="avatar_input" class="custom-file-button">Modifier la photo</label>
-  <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;"%>
+<div class="profil-photo-actions">
+  <%= form_tag user_avatars_path(current_user), multipart: true do %>
+      <label for="avatar_input" class="avatar-button">Modifier l'avatar</label>
+    <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;"%>
 
-  <%= submit_tag "mettre à jour", id: "submit_button", style: "display: none;" %>
-<% end %>
+    <%= submit_tag "mettre à jour", id: "profil-submit_button", style: "display: none;" %>
+  <% end %>
+</div>
 
 <!--modifier ou supprimer son compte-->
-<%= link_to "Modifier", edit_user_registration_path %>
+<div class="profil-actions">
+  <%= link_to "Modifier", edit_user_registration_path %>
 
-<%= form_with url: user_registration_path, method: :delete, local: true do %>
-  <%= submit_tag "Supprimer mon compte", data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
-<% end %>
+  <%= form_with url: user_registration_path, method: :delete, local: true do %>
+    <%= submit_tag "Supprimer mon compte", class: "profil-delete-account", data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
+  <% end %>
+</div>
 
+<div class="profil-section">
+  <h3> Nouvelles demandes </h3>
+  <% current_user.projects.each do |project|%>
+  <%if project.status == "en_validation"%>
+    <%= project.description%>
+    <%= project.status%>
 
-<h3> Nouvelles demandes </h3>
-<% current_user.projects.each do |project|%>
-<%if project.status == "en_validation"%>
-  <%= project.description%>
-  <%= project.status%>
-
+    <%end%>
   <%end%>
-<%end%>
+</div>
 
-<h3> Projets en cours </h3>
-<% current_user.projects.each do |project|%>
-<%if project.status == "en_cours" %>
-  <%= project.description%>
-  <%= project.status%>
+<div class="profil-section">
+  <h3> Projets en cours </h3>
+  <% current_user.projects.each do |project|%>
+  <%if project.status == "en_cours" %>
+    <%= project.description%>
+    <%= project.status%>
+    <%end%>
   <%end%>
-<%end%>
+</div>
 
-<h3> Historique des projets </h3>
+<div class="profil-section">
+  <h3> Historique des projets </h3>
 
-<% current_user.projects.each do |project|%>
-<%if project.status == "termine"%>
-  <%= project.description%>
-  <%= project.status%>
+  <% current_user.projects.each do |project|%>
+  <%if project.status == "termine"%>
+    <%= project.description%>
+    <%= project.status%>
+    <%end%>
   <%end%>
-<%end%>
+</div>
 
-<h3> Portfolio</h3>
-<%current_user.architect.portfolios.sample(rand(3)).each do |project|%>
-<%=project.project_title%><br>
-<%= truncate(project.project_description, length: 100)%>
-<%end%>
-
-
-
+<div class="profil-section">
+  <h3> Portfolio</h3>
+  <% if current_user.role == "architect" && current_user.architect.present? && current_user.architect.portfolios.present? %>
+    <%current_user.architect.portfolios.sample(rand(3)).each do |project|%>
+      <%=project.project_title%><br>
+      <%= truncate(project.project_description, length: 100)%>
+    <%end%>
+  <% end %>
+</div>
 
 <!-- JS pour afficher le bouton "mettre à jour" seulement lorsqu'un fichier est chargé-->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    let fileInput = document.getElementById("avatar_input");
-    let submitButton = document.getElementById("submit_button");
 
-    fileInput.addEventListener("change", function () {
-      if (fileInput.files.length > 0) {
-        submitButton.style.display = "inline-block";
-      } else {
-        submitButton.style.display = "none";
-      }
-    });
-  });
 </script>
-
 

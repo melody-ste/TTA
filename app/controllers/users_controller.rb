@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!  
   before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :configure_permitted_parameters
 
     
     def show
@@ -13,18 +14,16 @@ class UsersController < ApplicationController
   end
 
   def edit
+@user = current_user
 
   end
 
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: "Votre profil a été modifié avec succès" }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    @user = current_user
+    if @user.update(user_params)
+      redirect_to users_path(@user), notice: "Votre profil a été mis à jour avec succès."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -37,9 +36,27 @@ class UsersController < ApplicationController
     end
   end
 
+    def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:account_update, keys: [
+      :first_name, :last_name, :description,
+      specializations: [],
+      degrees: [:name, :acronym, :years_study],
+      city_id: [:name, :zip_code, :department],
+    ])
+  end
+
   private
     def set_user
       @user = User.find(params.expect(:id))
     end
+
+      def user_params
+    params.require(:user).permit(
+      :first_name, :last_name,:description,
+      specializations: [],
+      degrees: [:name, :acronym, :duration_years],
+      city_id: [:name, :zip_code, :department],
+    )
+  end
 
 end

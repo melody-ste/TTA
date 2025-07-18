@@ -16,11 +16,9 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :role, presence: true
 
-  # Validation conditionnelle : les architectes doivent avoir une ville
-  # Mais seulement après l'inscription, pas lors de la création du compte
-  # validates :city, presence: true, if: :should_validate_city?
 
-  attr_accessor :skip_city_validation
+
+  
 
   def fullname
     if first_name.present? || last_name.present?
@@ -30,8 +28,13 @@ class User < ApplicationRecord
     end
   end
 
+  # attribut virtuel(pas stocké sur db) pour le formulaire d'inscription
+  attr_accessor :skip_city_validation
   private
 
+    # Validation  les architectes doivent avoir une ville
+  # Mais seulement après l'inscription, pas lors de la création du compte
+  # validates :city, presence: true, if: :should_validate_city?
   def should_validate_city?
     architect? && !skip_city_validation
   end
