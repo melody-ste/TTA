@@ -4,6 +4,8 @@ import "controllers"
 // Import carousel functionality
 import "carousel"
 import "search"
+
+import "bootstrap"
 import "filter_toggle"
 
 

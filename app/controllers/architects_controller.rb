@@ -80,7 +80,9 @@ class ArchitectsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_architect
-      @architect = Architect.find(params.expect(:id))
+      @architect = Architect.includes(:specializations, user: :city, portfolio: :multimedias).find(params.expect(:id))
+    rescue ActiveRecord::RecordNotFound
+      redirect_to architects_path, alert: "Architecte non trouvé."
     end
 
     # Only allow a list of trusted parameters through.

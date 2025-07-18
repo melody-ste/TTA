@@ -1,6 +1,6 @@
 class SpecializationsController < ApplicationController
-# <!-- new update carousel-->
-  
+  # <!-- new update carousel-->
+
   def index
     if params[:query].present?
       # Normalisation de la requête pour enlever les accents

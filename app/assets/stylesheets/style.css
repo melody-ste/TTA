@@ -24,9 +24,24 @@ a {
   color: var(--color-dark-gray);
 }
 
+.mt-100 {
+  margin-top: 100px;
+}
+.mb-100 {
+  margin-bottom: 100px;
+}
+
 /* --------------------------------- */
 /*              HEADER               */
 /* --------------------------------- */
+
+nav {
+  position: absolute; /* ou fixed si tu veux qu'elle reste en haut au scroll */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; /* au-dessus du header */
+}
 
 .hero-header {
   position: relative;
@@ -34,7 +49,7 @@ a {
   width: 100%;
   background-image: linear-gradient(
     to bottom,
-     rgba(0,0,0,0) 50%,
+     rgba(0,0,0,0) 40%,
      var(--color-primary-color) ),
      url('hero.jpg');
   background-size: cover;
@@ -65,23 +80,29 @@ nav {
   border: 2px solid var(--color-light-gray);
   border-radius: 25px; 
   padding: 0.4rem 1rem;
-  max-width: 450px;
+  max-width: 500px;
   background-color: white;
   margin-left: auto;
 }
 
 .search-container .iconify {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: var(--color-light-gray);
   margin-right: 0.5rem;
 }
 
-.search-container input {
+.search-container .search-form {
+  width: 100%;
+}
+
+.search-container .search-input {
   border: none;
   outline: none;
   flex-grow: 1;
   font-size: 1rem;
   border-radius: 25px;
+  padding: 0.4rem 0.8rem;
+  width: 100%;
 }
 
 /* --------------------------------- */
@@ -161,7 +182,7 @@ nav {
 }
 
 .custom-sm-card {
-  width: 300px; 
+  width: 350px; 
   border-radius: 0;
   overflow: hidden; 
   background-color: white;
@@ -170,7 +191,7 @@ nav {
 }
 
 .custom-card {
-  width: 370px; 
+  width: 400px; 
   border-radius: 0;
   overflow: hidden; 
   background-color: white;
@@ -185,18 +206,26 @@ nav {
   transform: translateX(-5px);
 }
 
+.custom-sm-card:hover {
+  box-shadow: 
+    10px 10px 0 0 var(--color-medium-gray); 
+      
+  transform: translateX(-5px);
+}
+
+
 .card-sm-image {
   width: 100%;
   display: block;
   object-fit: cover;
-  height: 200px; 
+  height: 250px; 
 }
 
 .card-image {
   width: 100%;
   display: block;
   object-fit: cover;
-  height: 250px; 
+  height: 270px; 
 }
 
 .card-sm-body {
@@ -220,6 +249,14 @@ nav {
   color: var(--color-dark-gray);
   font-weight: bold;
   text-transform: uppercase;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 2rem;
 }
 
 /* --------------------------------- */
