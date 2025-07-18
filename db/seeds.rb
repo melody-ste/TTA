@@ -246,8 +246,8 @@ medias_by_specialization = {
       architect: architect,
       start_date: Faker::Date.backward(days: 1000),
       description: Faker::Lorem.paragraph,
-      # status: Project.statuses.keys.sample
-      status: %w[en_validation accepte refuse en_cours termine annule].sample
+      status: Project.statuses.keys.sample
+      # status: %w[en_validation accepte refuse en_cours termine annule].sample
     )
   end
 end
