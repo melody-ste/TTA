@@ -9,11 +9,11 @@ class ArchitectsController < ApplicationController
       @architects = Architect.joins(:user)
                              .left_joins(user: :city)
                              .left_joins(:specializations)
-                             .where("LOWER(users.first_name) LIKE ? OR 
-                                     LOWER(users.last_name) LIKE ? OR 
-                                     LOWER(architects.description) LIKE ? OR 
-                                     LOWER(cities.name) LIKE ? OR 
-                                     LOWER(specializations.name) LIKE ?", 
+                             .where("LOWER(users.first_name) LIKE ? OR
+                                     LOWER(users.last_name) LIKE ? OR
+                                     LOWER(architects.description) LIKE ? OR
+                                     LOWER(cities.name) LIKE ? OR
+                                     LOWER(specializations.name) LIKE ?",
                                     "%#{normalized_query}%", "%#{normalized_query}%", "%#{normalized_query}%", "%#{normalized_query}%", "%#{normalized_query}%")
                              .distinct
     else
@@ -77,7 +77,9 @@ class ArchitectsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_architect
-      @architect = Architect.find(params.expect(:id))
+      @architect = Architect.includes(:specializations, user: :city, portfolio: :multimedias).find(params.expect(:id))
+    rescue ActiveRecord::RecordNotFound
+      redirect_to architects_path, alert: "Architecte non trouvé."
     end
 
     # Only allow a list of trusted parameters through.

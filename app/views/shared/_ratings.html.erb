@@ -1,0 +1,6 @@
+<div class="star-rating" data-rating="">
+  <% 5.downto(1) do |i| %>
+    <input type="radio" name="rating" value="<%= i %>" id="star<%= i %>" />
+    <label for="star<%= i %>" class="star">★</label>
+  <% end %>
+</div>
