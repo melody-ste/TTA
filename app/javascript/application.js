@@ -6,8 +6,7 @@ import "carousel"
 import "search"
 
 import "bootstrap"
-
-
+import "filter_toggle"
 
 
 
