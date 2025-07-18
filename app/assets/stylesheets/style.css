@@ -93,6 +93,9 @@ nav {
   margin-left: auto;
 }
 
+.custom-position{
+  margin: auto;
+}
 .search-container .iconify {
   font-size: 1.8rem;
   color: var(--color-light-gray);
