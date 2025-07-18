@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_16_135342) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_18_131850) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -70,26 +70,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_16_135342) do
   end
 
   create_table "multimedias", force: :cascade do |t|
-    t.integer "portfolio_id", null: false
+    t.integer "project_id"
     t.string "type_media"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["portfolio_id"], name: "index_multimedias_on_portfolio_id"
-  end
-
-  create_table "portfolios", force: :cascade do |t|
-    t.integer "architect_id", null: false
-    t.string "project_title"
-    t.text "project_description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["architect_id"], name: "index_portfolios_on_architect_id"
+    t.index ["project_id"], name: "index_multimedias_on_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "architect_id", null: false
+    t.string "title"
+    t.boolean "portfolio", default: false
     t.date "start_date"
     t.text "description"
     t.string "status"
@@ -126,8 +119,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_16_135342) do
   add_foreign_key "architect_specializations", "specializations"
   add_foreign_key "architects", "users"
   add_foreign_key "cities", "users"
-  add_foreign_key "multimedias", "portfolios"
-  add_foreign_key "portfolios", "architects"
+  add_foreign_key "multimedias", "projects"
   add_foreign_key "projects", "architects"
   add_foreign_key "projects", "users"
 end
