@@ -14,15 +14,20 @@ class User < ApplicationRecord
   }
 
   validates :email, presence: true, uniqueness: true
+  validates :role, presence: true
 
   # Validation conditionnelle : les architectes doivent avoir une ville
-  # Sauf lors des seeds (attribut temporaire skip_city_validation)
-  validates :city, presence: true, if: :should_validate_city?
+  # Mais seulement après l'inscription, pas lors de la création du compte
+  # validates :city, presence: true, if: :should_validate_city?
 
   attr_accessor :skip_city_validation
 
   def fullname
-    "#{first_name} #{last_name}".strip
+    if first_name.present? || last_name.present?
+      "#{first_name} #{last_name}".strip
+    else
+      email # Fallback sur l'email si pas de nom
+    end
   end
 
   private
