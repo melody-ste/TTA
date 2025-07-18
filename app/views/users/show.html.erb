@@ -40,13 +40,16 @@
   <%= submit_tag "Supprimer mon compte", data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
 <% end %>
 
+<!--fonctionnalité archi-->
+<% if current_user.role == "architect"%>
 
-<h3> Nouvelles demandes </h3>
-<% current_user.projects.each do |project|%>
-<%if project.status == "en_validation"%>
-  <%= project.description%>
-  <%= project.status%>
+  <h3> Nouvelles demandes </h3>
+  <% current_user.projects.each do |project|%>
+  <%if project.status == "en_validation" %>
+    <%= project.description%>
+    <%= project.status%>
 
+    <%end%>
   <%end%>
 <%end%>
 
@@ -58,6 +61,16 @@
   <%end%>
 <%end%>
 
+<!--fonctionnalité archi-->
+<% if current_user.role == "architect"%>
+  <h3> Portfolio</h3>
+  <%@portfolio_projects.each do |project|%>
+  <%=project.title%><br>
+  <%= truncate(project.description, length: 100)%>
+  <%end%>
+<%end%>
+
+
 <h3> Historique des projets </h3>
 
 <% current_user.projects.each do |project|%>
@@ -66,14 +79,6 @@
   <%= project.status%>
   <%end%>
 <%end%>
-
-<h3> Portfolio</h3>
-<%current_user.architect.projects.sample(rand(3)).each do |project|%>
-<%=project.project_title%><br>
-<%= truncate(project.project_description, length: 100)%>
-<%end%>
-
-
 
 
 <!-- JS pour afficher le bouton "mettre à jour" seulement lorsqu'un fichier est chargé-->

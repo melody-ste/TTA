@@ -5,6 +5,8 @@ class UsersController < ApplicationController
     
     def show
     @user = User.find(params[:id])
+    @portfolio_projects = @user.projects.where(portfolio: true).sample(3)
+
   end
 
   def edit
