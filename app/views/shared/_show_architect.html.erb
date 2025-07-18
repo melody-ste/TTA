@@ -1,28 +1,29 @@
 <h1 class="mt-100 mb-5"><%= @architect.fullname %></h1>
-
 <div class="card p-5 mb-5">
   <div class="d-flex align-items-start gap-4">
     <%= image_tag "https://img.freepik.com/photos-gratuite/avatar-androgyne-personne-queer-non-binaire_23-2151100226.jpg", class: "avatar" %>
 
     <div>
-
-      <!-- <h3>Spécialités</h3> -->
+      <!-- Spécialités -->
       <ul class="list-unstyled">
         <% @architect.specializations.each do |specialization| %>
           <li class="lead"><%= specialization.name %></li>
         <% end %>
       </ul>
 
-      <% if @architect.user %>
+      <!-- Ville et département -->
+      <% if @architect.user && @architect.user.city %>
         <p><%= @architect.user.city.name %> (<%= @architect.user.city.zip_code %>)</p>
         <p>Département: <%= @architect.user.city.department %></p>
       <% else %>
         <p>Aucune ville renseignée</p>
       <% end %>
 
+      <!-- Diplômes -->
       <h4>Diplômes</h4>
       <%= render 'shared/architect_degrees' %>
 
+      <!-- Description -->
       <h4>Description</h4>
       <p><%= @architect.description %></p>
       <p><%= render 'shared/ratings' %></p>
