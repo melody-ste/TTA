@@ -1,0 +1,100 @@
+  /* profil formulaire */
+
+  .profil-form {
+    margin-top: 5rem;
+  }
+  
+
+  .profil-section {
+    margin-top: 5rem;
+    margin-left: 5rem;
+  }
+  /* Bouton modifier avatar */
+  .avatar-button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .avatar-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Bouton mettre à jour avatar */
+  #profil-submit_button {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  #profil-submit_button:hover {
+    background-color: #1e7e34;
+  }
+  
+  /* Liens modifier et supprimer compte */
+  .profil-actions {
+    margin: 20px 0;
+  }
+  
+  .profil-actions a {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-right: 10px;
+    display: inline-block;
+    transition: background-color 0.3s;
+  }
+  
+  .profil-actions a:hover {
+    background-color: #545b62;
+  }
+  
+  /* Bouton supprimer compte */
+  .profil-delete-account {
+    background-color: #dc3545 !important;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .profil-delete-account:hover {
+    background-color: #c82333 !important;
+  }
+  
+  /* Conteneur pour les boutons photo */
+  .profil-photo-actions {
+    margin: 15px 0;
+  }
+  
+  /* Sections du profil */
+  .profil-section {
+    margin: 25px 0;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+  }
+  
+  .profil-section h3 {
+    color: #495057;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+  }

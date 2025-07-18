@@ -1,0 +1,89 @@
+<div class="profil-form">
+
+<!-- Affichage des erreurs -->
+<% if @user.errors.any? %>
+  <div class="error-messages">
+    <h4><%= pluralize(@user.errors.count, "erreur") %> :</h4>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @user, url: user_path(@user), method: :patch, local: true do |f| %>
+  <div>
+    <%= f.label :first_name, "Prénom" %>
+    <%= f.text_field :first_name, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :last_name, "Nom" %>
+    <%= f.text_field :last_name, required: true %>
+  </div>
+
+  <!-- Informations de ville -->
+  <%= f.fields_for :city, @user.city || @user.build_city do |city_fields| %>
+    <div>
+      <%= city_fields.label :department, "Département" %>
+      <%= city_fields.text_field :department, id: "dept_input" %>
+
+      <%= city_fields.label :zip_code, "Code postal" %>
+      <%= city_fields.text_field :zip_code, id: "zip_code_input" %>
+
+      <%= city_fields.label :name, "Ville" %>
+      <%= city_fields.text_field :name, id: "city_input" %>
+    </div>
+  <% end %>
+
+  <!-- Informations spécifiques aux architectes -->
+  <% if @user.role == "architect" %>
+    <%= f.fields_for :architect, @user.architect || @user.build_architect do |architect_fields| %>
+      <div>
+        <%= architect_fields.label :description, "Description" %>
+        <%= architect_fields.text_area :description, rows: 5 %>
+      </div>
+
+      <div>
+        <p><strong>Diplômes</strong></p>
+        <!-- Champ caché pour forcer l'envoi d'un tableau vide si aucune checkbox n'est cochée -->
+        <%= hidden_field_tag "user[architect_attributes][selected_degrees][]", "", id: "hidden_degrees" %>
+        <% existing_degrees = @user.architect&.degree_acronyms_array || [] %>
+        <% degree_options.each do |degree_name, degree_acronym| %>
+          <div>
+            <%= check_box_tag "user[architect_attributes][selected_degrees][]", degree_acronym, existing_degrees.include?(degree_acronym) %>
+            <%= label_tag "user_architect_attributes_selected_degrees_#{degree_acronym}", degree_name %>
+          </div>
+        <% end %>
+
+        <div>
+          <%= architect_fields.label :years_study, "Années d'études en moyenne" %>
+          <%= architect_fields.number_field :years_study, min: 1, step: 1 %>
+        </div>
+      </div>
+
+      <div>
+        <p><strong>Spécialités</strong></p>
+        <!-- Champ caché pour forcer l'envoi d'un tableau vide si aucune checkbox n'est cochée -->
+        <%= hidden_field_tag "user[architect_attributes][specialization_names][]", "", id: "hidden_specializations" %>
+        <% existing_specializations = @user.architect&.specializations&.pluck(:name) || [] %>
+        <% specialization_options.each do |spec| %>
+          <div>
+            <%= check_box_tag "user[architect_attributes][specialization_names][]", spec, existing_specializations.include?(spec) %>
+            <%= label_tag "user_architect_attributes_specialization_names_#{spec}", spec %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+
+    <div>
+    <%= f.submit "Mettre à jour" %>
+  </div>
+<% end %>
+  </div>
+
+<div class="profil-actions">
+  <%= link_to "Modifier infos connexion", edit_user_registration_path %>
+</div>
