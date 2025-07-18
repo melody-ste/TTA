@@ -73,6 +73,7 @@
   <h3> Nouvelles demandes </h3>
   <% if @incoming_request.present? %>
     <% @incoming_request.each do |request|%>
+    <%=project.title%><br>
     <%= request.description%>
     <%= request.status%>
     <%end%>
@@ -86,6 +87,7 @@
 <h3> Projet en cours </h3>
   <% if @current_projects.present? %>
     <% @current_projects.each do |project|%>
+    <%=project.title%><br>
     <%= project.description%>
     <%= project.status%>
     <%end%>
@@ -104,6 +106,7 @@
 <h3> Historique des projets </h3>
   <% if @completed_projects.present? %>
     <% @completed_projects.each do |project|%>
+    <%=project.title%><br>
     <%= project.description%>
     <%= project.status%>
     <%end%>
@@ -117,7 +120,8 @@
     <h3> Portfolio <h3>
     <% if @portfolio_projects.present? %>
       <% @portfolio_projects.each do |project|%>
-      <%= project.description%>
+      <%=project.title%> <br>
+      <%= truncate(project.description, length: 100)%> <br>
       <%= project.status%>
       <%end%>
     <%else%>
