@@ -1,20 +1,17 @@
-<section>
-  <div style="background-image: url('https://img.freepik.com/photos-premium/plancher-gris-ombre-plancher-mur-batiment-plafond-art-confort-bois-espace-beton-appartement-verre_1034924-16460.jpg'); background-repeat: no-repeat;" >
-    <div >
-      <h1>Trouve Ton Archi</h1>
-      <p >Trouvez l'architecte idéal pour vos projets de construction, rénovation ou décoration.</p>
-      <div>
-  
-  <%= form_with(url: search_path, method: :get, class: "searchForm", data: {turbo_frame: "search_results", turbo_action: "advance"}) do |form| %>
-
-  <div class="flex space-x-3">
-    <%= form.text_field :query, class: "searchInput py-3 px-4 rounded border ring-0 focus:ring-4 focus:ring-orange-100 focus:shadow-none focus:border-orange-500 focus:outline-none", placeholder:"Rechercher un architecte, une ville..." %>
-
-    <%= form.submit '🔍', class: "px-4 py-3 font-medium
-  bg-orange-300 text-neutal-900 rounded flex items-center cursor-pointer hover:bg-orange-400 focus:ring-4 ring-0 focus:ring-orange-100" %>
-  </div>
-<% end %>
+<header class="hero-header text-center d-flex flex-column">
+  <div>
+    <div class="text-end custom-position px-5 pt-5">
+      <h1>TROUVE TON ARCHITECTE</h1>
+      <p class="lead">Trouvez l'architecte idéal pour vos projets de construction, rénovation ou décoration.</p>
+      
+      <div class="search-container mt-4">
+        <span>
+          <iconify-icon icon="gravity-ui:magnifier" class="iconify"></iconify-icon>
+        </span>
+        <%= form_with(url: search_path, method: :get, class: "search-form", data: {turbo_frame: "search_results", turbo_action: "advance"}) do |form| %>
+          <%= form.text_field :query, placeholder: "Rechercher un architecte, une ville...", class: "search-input" %>
+        <% end %>
       </div>
     </div>
   </div>
-</section>
+</header>
