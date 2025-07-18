@@ -43,14 +43,18 @@ class UsersController < ApplicationController
     
     architect_attrs = params[:user][:architect_attributes]
     
-    # Gérer les spécialisations
-    if architect_attrs[:specialization_names]
-      @user.architect.specialization_names = architect_attrs[:specialization_names]
+    # Gérer les spécialisations - toujours traiter, même si le tableau est vide
+    if architect_attrs.key?(:specialization_names)
+      # Filtrer les valeurs vides du champ caché
+      specialization_names = architect_attrs[:specialization_names].reject(&:blank?)
+      @user.architect.specialization_names = specialization_names
     end
     
-    # Gérer les diplômes
-    if architect_attrs[:selected_degrees]
-      @user.architect.selected_degrees = architect_attrs[:selected_degrees]
+    # Gérer les diplômes - toujours traiter, même si le tableau est vide
+    if architect_attrs.key?(:selected_degrees)
+      # Filtrer les valeurs vides du champ caché
+      selected_degrees = architect_attrs[:selected_degrees].reject(&:blank?)
+      @user.architect.selected_degrees = selected_degrees
     end
     
     # Sauvegarder explicitement l'architecte

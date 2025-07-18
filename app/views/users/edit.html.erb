@@ -47,6 +47,8 @@
 
       <div>
         <p><strong>Diplômes</strong></p>
+        <!-- Champ caché pour forcer l'envoi d'un tableau vide si aucune checkbox n'est cochée -->
+        <%= hidden_field_tag "user[architect_attributes][selected_degrees][]", "", id: "hidden_degrees" %>
         <% existing_degrees = @user.architect&.degree_acronyms_array || [] %>
         <% degree_options.each do |degree_name, degree_acronym| %>
           <div>
@@ -63,6 +65,8 @@
 
       <div>
         <p><strong>Spécialités</strong></p>
+        <!-- Champ caché pour forcer l'envoi d'un tableau vide si aucune checkbox n'est cochée -->
+        <%= hidden_field_tag "user[architect_attributes][specialization_names][]", "", id: "hidden_specializations" %>
         <% existing_specializations = @user.architect&.specializations&.pluck(:name) || [] %>
         <% specialization_options.each do |spec| %>
           <div>

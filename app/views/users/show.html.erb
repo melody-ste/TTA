@@ -11,17 +11,21 @@
 <% if user_is_architect_with_data? %>
   <div class="architect-info">
     <div class="specializations">
-      <% current_user.architect.specializations.each do |specialization| %>
-        <span class="specialization-tag"><%= specialization.name %></span>
-      <% end %>
+    <ul >
+    <% current_user.architect.specializations.each do |specialization| %>
+      <li class="specialization-tag"><%= specialization.name %></li>
+    <% end %>
+    </ul>
     </div>
     
     <% if current_user.architect.degree_names_array.any? %>
       <div class="degrees">
         <p><strong>Diplômes :</strong></p>
-        <% current_user.architect.degree_names_array.each do |degree| %>
-          <span class="degree-tag"><%= degree %></span>
-        <% end %>
+        <ul>
+          <% current_user.architect.degree_names_array.each do |degree| %>
+            <li class="degree-tag"><%= degree %></li>
+          <% end %>
+        </ul>
       </div>
     <% end %>
     

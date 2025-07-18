@@ -53,7 +53,7 @@ class Architect < ApplicationRecord
     end
 
     # Callback pour gérer les spécialisations après la sauvegarde
-    after_save :update_specializations
+    after_save :update_specializations, if: :specialization_names
 
     private
 
@@ -84,15 +84,15 @@ class Architect < ApplicationRecord
     end
 
     def update_specializations
-        return unless specialization_names.present?
-        
         # Supprimer les anciennes associations
         self.architect_specializations.destroy_all
         
-        # Créer les nouvelles associations
-        specialization_names.reject(&:blank?).each do |spec_name|
-            specialization = Specialization.find_or_create_by(name: spec_name)
-            self.architect_specializations.create(specialization: specialization)
+        # Créer les nouvelles associations seulement s'il y a des spécialisations
+        if specialization_names.present?
+            specialization_names.reject(&:blank?).each do |spec_name|
+                specialization = Specialization.find_or_create_by(name: spec_name)
+                self.architect_specializations.create(specialization: specialization)
+            end
         end
     end
 end
