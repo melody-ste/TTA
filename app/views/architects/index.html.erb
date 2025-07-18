@@ -23,7 +23,7 @@
     <% @architects.each do |architect| %>
       <div class="custom-card me-3 mb-4">
 
-        <% multimedia = architect.portfolios.first&.multimedias&.first %>
+        <% multimedia = architect.portfolio&.multimedias&.first %>
         <% if multimedia&.file&.attached? %>
           <%= image_tag url_for(multimedia.file), class: "card-image" %>
         <% else %>
