@@ -68,7 +68,7 @@
 <%end%>
 
 <h3> Portfolio</h3>
-<%current_user.architect.portfolios.sample(rand(3)).each do |project|%>
+<%current_user.architect.projects.sample(rand(3)).each do |project|%>
 <%=project.project_title%><br>
 <%= truncate(project.project_description, length: 100)%>
 <%end%>
