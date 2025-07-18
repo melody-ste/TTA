@@ -36,10 +36,11 @@
           <div class="architect-info">
 
             <% if current_user.architect.specializations.any? %>
-              <div class="specializations">
+              <div>
+                <h4>spécialité :</h4>
                 <ul class="list-unstyled">
                   <% current_user.architect.specializations.each do |specialization| %>
-                    <li class="lead"><%= specialization.name %></li>
+                    <li><%= specialization.name %></li>
                   <% end %>
                 </ul>
               </div>
@@ -47,7 +48,7 @@
 
             <% if current_user.architect.degree_names_array.any? %>
               <div class="degrees">
-                <p><strong>Diplômes :</strong></p>
+                <h4>Diplômes :</h4>
                 <ul>
                   <% current_user.architect.degree_names_array.each do |degree| %>
                     <li class="degree-tag"><%= degree %></li>
@@ -95,17 +96,17 @@
 
 
   <h2 class="mt-100 mb-5"> Projet en cours </h2>
-    <% if @current_projects.present? %>
-      <div class="card p-5">
-        <% @current_projects.each do |project|%>
-        <%=project.title%><br>
-        <%= project.description%>
-        <%= project.status%>
-        <%end%>
-      </div>
-    <%else%>
-      <p> Pas de nouvelle demande </p>
-    <%end%>
+  <% if @current_projects.present? %>
+    <div class="card p-5">
+      <% @current_projects.each do |project|%>
+      <%=project.title%><br>
+      <%= project.description%>
+      <%= project.status%>
+      <%end%>
+    </div>
+  <%else%>
+    <p> Pas de nouvelle demande </p>
+  <%end%>
 
   <!--Fonctionnalité client-->
     <!-- <% if current_user.role == "client" %>
@@ -116,28 +117,30 @@
   <% end %> -->
 
   <h2 class="mt-100 mb-5"> Historique des projets </h2>
-    <% if @completed_projects.present? %>
-      <div class="card p-5">
-        <% @completed_projects.each do |project|%>
-        <%=project.title%><br>
-        <%= project.description%>
-        <%= project.status%>
-        <%end%>
-      </div>
-    <%else%>
-      <p> Pas de projet terminé </p>
-    <%end%>
+  <% if @completed_projects.present? %>
+    <div class="card p-5">
+      <% @completed_projects.each do |project|%>
+      <%=project.title%><br>
+      <%= project.description%>
+      <%= project.status%>
+      <%end%>
+    </div>
+  <%else%>
+    <p> Pas de projet terminé </p>
+  <%end%>
 
   <!--fonctionnalité archi-->
     <% if current_user.role == "architect" && current_user.architect.present? %>
 
-      <h2 class="mt-100 mb-5"> Portfolio <h2>
+      <h2 class="mt-100 mb-5"> Portfolio </h2>
       <% if @portfolio_projects.present? %>
-        <% @portfolio_projects.each do |project|%>
-        <%=project.title%> <br>
-        <%= truncate(project.description, length: 100)%> <br>
-        <%= project.status%>
-        <%end%>
+        <div class="card p-5">
+          <% @portfolio_projects.each do |project|%>
+          <%=project.title%> <br>
+          <%= truncate(project.description, length: 100)%> <br>
+          <%= project.status%>
+          <%end%>
+        </div>
       <%else%>
         <p> Pas de projet dans le portfolio </p>
       <%end%>
