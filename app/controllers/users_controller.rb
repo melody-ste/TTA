@@ -6,37 +6,73 @@ class UsersController < ApplicationController
     def show
     @user = User.find(params[:id])
     @portfolio_projects = @user.projects.where(portfolio: true).sample(3)
+    redirect_to user_path(current_user) if params[:id].to_i != current_user.id
+
 
   end
 
   def edit
-
   end
 
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: "Votre profil a été modifié avec succès" }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    # Gérer les spécialisations et diplômes pour les architectes
+    handle_architect_data if architect_params_present?
+    
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: "Votre profil a été mis à jour avec succès."
+    else
+      # Ajouter les erreurs dans flash pour le débogage
+      flash.now[:alert] = "Erreur lors de la mise à jour : #{@user.errors.full_messages.join(', ')}"
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @user.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to users_path, status: :see_other, notice: "Votre compte a été supprimé" }
-      format.json { head :no_content }
-    end
+    redirect_to root_path, notice: "Votre compte a été supprimé"
   end
 
   private
-    def set_user
-      @user = User.find(params.expect(:id))
-    end
 
+  def set_user
+    @user = current_user
+  end
+
+  def architect_params_present?
+    @user.role == "architect" && params[:user][:architect_attributes]
+  end
+
+  def handle_architect_data
+    return unless @user.architect || @user.build_architect
+    
+    architect_attrs = params[:user][:architect_attributes]
+    
+    # Gérer les spécialisations - toujours traiter, même si le tableau est vide
+    if architect_attrs.key?(:specialization_names)
+      # Filtrer les valeurs vides du champ caché
+      specialization_names = architect_attrs[:specialization_names].reject(&:blank?)
+      @user.architect.specialization_names = specialization_names
+    end
+    
+    # Gérer les diplômes - toujours traiter, même si le tableau est vide
+    if architect_attrs.key?(:selected_degrees)
+      # Filtrer les valeurs vides du champ caché
+      selected_degrees = architect_attrs[:selected_degrees].reject(&:blank?)
+      @user.architect.selected_degrees = selected_degrees
+    end
+    
+    # Sauvegarder explicitement l'architecte
+    @user.architect.save if @user.architect.changed?
+  end
+
+  def user_params
+    params.require(:user).permit(
+      :first_name, 
+      :last_name,
+      city_attributes: [:id, :name, :zip_code, :department],
+      architect_attributes: [:id, :description, :degree_name, :degree_acronym, :years_study, specialization_names: [], selected_degrees: []]
+    )
+  end
 end
+
+

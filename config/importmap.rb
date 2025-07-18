@@ -10,3 +10,4 @@ pin "search", to: "search.js"
 pin "bootstrap", to: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js", preload: true
 
 pin "filter_toggle", to: "filter_toggle.js"
+pin "profil", to: "profil.js"

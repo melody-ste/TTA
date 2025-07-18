@@ -1,61 +1,109 @@
-<h1><%= current_user.first_name%></h1>
+<section class="profil-section">
+<h1 ><%= current_user.first_name %></h1>
 
-<!--info user en fonction du rôle-->
-<% if current_user.role == "architect"%>
-  <% current_user.architect.specializations.each do |specialization|%>
-    <%=specialization.name %>
-    <%end%>
-<%end%>
+<!-- Informations utilisateur -->
+<div class="user-info">
+  <%= current_user.email %><br>
+  <% if current_user.city.present? %>
+    <%= current_user.city.name %> (<%= current_user.city.zip_code %>)<br>
+  <% end %>
+  <%= current_user.role %><br>
+</div>
 
-<%=current_user.email%> <br>
-<%=current_user.city%><br>
-<%=current_user.role%><br>
-
-<% if current_user.role == "architect"%>
-  <%= current_user.architect.degree_name%><br>
-  <%= current_user.architect.description%>
-  
-<%end%>
-
+<!-- Informations spécifiques aux architectes -->
+<% if current_user.role == "architect" && current_user.architect.present? %>
+  <div class="architect-info">
+    <% if current_user.architect.specializations.any? %>
+      <div class="specializations">
+      <ul >
+      <% current_user.architect.specializations.each do |specialization| %>
+        <li class="specialization-tag"><%= specialization.name %></li>
+      <% end %>
+      </ul>
+      </div>
+    <% end %>
+    
+    <% if current_user.architect.degree_names_array.any? %>
+      <div class="degrees">
+        <p><strong>Diplômes :</strong></p>
+        <ul>
+          <% current_user.architect.degree_names_array.each do |degree| %>
+            <li class="degree-tag"><%= degree %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <% if current_user.architect.description.present? %>
+      <p><strong>Description :</strong> <%= current_user.architect.description %></p>
+    <% end %>
+  </div>
+<% end %>
 
 <!--avatar actuel-->
-<%if current_user.avatar.attached?%>
-  <%= image_tag current_user.avatar, alt: 'avatar' %>
-<%else%>
-  <p>=== Ajouter image avatar ===</p>
-<%end%>
+<div class="user-avatar-section">
+  <%= user_avatar_or_default %>
+</div>
 
 <!--bouton ajout/modification photo : display: none pour écraser "choisir un fichier" dans le bouton par défaut-->
-<%= form_tag user_avatars_path(current_user), multipart: true do %>
-    <label for="avatar_input" class="custom-file-button">Modifier la photo</label>
-  <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;"%>
-
-  <%= submit_tag "mettre à jour", id: "submit_button", style: "display: none;" %>
-<% end %>
+<div class="profil-photo-actions">
+  <%= form_tag user_avatars_path(current_user), multipart: true do %>
+    <label for="avatar_input" class="avatar-button">Modifier l'avatar</label>
+    <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;" %>
+    <%= submit_tag "mettre à jour", id: "profil-submit_button", style: "display: none;" %>
+  <% end %>
+</div>
 
 <!--modifier ou supprimer son compte-->
-<%= link_to "Modifier", edit_user_registration_path %>
+<div class="profil-actions">
+  <%= link_to "Modifier", edit_user_path(@user) %>
+  <%= form_with url: user_registration_path, method: :delete, local: true do %>
+    <%= submit_tag "Supprimer mon compte", class: "profil-delete-account", 
+        data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
+  <% end %>
+</div>
 
-<%= form_with url: user_registration_path, method: :delete, local: true do %>
-  <%= submit_tag "Supprimer mon compte", data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
-<% end %>
+<h3> Historique des projets </h3>
 
-<!--fonctionnalité archi-->
-<% if current_user.role == "architect"%>
-
-  <h3> Nouvelles demandes </h3>
-  <% current_user.projects.each do |project|%>
-  <%if project.status == "en_validation" %>
+<% finished_projects = current_user.projects.select { |project| project.status == "termine" } %>
+<% if finished_projects.any? %>
+  <% finished_projects.each do |project|%>
     <%= project.description%>
     <%= project.status%>
+  <% end %>
+<% else %>
+  <p>Aucun projet terminé pour le moment.</p>
+<% end %>
+<% if current_user.role == "client" %>
+<h3> favoris </h3>
+<img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
+<img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
+<img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
+<% end %>
 
-    <%end%>
+<% if current_user.role == "architect" && current_user.architect.present? %>
+
+<h3> Nouvelles demandes </h3>
+<% current_user.projects.each do |project|%>
+<%if project.status == "en_validation"%>
+  <%= project.description%>
+  <%= project.status%>
+
   <%end%>
 <%end%>
 
 <h3> Projets en cours </h3>
 <% current_user.projects.each do |project|%>
 <%if project.status == "en_cours" %>
+  <%= project.description%>
+  <%= project.status%>
+  <%end%>
+<%end%>
+
+<h3> Historique des projets </h3>
+
+<% current_user.projects.each do |project|%>
+<%if project.status == "termine"%>
   <%= project.description%>
   <%= project.status%>
   <%end%>
@@ -70,31 +118,5 @@
   <%end%>
 <%end%>
 
-
-<h3> Historique des projets </h3>
-
-<% current_user.projects.each do |project|%>
-<%if project.status == "termine"%>
-  <%= project.description%>
-  <%= project.status%>
-  <%end%>
-<%end%>
-
-
-<!-- JS pour afficher le bouton "mettre à jour" seulement lorsqu'un fichier est chargé-->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    let fileInput = document.getElementById("avatar_input");
-    let submitButton = document.getElementById("submit_button");
-
-    fileInput.addEventListener("change", function () {
-      if (fileInput.files.length > 0) {
-        submitButton.style.display = "inline-block";
-      } else {
-        submitButton.style.display = "none";
-      }
-    });
-  });
-</script>
 
 
