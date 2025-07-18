@@ -16,9 +16,12 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :role, presence: true
 
+  # Nested attributes
+  accepts_nested_attributes_for :city, allow_destroy: true
+  accepts_nested_attributes_for :architect, allow_destroy: true
 
-
-  
+  # attribut virtuel(pas stocké sur db) pour le formulaire d'inscription
+  attr_accessor :skip_city_validation
 
   def fullname
     if first_name.present? || last_name.present?
@@ -27,9 +30,7 @@ class User < ApplicationRecord
       email # Fallback sur l'email si pas de nom
     end
   end
-
-  # attribut virtuel(pas stocké sur db) pour le formulaire d'inscription
-  attr_accessor :skip_city_validation
+  
   private
 
     # Validation  les architectes doivent avoir une ville

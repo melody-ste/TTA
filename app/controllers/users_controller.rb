@@ -1,27 +1,21 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!  
-  before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :configure_permitted_parameters
+  before_action :authenticate_user!
+  before_action :set_user
 
-    
-    def show
+  def show
     # Rediriger vers le profil de l'utilisateur connecté si l'ID ne correspond pas
-    if params[:id].to_i != current_user.id
-      redirect_to user_path(current_user)
-    else
-      @user = current_user
-    end
+    redirect_to user_path(current_user) if params[:id].to_i != current_user.id
   end
 
   def edit
-@user = current_user
-
   end
 
   def update
-    @user = current_user
+    # Gérer les spécialisations pour les architectes
+    handle_architect_specializations if architect_with_specializations?
+    
     if @user.update(user_params)
-      redirect_to users_path(@user), notice: "Votre profil a été mis à jour avec succès."
+      redirect_to user_path(@user), notice: "Votre profil a été mis à jour avec succès."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -29,34 +23,34 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to users_path, status: :see_other, notice: "Votre compte a été supprimé" }
-      format.json { head :no_content }
-    end
-  end
-
-    def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update, keys: [
-      :first_name, :last_name, :description,
-      specializations: [],
-      degrees: [:name, :acronym, :years_study],
-      city_id: [:name, :zip_code, :department],
-    ])
+    redirect_to root_path, notice: "Votre compte a été supprimé"
   end
 
   private
-    def set_user
-      @user = User.find(params.expect(:id))
-    end
 
-      def user_params
+  def set_user
+    @user = current_user
+  end
+
+  def architect_with_specializations?
+    @user.role == "architect" && 
+    params[:user][:architect_attributes] && 
+    params[:user][:architect_attributes][:specialization_names]
+  end
+
+  def handle_architect_specializations
+    @user.architect ||= @user.build_architect
+    @user.architect.specialization_names = params[:user][:architect_attributes][:specialization_names]
+  end
+
+  def user_params
     params.require(:user).permit(
-      :first_name, :last_name,:description,
-      specializations: [],
-      degrees: [:name, :acronym, :duration_years],
-      city_id: [:name, :zip_code, :department],
+      :first_name, 
+      :last_name,
+      city_attributes: [:id, :name, :zip_code, :department],
+      architect_attributes: [:id, :description, :degree_name, :degree_acronym, :years_study, specialization_names: []]
     )
   end
+end
 
 end

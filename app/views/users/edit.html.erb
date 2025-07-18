@@ -1,7 +1,75 @@
-<%= form_with model: @user, url: user_path(@current_user), method: :patch, local: true do |f| %>
+<%= form_with model: @user, url: user_path(@user), method: :patch, local: true do |f| %>
+  <div>
+    <%= f.label :first_name, "Prénom" %>
+    <%= f.text_field :first_name, required: true %>
+  </div>
 
+  <div>
+    <%= f.label :last_name, "Nom" %>
+    <%= f.text_field :last_name, required: true %>
+  </div>
+
+  <!-- Informations de ville -->
+  <%= f.fields_for :city, @user.city || @user.build_city do |city_fields| %>
+    <div>
+      <%= city_fields.label :department, "Département" %>
+      <%= city_fields.text_field :department, id: "dept_input" %>
+
+      <%= city_fields.label :zip_code, "Code postal" %>
+      <%= city_fields.text_field :zip_code, id: "zip_code_input" %>
+
+      <%= city_fields.label :name, "Ville" %>
+      <%= city_fields.text_field :name, id: "city_input" %>
+    </div>
+  <% end %>
+
+  <!-- Informations spécifiques aux architectes -->
+  <% if @user.role == "architect" %>
+    <%= f.fields_for :architect, @user.architect || @user.build_architect do |architect_fields| %>
+      <div>
+        <%= architect_fields.label :description, "Description" %>
+        <%= architect_fields.text_area :description, rows: 5 %>
+      </div>
+
+      <div>
+        <p><strong>Diplômes</strong></p>
+        <div>
+          <%= architect_fields.label :degree_name, "Nom du diplôme" %>
+          <%= architect_fields.text_field :degree_name %>
+        </div>
+        
+        <div>
+          <%= architect_fields.label :degree_acronym, "Sigle du diplôme" %>
+          <%= architect_fields.select :degree_acronym, 
+              options_for_select(degree_options, @user.architect&.degree_acronym), 
+              { prompt: "Sélectionnez un diplôme" }, 
+              { id: "degree_select" } %>
+        </div>
+
+        <div>
+          <%= architect_fields.label :years_study, "Années d'études" %>
+          <%= architect_fields.number_field :years_study, min: 1, step: 1 %>
+        </div>
+      </div>
+
+      <div>
+        <p><strong>Spécialités</strong></p>
+        <% existing_specializations = @user.architect&.specializations&.pluck(:name) || [] %>
+        <% specialization_options.each do |spec| %>
+          <div>
+            <%= check_box_tag "user[architect_attributes][specialization_names][]", spec, existing_specializations.include?(spec) %>
+            <%= label_tag "user_architect_attributes_specialization_names_#{spec}", spec %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+
+    <div>
+    <%= f.submit "Mettre à jour" %>
+  </div>
 <% end %>
 
 <div class="profil-actions">
-  <%= link_to "Modifier", edit_user_registration_path %>
+  <%= link_to "Modifier infos connexion", edit_user_registration_path %>
 </div>
