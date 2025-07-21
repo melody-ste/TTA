@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :projects
+  resources :projects, only: [:show, :edit, :new, :update, :destroy] 
   resources :cities
   resources :architects
   resources :specializations
