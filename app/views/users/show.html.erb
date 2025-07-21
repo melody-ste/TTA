@@ -82,9 +82,9 @@
   <% if current_user.role == "architect" && current_user.architect.present? %>
 
     <h2 class="mt-5 mb-5"> Nouvelles demandes </h2>
-    <% if @incoming_request.present? %>
-      <% @incoming_request.each do |request|%>
-      <%=project.title%><br>
+    <% if @incoming_requests.present? %>
+      <% @incoming_requests.each do |request|%>
+      <%= request.title%><br>
       <%= request.description%>
       <%= request.status%>
       <%end%>
@@ -105,7 +105,7 @@
       <%end%>
     </div>
   <%else%>
-    <p> Pas de nouvelle demande </p>
+    <p> Pas de projet en cours </p>
   <%end%>
 
   <!--Fonctionnalité client-->
@@ -146,3 +146,17 @@
       <%end%>
 
     <%end%>
+
+
+  <h2 class="mt-100 mb-5"> Tous les projets </h2>
+    <% if current_user.architect.present? %>
+  <% current_user.architect.projects.each do |project| %>
+    <div class="card mb-3 p-3">
+      <h5><%= project.title %></h5>
+      <p><%= project.description %></p>
+      <p>Status : <%= project.status %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>Ce compte n’est pas lié à un architecte.</p>
+<% end %>
