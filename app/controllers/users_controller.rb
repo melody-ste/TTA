@@ -75,7 +75,7 @@ class UsersController < ApplicationController
       :first_name, 
       :last_name,
       city_attributes: [:id, :name, :zip_code, :department],
-      architect_attributes: [:id, :description, :degree_name, :degree_acronym, :years_study, specialization_names: [], selected_degrees: []]
+      architect_attributes: [:id, :description, :degree_name, :degree_acronym, specialization_names: [], selected_degrees: []]
     )
   end
 end
