@@ -57,7 +57,7 @@ end
     @project.destroy!
 
     respond_to do |format|
-      format.html { redirect_to projects_path, status: :see_other, notice: "Project was successfully destroyed." }
+      format.html { redirect_to root_path, status: :see_other, notice: "Project was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -70,7 +70,15 @@ end
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:architect_id, :start_date, :description)
+      params.require(:project).permit(
+        :title, 
+        :description, 
+        :start_date, 
+        :architect_id, 
+        :status, 
+        :portfolio, 
+        :user_id
+      )
 
     end
 end
