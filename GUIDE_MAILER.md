@@ -109,8 +109,14 @@ config.sign_in_after_reset_password = true
 config.lock_strategy = :failed_attempts
 config.unlock_keys = [:email]
 config.unlock_strategy = :email
-config.maximum_attempts = 20
+config.maximum_attempts = 3
 config.unlock_in = 1.hour
+
+  # Send a notification to the original email when the user's email is changed.
+  config.send_email_changed_notification = true
+
+  # Send a notification email when the user's password is changed.
+  config.send_password_change_notification = true
 ```
 
 Redemarrer server et tester
