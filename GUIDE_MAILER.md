@@ -56,7 +56,7 @@ remplacer:
          :recoverable, :rememberable, :validatable
 # APRES
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable
 ```
 
 ### mise à jour config/environments/development.rb
@@ -97,6 +97,20 @@ config.mailer_sender = "please-change-me-at-config-initializers-devise@example.c
 
 # APRÈS
 config.mailer_sender = ENV['SENDMAIL_USERNAME']
+```
+Décommenter ou ajoute:
+```ruby
+# ==> Configuration for :recoverable
+config.reset_password_keys = [:email]
+config.reset_password_within = 6.hours
+config.sign_in_after_reset_password = true
+
+# ==> Configuration for :lockable  
+config.lock_strategy = :failed_attempts
+config.unlock_keys = [:email]
+config.unlock_strategy = :email
+config.maximum_attempts = 20
+config.unlock_in = 1.hour
 ```
 
 Redemarrer server et tester
