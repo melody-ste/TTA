@@ -33,6 +33,21 @@
           <% end %>
         </li>
       <% end %>
+      <li>
+<li>
+<li>
+  <%= form_with url: request.path, method: :get, local: true do |form| %>
+    <%= form.select :locale,
+      options_for_select([['fr', 'fr'], ['en', 'en']], I18n.locale.to_s),
+      {},
+      onchange: "this.form.submit();",
+      class: "border-0 bg-transparent text-sm cursor-pointer" %>
+  <% end %>
+</li>
+
+</li>
+
+      </li>
 
       <li>
         <a href="#">
