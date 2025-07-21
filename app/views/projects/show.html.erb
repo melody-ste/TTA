@@ -1,10 +1,13 @@
-<p style="color: green"><%= notice %></p>
+<div class="container mt-100 mb-5">
+  <p style="color: #618866"><%= notice %></p>
 
-<%= render @project %>
+  <%= render @project %>
 
-<div>
-  <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= link_to "Back to projects", projects_path %>
+  <div class="mt-5 mb-5">
+   
 
-  <%= button_to "Destroy this project", @project, method: :delete %>
+    <%= link_to "Retour", :back, class: "btn btn-primary" %>
+
+    
+  </div>
 </div>
