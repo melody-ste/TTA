@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Trouve ton architecte" %></title>
+    <title><%= content_for?(:title) ? "#{yield(:title)} | TTA" : "Trouve ton architecte" %></title>
+    <meta name="description" content="<%= content_for?(:meta_description) ? yield(:meta_description) : 'Trouvez un architecte certifié pour votre projet.' %>">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -34,6 +35,9 @@
 
     <!-- Lien Icon -->
     <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
+
+    <!-- Balise canonique -->
+    <link rel="canonical" href="<%= canonical_url %>" />
 
   </head>
 
