@@ -22,3 +22,9 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+# how to rollback a specific migration:
+```bash
+rails db:migrate:down VERSION=20250716100801
+
+```
