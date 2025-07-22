@@ -1,5 +1,8 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :authorize_user!, only: [:edit, :update]
+
 
   # GET /projects or /projects.json
   def index
@@ -41,13 +44,17 @@ end
 
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
-    respond_to do |format|
-      if @project.update(project_params)
-        format.html { redirect_to @project, notice: "Project was successfully updated." }
-        format.json { render :show, status: :ok, location: @project }
+    if current_user.architect?
+      if @project.update(status_params)
+        redirect_to @project, notice: (@project.status == "en_cours" ? "Projet accepté !" : "Projet refusé !")
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        render :edit, status: :unprocessable_entity
+      end
+    else
+      if @project.update(project_params)
+        redirect_to @project, notice: "Projet mis à jour."
+      else
+        render :edit, status: :unprocessable_entity
       end
     end
   end
@@ -70,7 +77,17 @@ end
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:architect_id, :start_date, :description)
+      params.require(:project).permit(:architect_id, :start_date, :description, :status)
 
+    end
+
+     def status_params
+      params.require(:project).permit(:status)
+    end
+
+    def authorize_user!
+      unless current_user == @project.user
+        redirect_to project_path(@project), alert: "Vous n'êtes pas autorisé à effectuer cette action."
+      end
     end
 end

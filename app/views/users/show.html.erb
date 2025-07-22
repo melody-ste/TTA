@@ -83,11 +83,17 @@
 
     <h2 class="mt-5 mb-5"> Nouvelles demandes </h2>
     <% if @incoming_requests.present? %>
+      <ul>
       <% @incoming_requests.each do |request|%>
       <%= request.title%><br>
       <%= request.description%>
       <%= request.status%>
-      <%end%>
+       <li>
+      <%= link_to "Voir", project_path(request) %>
+    </li>
+    <%end%>
+      
+    </ul>
     <%else%>
       <p> Pas de nouvelle demande </p>
     <%end%>

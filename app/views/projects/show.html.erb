@@ -2,9 +2,18 @@
 
 <%= render @project %>
 
+<% if current_user == @project.user %>
 <div>
   <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= link_to "Back to projects", projects_path %>
-
   <%= button_to "Destroy this project", @project, method: :delete %>
 </div>
+<%end%>
+
+<% if current_user.architect? %>
+  <div class="d-flex flex-row justify-content-center gap-4">
+    <%= button_to "Accepter", project_path(@project, project: { status: "en_cours" }), method: :patch, class:  %>
+    <%= button_to "Refuser", project_path(@project, project: { status: "refuse" }), method: :patch, class: %>
+  </div>
+<% end %>
+
+<%= link_to "Back to projects", projects_path %>
