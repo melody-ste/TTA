@@ -61,16 +61,10 @@ nav {
      var(--color-primary-color) ),
      url('hero.jpg');
   background-size: cover;
-  background-position: center 10%;
+  background-position: center;
   background-repeat: no-repeat;
   z-index: 1;
-  padding-top: 170px; 
   padding-bottom: 500px; 
-}
-
-
-nav {
-  z-index: 10;
 }
 
 .custom-position {
@@ -299,7 +293,8 @@ nav {
 /* --------------------------------- */
 
 .avatar {
-  width: 25rem;
+  width: 20rem;
+  height: 20rem;
   border-radius: 50%;
   object-fit: cover;
 }
