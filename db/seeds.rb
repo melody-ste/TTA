@@ -51,8 +51,11 @@ admin = User.create!(
   last_name: "Admin",
   email: "admin@yopmail.com",
   password: "password",
-  role: 0 # enum :admin
+  role: 0, # enum :admin
+  confirmed_at: Time.current
 )
+# admin.skip_confirmation!
+# admin.save!
 
 # Créer une ville pour l'admin
 admin_city_data = cities_data.sample
@@ -61,13 +64,14 @@ admin.create_city!(admin_city_data)
 
 # === CLIENTS ===
 puts "👤 Création des clients..."
-clients = 100.times.map do |i|
+clients = 50.times.map do |i|
   client = User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: "client#{i}@yopmail.com",
     password: "password",
-    role: 1 # enum :client
+    role: 1, # enum :client
+    confirmed_at: Time.current # Confirmer l'email automatiquement
   )
 
   # Créer une ville pour chaque client
@@ -135,14 +139,15 @@ degrees = [
 ]
 # === ARCHITECTES & PROJETS ===
 puts "🏗️ Création des architectes et projets..."
-200.times do |i|
+50.times do |i|
   user = User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: "architect#{i}@yopmail.com",
     password: "password",
     role: 2,
-    skip_city_validation: true
+    skip_city_validation: true,
+    confirmed_at: Time.current
   )
   user.create_city!(cities_data.sample)
 

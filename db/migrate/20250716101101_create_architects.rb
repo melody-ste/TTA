@@ -4,8 +4,7 @@ class CreateArchitects < ActiveRecord::Migration[8.0]
       t.text :description
       t.string :degree_name
       t.string :degree_acronym
-      t.integer :years_study
-      t.references :user, null: false, foreign_key: true
+      t.references :user, null: false, foreign_key: { on_delete: :cascade }
 
       t.timestamps
     end

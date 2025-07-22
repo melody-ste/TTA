@@ -66,4 +66,9 @@ gem "faker"
 gem "devise"
 gem "stripe"
 gem "dotenv-rails"
+
+gem 'mailjet'
+gem 'rails-i18n'
+
+
 gem 'aws-sdk-s3', require: false
