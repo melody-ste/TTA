@@ -25,6 +25,7 @@
       <div>
         <!-- Informations utilisateur -->
         <div class="user-info">
+          <h5>Informations personelles :</h5>
           <p><%= current_user.email %></p>
           <p><% if current_user.city.present? %>
             <%= current_user.city.name %> (<%= current_user.city.zip_code %>)<br>
@@ -39,7 +40,7 @@
 
             <% if current_user.architect.specializations.any? %>
               <div>
-                <h4>spécialité :</h4>
+                <h5>spécialité :</h5>
                 <ul class="list-unstyled">
                   <% current_user.architect.specializations.each do |specialization| %>
                     <li><%= specialization.name %></li>
@@ -50,8 +51,8 @@
 
             <% if current_user.architect.degree_names_array.any? %>
               <div class="degrees">
-                <h4>Diplômes :</h4>
-                <ul>
+                <h5>Diplôme :</h5>
+                <ul class="list-unstyled">
                   <% current_user.architect.degree_names_array.each do |degree| %>
                     <li class="degree-tag"><%= degree %></li>
                   <% end %>
@@ -60,7 +61,8 @@
             <% end %>
 
             <% if current_user.architect.description.present? %>
-              <p><strong>Description :</strong> <%= current_user.architect.description %></p>
+              <h5>Description :</h5>
+              <p><%= current_user.architect.description %></p>
             <% end %>
 
           </div>
