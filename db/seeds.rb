@@ -64,7 +64,7 @@ admin.create_city!(admin_city_data)
 
 # === CLIENTS ===
 puts "👤 Création des clients..."
-clients = 100.times.map do |i|
+clients = 50.times.map do |i|
   client = User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -139,7 +139,7 @@ degrees = [
 ]
 # === ARCHITECTES & PROJETS ===
 puts "🏗️ Création des architectes et projets..."
-200.times do |i|
+50.times do |i|
   user = User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,

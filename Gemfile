@@ -68,3 +68,5 @@ gem "stripe"
 gem "dotenv-rails"
 
 gem 'mailjet'
+gem 'rails-i18n'
+
