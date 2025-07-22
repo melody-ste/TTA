@@ -31,7 +31,10 @@ end
     @project.status ||= "en_validation"
     respond_to do |format|
       if @project.save
-        format.html { redirect_to @project, notice: "Project was successfully created." }
+        UserProjectMailMailer.new_project_client(@project).deliver_now
+        UserProjectMailMailer.new_project_architect(@project).deliver_now
+        flash[:alert] = "Un email de notification a été envoyé au client."
+        format.html { redirect_to @project, notice: "Votre projet a été créé avec succès et est en attente de validation par l'architecte. Vous recevrez un email de confirmation pour la création du projet." }
         format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new, status: :unprocessable_entity }
