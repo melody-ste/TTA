@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1 or /projects/1.json
   def show
+
   end
 
   # GET /projects/new
@@ -43,21 +44,41 @@ end
   end
 
   # PATCH/PUT /projects/1 or /projects/1.json
-  def update
-    if current_user.architect?
-      if @project.update(status_params)
-        redirect_to @project, notice: (@project.status == "en_cours" ? "Projet accepté !" : "Projet refusé !")
+def update
+  if current_user.architect?
+    attrs = status_params
+
+    # Ajout au portfolio uniquement si le projet est terminé
+    if attrs.key?(:portfolio)
+      if @project.status == "termine" && @project.update(attrs)
+        redirect_to @project, notice: "Projet ajouté au portfolio." and return
       else
-        render :edit, status: :unprocessable_entity
-      end
-    else
-      if @project.update(project_params)
-        redirect_to @project, notice: "Projet mis à jour."
-      else
-        render :edit, status: :unprocessable_entity
+        redirect_to @project, alert: "Le projet doit être terminé avant d'être ajouté au portfolio." and return
       end
     end
+
+    # Changement de statut (accepter, refuser, terminer)
+    if attrs.key?(:status) && @project.update(attrs)
+      notice = case @project.status
+               when "en_cours" then "Projet accepté, il est maintenant en cours."
+               when "refuse" then "Projet refusé."
+               when "termine" then "Projet terminé."
+               else "Projet mis à jour."
+               end
+      redirect_to @project, notice: notice and return
+    elsif attrs.key?(:status)
+      render :show, status: :unprocessable_entity and return
+    end
+
+    render :show, status: :unprocessable_entity
+  else
+    if @project.update(project_params)
+      redirect_to @project, notice: "Projet mis à jour." and return
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
+end
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
@@ -82,7 +103,7 @@ end
     end
 
      def status_params
-      params.require(:project).permit(:status)
+      params.require(:project).permit(:status, :portfolio)
     end
 
     def authorize_user!
