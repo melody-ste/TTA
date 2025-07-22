@@ -7,4 +7,19 @@ class MultimediasController < ApplicationController
   def show
     @media = Multimedia.find(params[:id])
   end
+
+  def create
+    @media = Multimedia.new(media_params)
+    if @media.save
+      redirect_to @media, notice: "Multimédia ajouté avec succès."
+    else
+      render :new
+    end
+  end
+
+  private
+
+  def media_params
+    params.require(:multimedia).permit(:description, :file, :project_id)
+  end
 end
