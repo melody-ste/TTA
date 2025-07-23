@@ -1,0 +1,30 @@
+# --- ops/dev/docker-compose.yml ---
+# Usage: docker compose -f ops/dev/docker-compose.yml up
+
+services:
+  web:
+    build: .
+    container_name: tta-dev
+    environment:
+      RAILS_ENV: development
+    env_file:
+      - ../../.env
+    volumes:
+      - tta-dev-data:/rails/db
+    ports:
+      - "3000:3000"
+    labels:
+      - "traefik.enable=false"
+      - "traefik.http.routers.tta-dev.rule=Host(`staging.dexample.com`)"
+      - "traefik.http.routers.tta-dev.entrypoints=websecure"
+      - "traefik.http.routers.tta-dev.tls=true"
+      - "traefik.http.routers.tta-dev.tls.certresolver=letsencrypt"
+    networks:
+      - traefik
+
+volumes:
+  tta-dev-data:
+
+networks:
+  traefik:
+    external: true
