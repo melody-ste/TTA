@@ -1,13 +1,23 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Ton projet" %>
+<% content_for :meta_description, "Page récapitulatif de la demande de projet envoyé" %>
 
-<%= render @project %>
+<div class="container mt-100 mb-5">
+  <p style="color: #618866"><%= notice %></p>
 
-<% if current_user == @project.user %>
-<div>
-  <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= button_to "Destroy this project", @project, method: :delete %>
+  <%= render @project %>
+
+  <div class="mt-5 mb-5">
+   
+    <% if current_user == @project.user %>
+    <div>
+      <%= link_to "Edit this project", edit_project_path(@project) %> |
+      <%= button_to "Destroy this project", @project, method: :delete %>
+    <%end%>
+    <%= link_to "Retour", :back, class: "btn btn-primary" %>
+
+    
+  </div>
 </div>
-<%end%>
 
 <%# === Pour l’architecte, en fonction du statut du projet === %>
 <% if current_user.architect? && current_user.architect&.id == @project.architect_id %>

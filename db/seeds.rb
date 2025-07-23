@@ -47,12 +47,15 @@ specializations = [
 # === ADMIN ===
 puts "🛡️ Création de l'admin..."
 admin = User.create!(
-  first_name: "Super",
+  first_name: "Admin",
   last_name: "Admin",
   email: "admin@yopmail.com",
   password: "password",
-  role: 0 # enum :admin
+  role: 0, # enum :admin
+  confirmed_at: Time.current
 )
+# admin.skip_confirmation!
+# admin.save!
 
 # Créer une ville pour l'admin
 admin_city_data = cities_data.sample
@@ -61,13 +64,14 @@ admin.create_city!(admin_city_data)
 
 # === CLIENTS ===
 puts "👤 Création des clients..."
-clients = 10.times.map do |i|
+clients = 50.times.map do |i|
   client = User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: "client#{i}@yopmail.com",
     password: "password",
-    role: 1 # enum :client
+    role: 1, # enum :client
+    confirmed_at: Time.current # Confirmer l'email automatiquement
   )
 
   # Créer une ville pour chaque client
@@ -119,44 +123,43 @@ medias_by_specialization = {
 
 
 degrees = [
-  { name: "Diplôme d'État d'Architecte", acronym: "DEA", years: 5 },
-  { name: "Diplôme d'Architecte de l'École Spéciale", acronym: "DESA", years: 6 },
-  { name: "Master en Architecture", acronym: "MA", years: 5 },
-  { name: "Master Architecture et Habitat", acronym: "MAH", years: 5 },
-  { name: "Master Architecture Résidentielle", acronym: "MAR", years: 5 },
-  { name: "Diplôme Supérieur d'Arts Appliqués Architecture d'Intérieur", acronym: "DSAA-AI", years: 5 },
-  { name: "Master Design d'Espace et Architecture d'Intérieur", acronym: "MDEAI", years: 5 },
-  { name: "BTS Design d'Espace", acronym: "BTS-DE", years: 2 },
-  { name: "Diplôme National d'Arts et Techniques Architecture d'Intérieur", acronym: "DNAT-AI", years: 3 },
-  { name: "Master Architecture du Paysage", acronym: "MAP", years: 5 },
-  { name: "Diplôme d'Ingénieur Paysagiste", acronym: "DIP", years: 5 },
-  { name: "Master Urbanisme et Aménagement Paysager", acronym: "MUAP", years: 5 },
-  { name: "Licence Professionnelle Aménagement Paysager", acronym: "LP-AP", years: 3 }
+  { name: "Diplôme d'État d'Architecte", acronym: "DEA"},
+  { name: "Diplôme d'Architecte de l'École Spéciale", acronym: "DESA" },
+  { name: "Master en Architecture", acronym: "MA" },
+  { name: "Master Architecture et Habitat", acronym: "MAH"},
+  { name: "Master Architecture Résidentielle", acronym: "MAR" },
+  { name: "Diplôme Supérieur d'Arts Appliqués Architecture d'Intérieur", acronym: "DSAA-AI" },
+  { name: "Master Design d'Espace et Architecture d'Intérieur", acronym: "MDEAI" },
+  { name: "BTS Design d'Espace", acronym: "BTS-DE" },
+  { name: "Diplôme National d'Arts et Techniques Architecture d'Intérieur", acronym: "DNAT-AI" },
+  { name: "Master Architecture du Paysage", acronym: "MAP" },
+  { name: "Diplôme d'Ingénieur Paysagiste", acronym: "DIP" },
+  { name: "Master Urbanisme et Aménagement Paysager", acronym: "MUAP" },
+  { name: "Licence Professionnelle Aménagement Paysager", acronym: "LP-AP" }
 ]
 # === ARCHITECTES & PROJETS ===
 puts "🏗️ Création des architectes et projets..."
-10.times do |i|
+50.times do |i|
   user = User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: "architect#{i}@yopmail.com",
     password: "password",
     role: 2,
-    skip_city_validation: true
+    skip_city_validation: true,
+    confirmed_at: Time.current
   )
   user.create_city!(cities_data.sample)
 
   selected_degrees = degrees.sample(rand(1..2))
   degree_names = selected_degrees.map { |d| d[:name] }.join(" | ")
   degree_acronyms = selected_degrees.map { |d| d[:acronym] }.join(" | ")
-  years = selected_degrees.map { |d| d[:years] }.max
 
   architect = Architect.create!(
     user: user,
     description: Faker::Lorem.paragraph(sentence_count: 20),
     degree_name: degree_names,
-    degree_acronym: degree_acronyms,
-    years_study: years
+    degree_acronym: degree_acronyms
   )
 
   specs = specializations.sample(rand(1..2))
@@ -164,7 +167,7 @@ puts "🏗️ Création des architectes et projets..."
     ArchitectSpecialization.create!(architect: architect, specialization: spec)
   end
 
-  rand(1..3).times do
+  rand(1..10).times do
     project = Project.create!(
       user: clients.sample,
       architect: architect,

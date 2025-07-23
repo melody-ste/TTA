@@ -42,6 +42,10 @@
   </head>
 
   <body>
+  <%= render 'shared/flash_notices' %>
+    <p><% notice = flash[:notice] %></p>
+     <p><% alert = flash[:alert] %></p>
+    
     
     <%= render 'layouts/header' %>
 

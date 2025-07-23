@@ -1,12 +1,16 @@
-<% content_for :title, "Editing project" %>
+<% content_for :title, "Modifier ton projet" %>
+<% content_for :meta_description, "Page de modification du projet envoyé" %>
 
-<h1>Editing project</h1>
+<div class="container mt-100 mb-5">
+  <% content_for :title, "Editing project" %>
 
-<%= render "form", project: @project %>
+  <h1 class="mb-5">Modifier le projet</h1>
 
-<br>
+  <%= render "form", project: @project %>
 
-<div>
-  <%= link_to "Show this project", @project %> |
-  <%= link_to "Back to projects", projects_path %>
+  
+
+  <div class="d-flex gap-3 mt-4">
+    <%= link_to "Retour", :back, class: "btn btn-primary" %>
+  </div>
 </div>

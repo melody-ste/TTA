@@ -1,3 +1,6 @@
+<% content_for :title, "Dashboard" %>
+<% content_for :meta_description, "Dashboard relié au profil de l'utilisateur connecté" %>
+
 <div class="container mt-100 mb-5">
   <h1 class="mb-5"><%= current_user.fullname %></h1>
 
@@ -15,7 +18,6 @@
           <%= form_tag user_avatars_path(current_user), multipart: true do %>
             <label for="avatar_input" class="btn btn-warning btn-sm">Modifier l'avatar</label>
             <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;" %>
-            <%= submit_tag "mettre à jour", id: "profil-submit_button", style: "display: none;" %>
           <% end %>
         </div>
       </div>

@@ -1,0 +1,12 @@
+<h1>Bonjour <%= @architect.first_name %>,</h1>
+
+<p>Un nouveau projet a été soumis par <%= @project.user.fullname %>.</p>
+<p>Voici les détails du projet :</p>
+<p>Titre : <%= @project.title %></p>
+<p>Date de début : <%= @project.start_date %></p>
+<p>Description : <%= @project.description %></p>
+
+<p>Merci de le consulter et de le valider dès que possible sur votre profil.</p>
+
+      <p>Merci de votre confiance,</p>
+      <p>L'équipe de TTA</p>

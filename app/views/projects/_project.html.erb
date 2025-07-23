@@ -1,9 +1,21 @@
-<div id="<%= dom_id project %>">
+<h1 class="mt-100 mb-5">Récapitulatif du projet</h1>
+<div class="card p-5">
+  <div id="<%= dom_id project %>">
+  </div>
+  
+  <h3 class="mb-4"><%= project.title%> </h3>
+  <p> 
+    <span class="btn btn-outline btn-sm d-inline-block w-auto">
+      <%= project.status %>
+    </span>
+  </p>
+  <p><strong>Nom : </strong><%= project.architect.user.fullname%> </p>
+  <p><strong>Date de début du projet : </strong> <%= project.start_date%></p>
+  <p><strong>Description : </strong><%= project.description%></p>
+
+  <div class="d-flex gap-3 mt-4">
+    <%= link_to "Modifier le projet", edit_project_path(project),class: "btn btn-warning" %> 
+    <%= button_to "Supprimer le projet", project, method: :delete, class: "btn btn-danger" %>
+  </div>
 </div>
-<h1>Titre du projet <h1>
-<p> <%= @project.start_date%>
-<p> <%= @project.architect.user.first_name%> </p>
-<p> <%= @project.architect.user.last_name%> </p>
-<p> <%= @project.description%></p>
-<p> <%= @project.status%> <p>
 

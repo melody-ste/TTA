@@ -1,3 +1,6 @@
+<% content_for :title, "Modifier mon profil" %>
+<% content_for :meta_description, "Formulaire pour modifier son profil" %>
+
 <div class="container mt-5 mb-5">
   <h1 class="mb-5 mt-100">Modifier mes informations</h1>
 
@@ -58,11 +61,6 @@
                 <%= label_tag "user_architect_attributes_selected_degrees_#{degree_acronym}", degree_name %>
               </div>
             <% end %>
-
-            <div class="field m-4">
-              <%= architect_fields.label :years_study, "Années d'études en moyenne" %>
-              <%= architect_fields.number_field :years_study, min: 1, step: 1 %>
-            </div>
           </div>
 
           <div class="field m-4">

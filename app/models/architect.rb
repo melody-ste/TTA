@@ -7,8 +7,6 @@ class Architect < ApplicationRecord
     # Validation pour s'assurer que l'utilisateur associé a une ville
     validate :user_must_have_city
     
-    # Validation pour les années d'études
-    validates :years_study, presence: true, numericality: { greater_than: 0, only_integer: true }, allow_blank: true
 
     # Attribut virtuel pour gérer les spécialisations dans le formulaire
     attr_accessor :specialization_names
