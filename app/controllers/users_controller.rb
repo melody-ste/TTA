@@ -18,6 +18,10 @@ class UsersController < ApplicationController
       @completed_projects = @projects.where(status: :termine)
       @incoming_requests = @projects.where(status: :en_validation)
       @current_projects = @projects.where(status: :en_cours)
+
+      if current_user.client?
+  @favorite_architects = current_user.liked_architects.includes(:user, :specializations)
+      end
     end
   end
 

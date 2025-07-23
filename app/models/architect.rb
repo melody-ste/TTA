@@ -62,7 +62,7 @@ class Architect < ApplicationRecord
         likes.count
     end
 
-   
+
 
     def degree_mapping
         {
@@ -83,7 +83,7 @@ class Architect < ApplicationRecord
     end
 
      private
-     
+
     def user_must_have_city
         if user && user.city.nil?
             errors.add(:user, "doit avoir une ville associée")

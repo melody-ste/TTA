@@ -1,17 +1,18 @@
 Rails.application.routes.draw do
   resources :projects
   resources :cities
-  resources :architects
+  resources :architects do
+    member do
+      post "like", to: "likes#create"
+      delete "unlike", to: "likes#destroy"
+    end
+  end
   resources :specializations
   resources :multimedias
 
   devise_for :users
   resources :users, only: [ :show, :edit, :update, :destroy ] do
     resources :avatars, only: [ :create, :edit, :update, :destroy ]
-    member do
-      post "like", to: "likes#create"
-      delete "unlike", to: "likes#destroy"
-    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

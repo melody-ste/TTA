@@ -1,20 +1,36 @@
-const heart_container = document.querySelector(".favorite-container");
-const fav_icon = heart_container.querySelector(".heart-icon");
+// Attendre que le DOM soit chargé et gérer Turbo
+document.addEventListener('DOMContentLoaded', initializeFavorites);
+document.addEventListener('turbo:load', initializeFavorites);
 
-fav_icon.addEventListener("click", (event) => {
-  event.preventDefault();
-  if (fav_icon.classList.contains("fa-regular")) {
-    fav_icon.classList.remove("fa-regular", "text-muted");
-    fav_icon.classList.add("fa-solid", "text-danger");
-    fav_icon.setAttribute("data-liked", "true");
-  } else {
-    fav_icon.classList.remove("fa-solid", "text-danger");
-    fav_icon.classList.add("fa-regular", "text-muted");
-    fav_icon.setAttribute("data-liked", "false");
-  }
+function initializeFavorites() {
+  const heart_containers = document.querySelectorAll(".favorite-container");
 
-  // compteuur de  likes
+  heart_containers.forEach(container => {
+    const fav_icon = container.querySelector(".heart-icon");
 
-  heart_container.querySelector(".likes-count").textContent = data.likes_count;
+    if (fav_icon && !fav_icon.hasAttribute('data-listener-added')) {
+      fav_icon.setAttribute('data-listener-added', 'true');
 
-});
+      fav_icon.addEventListener("click", (event) => {
+        event.preventDefault();
+        const architectId = container.dataset.architectId;
+        const isLiked = fav_icon.dataset.liked === "true";
+
+        fetch(`/architects/${architectId}/${isLiked ? 'unlike' : 'like'}`, {
+          method: isLiked ? 'DELETE' : 'POST',
+          headers: {
+            'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content,
+            'Accept': 'text/javascript'
+          }
+        })
+          .then(response => response.text())
+          .then(script => {
+            eval(script);
+          })
+          .catch(error => {
+            console.error('Erreur lors de la requête:', error);
+          });
+      });
+    }
+  });
+}

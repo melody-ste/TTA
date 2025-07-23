@@ -53,6 +53,4 @@ class User < ApplicationRecord
   def should_validate_city?
     architect? && !skip_city_validation
   end
-
-
 end
