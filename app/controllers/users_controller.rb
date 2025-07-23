@@ -4,9 +4,11 @@ class UsersController < ApplicationController
 
     
     def show
+    redirect_to user_path(current_user) if params[:id].to_i != current_user.id
+
     @user = current_user
 
-    if current_user.architect.present?
+    if current_user.role = "architect"
       @projects = current_user.architect.projects
       @portfolio_projects = @projects.where(portfolio: true).sample(3)
       @completed_projects = @projects.where(status: :termine)
@@ -20,7 +22,6 @@ class UsersController < ApplicationController
     end
 
 
-    redirect_to user_path(current_user) if params[:id].to_i != current_user.id
 
 
   end

@@ -45,6 +45,9 @@ end
 
   # PATCH/PUT /projects/1 or /projects/1.json
 def update
+  Rails.logger.debug "PARAMS RECUS : #{params.inspect}"
+  Rails.logger.debug "STATUS AVANT : #{@project.status}"
+  super
   if current_user.architect?
     attrs = status_params
 
