@@ -1,5 +1,5 @@
 class UserProjectMailMailer < ApplicationMailer
-  default from: 'no-reply@monsite.fr'
+  default from: 'trouvetonarchi@gmail.com'
 
   def new_project_client(project)
     @project = project

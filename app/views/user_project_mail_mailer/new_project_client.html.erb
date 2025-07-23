@@ -1,19 +1,28 @@
-<h1>Bonjour <%= @client.first_name %>,</h1>
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color: #e5e2d9; padding: 4rem; font-family: 'Roboto', Helvetica, sans-serif;">
+  <tr>
+    <td>
 
-    <p>
-      Vous avez récemment créé un projet sur notre plateforme. Pour finaliser la mise en relation avec <%= @project.architect&.user&.fullname %>
-    </p><br> <hr>
-   
-      <p>Nous avons bien reçu votre projet "<%= @project.title %>".</p>
-      <p>Statut actuel : <strong>En cours de validation</strong>.</p>
-      <p>début du projet: <%= @project.start_date%></p>
-      <p>Descripttion du projet:</p><br>
-      <p><%= @project.description %></p>
+      <h1 style="color: #536059;">Bonjour <%= @client.first_name %>,</h1>
 
-      <p>L'architecte vous contacterons dès que possible pour vous informer de la suite.</p>
+      <p style="color: #72827f; padding-bottom: 10px; font-size: 16px;">
+        Vous avez récemment créé un projet sur notre plateforme. Pour finaliser la mise en relation avec <%= @project.architect&.user&.fullname %>
+      </p><br> <hr>
 
-      <p>En attendant, vous pouvez consulter le status  de  votre projet sur votre profil</p>
+      <p style="color: #72827f; padding-bottom: 5px; font-size: 16px;">Nous avons bien reçu votre projet "<%= @project.title %>".</p>
 
-      <p>Merci de votre confiance,</p>
-      <p>L'équipe de TTA</p>
-  
+      <p style="color: #72827f; padding-bottom: 5px; font-size: 16px;">Statut actuel : <strong>En cours de validation</strong>.</p>
+
+      <p style="color: #72827f; padding-bottom: 5px; font-size: 16px;">début du projet: <%= @project.start_date%></p>
+
+      <p style="color: #72827f; padding-bottom: 5px; font-size: 16px;">Description du projet: <%= @project.description %></p><br>
+
+      <p style="color: #72827f; padding-bottom: 5px; font-size: 16px;">L'architecte vous contacterons dès que possible pour vous informer de la suite.</p>
+
+      <p style="color: #72827f; padding-bottom: 10px; font-size: 16px;">En attendant, vous pouvez consulter le status  de  votre projet sur votre profil.</p>
+
+      <p style="color: #72827f; padding-bottom: 10px; font-size: 16px;">Merci de votre confiance,</p>
+      
+      <p style="color: #72827f; padding-bottom: 10px; font-size: 16px;">L'équipe de Trouve Ton Architecte.</p>
+    </td>
+  </tr>
+</table>
