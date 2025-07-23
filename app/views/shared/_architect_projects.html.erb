@@ -2,26 +2,26 @@
 
 <% if @architect.projects.any? %>
   <% @architect.projects.where(portfolio: true).each do |project| %>
-    <% medias = project.multimedias.to_a %>
+    <% medias = project.multimedias.with_attached_file.to_a %>
 
     <div class="row project-block g-4 align-items-stretch">
       <!-- Colonne gauche : image 1 -->
       <div class="col-12 col-md-6">
-        <% if medias[0] %>
-          <%= image_tag medias[0].type_media, class: "img-fluid h-100 w-100 object-fit-cover", alt: "Image projet #{project.id} gauche" %>
+        <% if medias[0]&.file&.attached? %>
+          <%= image_tag url_for(medias[0].file), class: "img-fluid h-60 w-100 object-fit-cover", alt: "Image projet #{project.id} gauche" %>
         <% else %>
-          <%= image_tag "placeholder.jpg", class: "img-fluid h-100 w-100 object-fit-cover", alt: "Image par défaut" %>
+          <%= image_tag "placeholder.jpg", class: "img-fluid h-60 w-100 object-fit-cover", alt: "Image par défaut" %>
         <% end %>
       </div>
 
       <!-- Colonne droite : image 2 + texte -->
       <div class="col-12 col-md-6 d-flex flex-column h-100">
-        <% if medias[1] %>
-          <%= image_tag medias[1].type_media, class: "img-fluid mb-3", alt: "Image projet #{project.id} droite" %>
+        <% if medias[1]&.file&.attached? %>
+          <%= image_tag url_for(medias[1].file), class: "img-fluid mb-3", alt: "Image projet #{project.id} droite" %>
         <% end %>
 
         <div class="card p-4 mt-auto h-100">
-          <h3 class="h5">Description – <span><%= format_french_date(project.start_date) %></span></h3>
+          <h3 class="h5"><%= project.title %> – <span><%= format_french_date(project.start_date) %></span></h3>
           <p><%= project.description %></p>
         </div>
       </div>
