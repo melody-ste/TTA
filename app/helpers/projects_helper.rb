@@ -1,7 +1,7 @@
 module ProjectsHelper
   def format_french_date(date)
     return "" if date.nil?
-    
+
     # Si c'est déjà une Date/DateTime, on la formate directement
     if date.is_a?(Date) || date.is_a?(DateTime)
       date.strftime("%d/%m/%Y")
@@ -17,7 +17,7 @@ module ProjectsHelper
     end
   end
 
-  def random_img 
+  def random_img
     images = [
      "https://img.freepik.com/photos-premium/processus-conception-maison_190619-4525.jpg",
      "https://img.freepik.com/photos-premium/dessin-main-villa-conception-realisation-du-batiment_190619-1591.jpg",

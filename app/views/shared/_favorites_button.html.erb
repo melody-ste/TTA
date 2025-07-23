@@ -1,0 +1,14 @@
+<% if user_signed_in? && current_user.client? %>
+    <div class="favorite-container" data-architect-id="<%= architect.id %>">
+    <% if current_user.is_architect_liked?(architect) %>
+        <i class="fas fa-heart text-danger heart-icon liked" 
+         data-liked="true" 
+         title="Retirer des favoris"></i>
+    <% else %>
+        <i class="far fa-heart text-muted heart-icon" 
+         data-liked="false" 
+         title="Ajouter aux favoris"></i>
+    <% end %>
+        <span class="likes-count ms-1"><%= architect.likes_count %></span>
+    </div>
+<% end %>

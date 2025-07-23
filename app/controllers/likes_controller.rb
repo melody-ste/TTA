@@ -1,8 +1,8 @@
 class LikesController < ApplicationController
   before_action :authenticate_user!
-  before_action :only_for_clients, only: [:create, :destroy]
+  before_action :only_for_clients, only: [ :create, :destroy ]
 
-  def create 
+  def create
     @architect = Architect.find(params[:architect_id])
     @like = current_user.likes.build(architect: @architect)
 
@@ -11,7 +11,7 @@ class LikesController < ApplicationController
     end
   end
 
-  def destroy 
+  def destroy
     @architect = Architect.find(params[:architect_id])
     @like = current_user.likes.find_by(architect: @architect)
 
@@ -20,7 +20,7 @@ class LikesController < ApplicationController
     end
   end
 
-  private 
+  private
 
   def only_for_clients
     unless current_user.client?

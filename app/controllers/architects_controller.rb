@@ -10,11 +10,11 @@ class ArchitectsController < ApplicationController
 
     if params[:query].present?
       normalized_query = I18n.transliterate(params[:query]).downcase
-      @architects = @architects.where("LOWER(users.first_name) LIKE ? OR 
-                                      LOWER(users.last_name) LIKE ? OR 
-                                      LOWER(architects.description) LIKE ? OR 
-                                      LOWER(cities.name) LIKE ? OR 
-                                      LOWER(specializations.name) LIKE ?", 
+      @architects = @architects.where("LOWER(users.first_name) LIKE ? OR
+                                      LOWER(users.last_name) LIKE ? OR
+                                      LOWER(architects.description) LIKE ? OR
+                                      LOWER(cities.name) LIKE ? OR
+                                      LOWER(specializations.name) LIKE ?",
                                       "%#{normalized_query}%", "%#{normalized_query}%", "%#{normalized_query}%", "%#{normalized_query}%", "%#{normalized_query}%")
     end
 
@@ -28,7 +28,6 @@ class ArchitectsController < ApplicationController
     # si architecte a un portfolio, on récupères ses medias
     # @multimedias = @architect.project.multimedias if @architect.project
     @multimedias = @architect.projects.includes(:multimedias).map(&:multimedias).flatten
-    
   end
 
   # GET /architects/new
