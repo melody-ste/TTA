@@ -1,6 +1,8 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: [:new, :create]
+  before_action :authorize_user!, only: [:edit, :update]
+
 
   # GET /projects or /projects.json
   def index
@@ -9,6 +11,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1 or /projects/1.json
   def show
+
   end
 
   # GET /projects/new
@@ -44,17 +47,44 @@ end
   end
 
   # PATCH/PUT /projects/1 or /projects/1.json
-  def update
-    respond_to do |format|
-      if @project.update(project_params)
-        format.html { redirect_to @project, notice: "Project was successfully updated." }
-        format.json { render :show, status: :ok, location: @project }
+def update
+  Rails.logger.debug "PARAMS RECUS : #{params.inspect}"
+  Rails.logger.debug "STATUS AVANT : #{@project.status}"
+  super
+  if current_user.architect?
+    attrs = status_params
+
+    # Ajout au portfolio uniquement si le projet est terminé
+    if attrs.key?(:portfolio)
+      if @project.status == "termine" && @project.update(attrs)
+        redirect_to @project, notice: "Projet ajouté au portfolio." and return
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        redirect_to @project, alert: "Le projet doit être terminé avant d'être ajouté au portfolio." and return
       end
     end
+
+    # Changement de statut (accepter, refuser, terminer)
+    if attrs.key?(:status) && @project.update(attrs)
+      notice = case @project.status
+               when "en_cours" then "Projet accepté, il est maintenant en cours."
+               when "refuse" then "Projet refusé."
+               when "termine" then "Projet terminé."
+               else "Projet mis à jour."
+               end
+      redirect_to @project, notice: notice and return
+    elsif attrs.key?(:status)
+      render :show, status: :unprocessable_entity and return
+    end
+
+    render :show, status: :unprocessable_entity
+  else
+    if @project.update(project_params)
+      redirect_to @project, notice: "Projet mis à jour." and return
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
+end
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
@@ -84,5 +114,15 @@ end
         :user_id
       )
 
+    end
+
+     def status_params
+      params.require(:project).permit(:status, :portfolio)
+    end
+
+    def authorize_user!
+      unless current_user == @project.user
+        redirect_to project_path(@project), alert: "Vous n'êtes pas autorisé à effectuer cette action."
+      end
     end
 end

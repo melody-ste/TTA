@@ -4,14 +4,24 @@ class UsersController < ApplicationController
 
     
     def show
-    @user = User.find(params[:id])
-    @portfolio_projects = @user.projects.where(portfolio: true).sample(3)
-    @complited_projects = @user.projects.where(status: "termine")
-    @incoming_requests = @user.projects.where(status: "en_validation")
-    @current_projects = @user.projects.where(status: "en_cours")
-
-
     redirect_to user_path(current_user) if params[:id].to_i != current_user.id
+
+    @user = current_user
+
+    if current_user.role = "architect"
+      @projects = current_user.architect.projects
+      @portfolio_projects = @projects.where(portfolio: true).sample(3)
+      @completed_projects = @projects.where(status: :termine)
+      @incoming_requests = @projects.where(status: :en_validation)
+      @current_projects = @projects.where(status: :en_cours)
+    else
+      @projects = current_user.projects
+      @completed_projects = @projects.where(status: :termine)
+      @incoming_requests = @projects.where(status: :en_validation)
+      @current_projects = @projects.where(status: :en_cours)
+    end
+
+
 
 
   end

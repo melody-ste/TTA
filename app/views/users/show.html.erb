@@ -30,7 +30,6 @@
             <%= current_user.city.name %> (<%= current_user.city.zip_code %>)<br>
           <% end %>
           </p>
-          <p><%= current_user.role %></p>
         </div>
 
         <!-- Informations spécifiques aux architectes -->
@@ -84,16 +83,35 @@
   <% if current_user.role == "architect" && current_user.architect.present? %>
 
     <h2 class="mt-5 mb-5"> Nouvelles demandes </h2>
-    <% if @incoming_request.present? %>
-      <% @incoming_request.each do |request|%>
-      <%=project.title%><br>
+    <% if @incoming_requests.present? %>
+      <% @incoming_requests.each do |request|%>
+      <%= request.title%><br>
       <%= request.description%>
-      <%= request.status%>
-      <%end%>
+      <%= link_to "Voir", project_path(request) %>
+    <%end%>
+      
     <%else%>
       <p> Pas de nouvelle demande </p>
     <%end%>
   <%end%>
+
+<!--demande en attente de validation client-->
+<% if current_user.role == "client" %>
+  <h2 class="mt-5 mb-5">Mes demandes en attente de validation</h2>
+  <% if @incoming_requests.present? %>
+    <ul>
+      <% @incoming_requests.each do |project| %>
+        <li>
+          <strong><%= project.title %></strong><br>
+          <%= truncate(project.description, length: 100) %><br>
+          <%= link_to "Voir", project_path(project), class: "btn btn-link btn-sm" %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>Vous n'avez aucune demande en attente.</p>
+  <% end %>
+<% end %>
 
 
 
@@ -103,11 +121,11 @@
       <% @current_projects.each do |project|%>
       <%=project.title%><br>
       <%= project.description%>
-      <%= project.status%>
+      <%= link_to "Voir", project_path(project) %>
       <%end%>
     </div>
   <%else%>
-    <p> Pas de nouvelle demande </p>
+    <p> Pas de projet en cours </p>
   <%end%>
 
   <!--Fonctionnalité client-->
@@ -124,7 +142,8 @@
       <% @completed_projects.each do |project|%>
       <%=project.title%><br>
       <%= project.description%>
-      <%= project.status%>
+      <%= link_to "Voir", project_path(project) %>
+
       <%end%>
     </div>
   <%else%>
@@ -140,7 +159,7 @@
           <% @portfolio_projects.each do |project|%>
           <%=project.title%> <br>
           <%= truncate(project.description, length: 100)%> <br>
-          <%= project.status%>
+          <%= link_to "Voir", project_path(project) %>
           <%end%>
         </div>
       <%else%>
@@ -148,3 +167,5 @@
       <%end%>
 
     <%end%>
+
+
