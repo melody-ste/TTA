@@ -8,11 +8,7 @@
 
   <div class="mt-5 mb-5">
    
-    <% if current_user == @project.user %>
-    <div>
-      <%= link_to "Edit this project", edit_project_path(@project) %> |
-      <%= button_to "Destroy this project", @project, method: :delete %>
-    <%end%>
+   
     <%= link_to "Retour", :back, class: "btn btn-primary" %>
 
     

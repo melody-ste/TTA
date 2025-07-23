@@ -169,7 +169,7 @@
       <%else%>
         <p> Pas de projet dans le portfolio </p>
       <%end%>
-
+      <%= link_to 'Ajouter un projet au portfolio', new_project_path(user_id: current_user, architect_id: current_user.architect.id), class: "btn btn-primary" %>
     <%end%>
 
 
