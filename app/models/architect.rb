@@ -74,6 +74,14 @@ class Architect < ApplicationRecord
         }
     end
 
+    def liked_by_client?(client)
+        likes.exists?(client: client)
+    end
+
+    def likes_count
+        likes.count
+    end
+
     private
 
     def user_must_have_city

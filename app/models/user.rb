@@ -41,4 +41,16 @@ class User < ApplicationRecord
   def should_validate_city?
     architect? && !skip_city_validation
   end
+
+  def add_to_favorites(architect)
+    likes.find_or_create_by(architect: architect)
+  end
+
+  def remove_from_favorites(architect)
+    likes.find_by(architect: architect)&.destroy
+  end
+
+  def is_architect_liked?(architect)
+    likes.exists?(architect: architect)
+  end
 end
