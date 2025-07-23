@@ -20,7 +20,7 @@ class ProjectsController < ApplicationController
     @project.architect_id = params[:architect_id]
     @project.user = current_user
     @project.status = "en_validation"
-end
+  end
 
 
   # GET /projects/1/edit
@@ -36,7 +36,6 @@ end
       if @project.save
         UserProjectMailMailer.new_project_client(@project).deliver_now
         UserProjectMailMailer.new_project_architect(@project).deliver_now
-        flash[:alert] = "Un email de notification a été envoyé au client."
         format.html { redirect_to @project, notice: "Votre projet a été créé avec succès et est en attente de validation par l'architecte. Vous recevrez un email de confirmation pour la création du projet." }
         format.json { render :show, status: :created, location: @project }
       else
@@ -47,44 +46,44 @@ end
   end
 
   # PATCH/PUT /projects/1 or /projects/1.json
-def update
-  Rails.logger.debug "PARAMS RECUS : #{params.inspect}"
-  Rails.logger.debug "STATUS AVANT : #{@project.status}"
-  super
-  if current_user.architect?
-    attrs = status_params
+  def update
+    Rails.logger.debug "PARAMS RECUS : #{params.inspect}"
+    Rails.logger.debug "STATUS AVANT : #{@project.status}"
+    super
+    if current_user.architect?
+      attrs = status_params
 
-    # Ajout au portfolio uniquement si le projet est terminé
-    if attrs.key?(:portfolio)
-      if @project.status == "termine" && @project.update(attrs)
-        redirect_to @project, notice: "Projet ajouté au portfolio." and return
+      # Ajout au portfolio uniquement si le projet est terminé
+      if attrs.key?(:portfolio)
+        if @project.status == "termine" && @project.update(attrs)
+          redirect_to @project, notice: "Projet ajouté au portfolio." and return
+        else
+          redirect_to @project, alert: "Le projet doit être terminé avant d'être ajouté au portfolio." and return
+        end
+      end
+
+      # Changement de statut (accepter, refuser, terminer)
+      if attrs.key?(:status) && @project.update(attrs)
+        notice = case @project.status
+                when "en_cours" then "Projet accepté, il est maintenant en cours."
+                when "refuse" then "Projet refusé."
+                when "termine" then "Projet terminé."
+                else "Projet mis à jour."
+                end
+        redirect_to @project, notice: notice and return
+      elsif attrs.key?(:status)
+        render :show, status: :unprocessable_entity and return
+      end
+
+      render :show, status: :unprocessable_entity
+    else
+      if @project.update(project_params)
+        redirect_to @project, notice: "Projet mis à jour." and return
       else
-        redirect_to @project, alert: "Le projet doit être terminé avant d'être ajouté au portfolio." and return
+        render :edit, status: :unprocessable_entity
       end
     end
-
-    # Changement de statut (accepter, refuser, terminer)
-    if attrs.key?(:status) && @project.update(attrs)
-      notice = case @project.status
-               when "en_cours" then "Projet accepté, il est maintenant en cours."
-               when "refuse" then "Projet refusé."
-               when "termine" then "Projet terminé."
-               else "Projet mis à jour."
-               end
-      redirect_to @project, notice: notice and return
-    elsif attrs.key?(:status)
-      render :show, status: :unprocessable_entity and return
-    end
-
-    render :show, status: :unprocessable_entity
-  else
-    if @project.update(project_params)
-      redirect_to @project, notice: "Projet mis à jour." and return
-    else
-      render :edit, status: :unprocessable_entity
-    end
   end
-end
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
