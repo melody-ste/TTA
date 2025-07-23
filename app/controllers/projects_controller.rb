@@ -94,7 +94,7 @@ class ProjectsController < ApplicationController
     @project.destroy!
 
     respond_to do |format|
-      format.html { redirect_to root_path, status: :see_other, notice: "Project was successfully destroyed." }
+      format.html { redirect_to user_path(current_user), status: :see_other, notice: "Project was successfully destroyed." }
       format.json { head :no_content }
     end
   end
