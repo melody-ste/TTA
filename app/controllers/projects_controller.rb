@@ -19,7 +19,6 @@ class ProjectsController < ApplicationController
     @project = Project.new
     @project.architect_id = params[:architect_id]
     @project.user = current_user
-    # @project.status = "en_validation"
   end
 
 
@@ -32,7 +31,6 @@ class ProjectsController < ApplicationController
 
     @project = Project.new(project_params)
     @project.user = current_user
-    # @project.status ||= "en_validation"
     if current_user.role == "client"
       @project.status = "en_validation"
     else
