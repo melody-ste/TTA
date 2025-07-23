@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_one :architect, dependent: :destroy
   has_many :projects, dependent: :destroy
   has_one_attached :avatar
+  has_many :likes, foreign_key: :client_id, dependent: :destroy
+  has_many :liked_architects, through: :likes, source: :architect
   
   enum :role, {
     admin: 0,

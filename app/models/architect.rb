@@ -3,6 +3,8 @@ class Architect < ApplicationRecord
     has_many :architect_specializations, dependent: :destroy
     has_many :specializations, through: :architect_specializations
     has_many :projects
+    has_many :likes, dependent: :destroy
+    has_many :clients_who_liked, through: :likes, source: :client
 
     # Validation pour s'assurer que l'utilisateur associé a une ville
     validate :user_must_have_city
