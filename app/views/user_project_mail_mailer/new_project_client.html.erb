@@ -1,0 +1,19 @@
+<h1>Bonjour <%= @client.first_name %>,</h1>
+
+    <p>
+      Vous avez récemment créé un projet sur notre plateforme. Pour finaliser la mise en relation avec <%= @project.architect&.user&.fullname %>
+    </p><br> <hr>
+   
+      <p>Nous avons bien reçu votre projet "<%= @project.title %>".</p>
+      <p>Statut actuel : <strong>En cours de validation</strong>.</p>
+      <p>début du projet: <%= @project.start_date%></p>
+      <p>Descripttion du projet:</p><br>
+      <p><%= @project.description %></p>
+
+      <p>L'architecte vous contacterons dès que possible pour vous informer de la suite.</p>
+
+      <p>En attendant, vous pouvez consulter le status  de  votre projet sur votre profil</p>
+
+      <p>Merci de votre confiance,</p>
+      <p>L'équipe de TTA</p>
+  
