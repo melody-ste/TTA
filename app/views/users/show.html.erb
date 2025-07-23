@@ -122,17 +122,17 @@
 
 
   <h2 class="mt-100 mb-5"> Projet en cours </h2>
-  <% if @current_projects.present? %>
-    <div class="card p-5">
-      <% @current_projects.each do |project|%>
-      <%=project.title%><br>
-      <%= project.description%>
-      <%= link_to "Voir", project_path(project) %>
+  <div class="card p-5">
+    <% if @current_projects.present? %>
+        <% @current_projects.each do |project|%>
+        <%=project.title%><br>
+        <%= project.description%>
+        <%= link_to "Voir", project_path(project) %>
+        <%end%>
+      <%else%>
+        <p> Pas de projet en cours </p>
       <%end%>
     </div>
-  <%else%>
-    <p> Pas de projet en cours </p>
-  <%end%>
 
   <!--Fonctionnalité client-->
     <!-- <% if current_user.role == "client" %>
@@ -143,18 +143,18 @@
   <% end %> -->
 
   <h2 class="mt-100 mb-5"> Historique des projets </h2>
-  <% if @completed_projects.present? %>
-    <div class="card p-5">
-      <% @completed_projects.each do |project|%>
-      <%=project.title%><br>
-      <%= project.description%>
-      <%= link_to "Voir", project_path(project) %>
+  <div class="card p-5">
+    <% if @completed_projects.present? %>
+        <% @completed_projects.each do |project|%>
+        <%=project.title%><br>
+        <%= project.description%>
+        <%= link_to "Voir", project_path(project) %>
 
-      <%end%>
+        <%end%>
+    <%else%>
+      <p> Pas de projet terminé </p>
+    <%end%>
     </div>
-  <%else%>
-    <p> Pas de projet terminé </p>
-  <%end%>
 
   <!--fonctionnalité archi-->
     <% if current_user.role == "architect" && current_user.architect.present? %>
