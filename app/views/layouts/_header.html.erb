@@ -3,7 +3,12 @@
 
     <!-- Liens de navigation principaux -->
     <ul class="list-unstyled d-flex gap-4 px-4 py-2 mb-0">
-      <li><%= link_to 'TTA', root_path %></li>
+      <li>
+        <%= link_to root_path do %>
+          <%= image_tag('/icon_new.png', alt: 'TTA', height: 30) %>
+          <strong>TTA</strong>
+        <% end %>
+      </li>
       <li><%= link_to 'Architecte', architects_path %></li>
       <li><%= link_to "Architecte d'intérieur", architects_path(specialization_id: 2) %></li>
       <li><%= link_to "Architecte paysagiste", architects_path(specialization_id: 3) %></li>
