@@ -7,7 +7,10 @@ class LikesController < ApplicationController
     @like = current_user.likes.build(architect: @architect)
 
     if @like.save
-      redirect_to @architect
+      respond_to do |format|
+        format.html { redirect_to @architect }
+        format.js   # This will render create.js.erb
+      end
     end
   end
 
