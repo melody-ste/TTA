@@ -7,22 +7,20 @@
   <div class="card p-5 mb-5">
     <div class="d-flex align-items-start gap-4">
 
-      <div>
-        <!--avatar actuel-->
-        <div class= "avatar">
+      <div class="text-center">
+        <div class="avatar mb-3">
           <%= user_avatar_or_default %>
-        
+        </div>
 
-          <!--bouton ajout/modification photo : display: none pour écraser "choisir un fichier" dans le bouton par défaut-->
-          <div class="profil-photo-actions">
-            <%= form_tag user_avatars_path(current_user), multipart: true do %>
-              <label for="avatar_input" class="btn btn-warning btn-sm mb-4">Modifier l'avatar</label>
-              <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;" %>
-            <% end %>
-          </div>
+        <!-- Bouton Modifier -->
+        <div class="profil-photo-actions">
+          <%= form_tag user_avatars_path(current_user), multipart: true do %>
+            <label for="avatar_input" class="btn btn-warning btn-sm">Modifier l'avatar</label>
+            <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;" %>
+          <% end %>
         </div>
       </div>
-
+      
       <div>
         <!-- Informations utilisateur -->
         <div>

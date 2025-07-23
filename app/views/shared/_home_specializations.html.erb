@@ -9,23 +9,28 @@
           <h2 class="mt-100 mb-100"><%= specialization.name %></h2>
           <div class="card-row">
             <% specialization_medias.limit(3).each do |media| %>
-              <% architect = media.project&.architect %>
+              <% project = media.project %>
+              <% architect = project&.architect %>
+
               <div class="custom-sm-card">
-                <%= image_tag(media.type_media, alt: "Image ##{media.id}", class: "card-sm-image") %>
+                <% if media.file.attached? %>
+                  <%= image_tag url_for(media.file), alt: "Image ##{media.id}", class: "card-sm-image" %>
+                <% else %>
+                  <%= image_tag "placeholder.jpg", alt: "Image manquante", class: "card-sm-image" %>
+                <% end %>
+
                 <div class="card-sm-body">
-                  <% if architect %>
+                  <% if architect&.user %>
                     <span class="card-name"><%= architect.user.fullname %></span>
-                    
+                    <%= link_to "Voir plus", architect_path(architect), class: "btn btn-more btn-sm" %>
                   <% else %>
                     <span class="card-name text-muted">Architecte inconnu</span>
                   <% end %>
-                  <%= link_to "Voir plus", architect_path(architect), class: "btn btn-more btn-sm" %>
                 </div>
               </div>
             <% end %>
           </div>
         </div>
-
       <!-- ---------- SPÉCIALITÉ 2 : deux carrousels côte à côte ---------- -->
       <% elsif i == 1 %>
         <div class="carousel-double mt-5">
@@ -40,9 +45,15 @@
                   <button class="prev">&#10094;</button>
                   <div class="carousel-images">
                     <% group.each_with_index do |media, index| %>
-                      <% architect = media.project&.architect %>
+                      <% project = media.project %>
+                      <% architect = project&.architect %>
+
                       <div class="carousel-image <%= 'active' if index == 0 %>">
-                        <%= image_tag(media.type_media, alt: "Image ##{media.id}") %>
+                        <% if media.file.attached? %>
+                          <%= image_tag url_for(media.file), alt: "Image ##{media.id}" %>
+                        <% else %>
+                          <%= image_tag "placeholder.jpg", alt: "Image manquante" %>
+                        <% end %>
                         <% if architect %>
                           <%= link_to "Voir plus", architect_path(architect), class: "btn btn-more" %>
                         <% else %>
@@ -66,7 +77,11 @@
             <% specialization_medias.limit(3).each do |media| %>
               <% architect = media.project&.architect %>
               <div class="custom-sm-card">
-                <%= image_tag(media.type_media, alt: "Image ##{media.id}", class: "card-sm-image") %>
+                 <% if media.file.attached? %>
+                  <%= image_tag url_for(media.file), alt: "Image ##{media.id}", class: "card-sm-image" %>
+                <% else %>
+                  <%= image_tag "placeholder.jpg", alt: "Image manquante", class: "card-sm-image" %>
+                <% end %>
                 <div class="card-sm-body">
                   <% if architect %>
                     <span class="card-name"><%= architect.user.fullname %></span>
