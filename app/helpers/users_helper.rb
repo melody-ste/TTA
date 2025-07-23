@@ -5,12 +5,11 @@ module UsersHelper
 
   def user_avatar_or_default
     if current_user.avatar.attached?
-      image_tag current_user.avatar, alt: 'avatar', class: 'user-avatar'
+      image_tag current_user.avatar, alt: 'avatar', class: 'avatar'
     else
       image_tag "https://img.freepik.com/photos-gratuite/avatar-androgyne-personne-queer-non-binaire_23-2151100226.jpg", 
                 alt: 'avatar par défaut', 
-                style: "width: 10rem; border-radius: 50%;", 
-                class: 'user-avatar-default'
+                class: 'avatar'
     end
   end
 

@@ -42,12 +42,20 @@
   </head>
 
   <body>
-  <%= render 'shared/flash_notices' %>
-    <p><% notice = flash[:notice] %></p>
-     <p><% alert = flash[:alert] %></p>
-    
-    
+
     <%= render 'layouts/header' %>
+
+    <% if flash[:notice] %>
+      <div class="alert alert-success text-center mb-0 mt-5">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <div class="alert alert-danger text-center mb-0 mt-5">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
 
     <main>
       <%= yield %>
