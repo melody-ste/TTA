@@ -8,6 +8,7 @@ import "search"
 import "bootstrap"
 import "filter_toggle"
 import "profil"
+import "favorites"
 
 
 

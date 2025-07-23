@@ -33,16 +33,7 @@ class User < ApplicationRecord
     end
   end
 
-  private
-
-  # Validation  les architectes doivent avoir une ville
-  # Mais seulement après l'inscription, pas lors de la création du compte
-  # validates :city, presence: true, if: :should_validate_city?
-  def should_validate_city?
-    architect? && !skip_city_validation
-  end
-
-  def add_to_favorites(architect)
+    def add_to_favorites(architect)
     likes.find_or_create_by(architect: architect)
   end
 
@@ -53,4 +44,15 @@ class User < ApplicationRecord
   def is_architect_liked?(architect)
     likes.exists?(architect: architect)
   end
+
+  private
+
+  # Validation  les architectes doivent avoir une ville
+  # Mais seulement après l'inscription, pas lors de la création du compte
+  # validates :city, presence: true, if: :should_validate_city?
+  def should_validate_city?
+    architect? && !skip_city_validation
+  end
+
+
 end

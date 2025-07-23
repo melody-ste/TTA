@@ -54,7 +54,15 @@ class Architect < ApplicationRecord
     # Callback pour gérer les spécialisations après la sauvegarde
     after_save :update_specializations, if: :specialization_names
 
-    private
+        def liked_by_client?(client)
+        likes.exists?(client: client)
+    end
+
+    def likes_count
+        likes.count
+    end
+
+   
 
     def degree_mapping
         {
@@ -74,16 +82,8 @@ class Architect < ApplicationRecord
         }
     end
 
-    def liked_by_client?(client)
-        likes.exists?(client: client)
-    end
-
-    def likes_count
-        likes.count
-    end
-
-    private
-
+     private
+     
     def user_must_have_city
         if user && user.city.nil?
             errors.add(:user, "doit avoir une ville associée")
