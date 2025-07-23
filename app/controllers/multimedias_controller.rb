@@ -11,7 +11,7 @@ class MultimediasController < ApplicationController
   def create
     @media = Multimedia.new(media_params)
     if @media.save
-      redirect_to @media, notice: "Multimédia ajouté avec succès."
+      redirect_back fallback_location: root_path, notice: "Multimédia ajouté avec succès."
     else
       render :new
     end
