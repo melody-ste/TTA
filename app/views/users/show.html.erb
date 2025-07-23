@@ -11,20 +11,21 @@
         <!--avatar actuel-->
         <div class= "avatar">
           <%= user_avatar_or_default %>
-        </div>
+        
 
-        <!--bouton ajout/modification photo : display: none pour écraser "choisir un fichier" dans le bouton par défaut-->
-        <div class="profil-photo-actions">
-          <%= form_tag user_avatars_path(current_user), multipart: true do %>
-            <label for="avatar_input" class="btn btn-warning btn-sm">Modifier l'avatar</label>
-            <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;" %>
-          <% end %>
+          <!--bouton ajout/modification photo : display: none pour écraser "choisir un fichier" dans le bouton par défaut-->
+          <div class="profil-photo-actions">
+            <%= form_tag user_avatars_path(current_user), multipart: true do %>
+              <label for="avatar_input" class="btn btn-warning btn-sm mb-4">Modifier l'avatar</label>
+              <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;" %>
+            <% end %>
+          </div>
         </div>
       </div>
 
       <div>
         <!-- Informations utilisateur -->
-        <div class="user-info">
+        <div>
           <h5>Informations personelles :</h5>
           <p><%= current_user.email %></p>
           <p><% if current_user.city.present? %>
@@ -85,40 +86,47 @@
   <% if current_user.role == "architect" && current_user.architect.present? %>
 
     <h2 class="mt-5 mb-5"> Nouvelles demandes </h2>
-    <div class="card p-5">
-    <% if @incoming_requests.present? %>
-      <% @incoming_requests.each do |request|%>
-      <%= request.title%><br>
-      <%= request.description%>
-      <%= link_to "Voir", project_path(request) %>
-    <%end%>
-      
-    <%else%>
-      <p> Pas de nouvelle demande </p>
-    <%end%>
+    
+      <% if @incoming_requests.present? %>
+         
+        <ul class="list-unstyled">
+          <% @incoming_requests.each do |request|%>
+            <li class="card mb-5 p-5">
+              <h4 class="mb-5"><strong><%= request.title%></strong></h4>
+              <p class="mb-5"><%= request.description%></p>
+              <div>
+                <%= link_to "Voir", project_path(request), class: "btn btn-primary" %>
+              </div>
+            </li>
+          <%end%>
+        </ul>
+        
+      <%else%>
+        <p> Pas de nouvelle demande </p>
+      <%end%>
   <%end%>
-  </div>
+  
 
-<!--demande en attente de validation client-->
-<% if current_user.role == "client" %>
-  <h2 class="mt-5 mb-5">Mes demandes en attente de validation</h2>
-  <div class="card p-5">
-  <% if @incoming_requests.present? %>
-    <ul>
-      <% @incoming_requests.each do |project| %>
-        <li>
-          <strong><%= project.title %></strong><br>
-          <%= truncate(project.description, length: 100) %><br>
-          <%= link_to "Voir", project_path(project), class: "btn btn-link btn-sm" %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>Vous n'avez aucune demande en attente.</p>
+  <!--demande en attente de validation client-->
+  <% if current_user.role == "client" %>
+    <h2 class="mt-5 mb-5">Mes demandes en attente de validation</h2>
+    
+    <% if @incoming_requests.present? %>
+      <ul>
+        <% @incoming_requests.each do |project| %>
+          <div class="card p-5">
+            <li>
+              <strong><%= project.title %></strong><br>
+              <%= truncate(project.description, length: 100) %><br>
+              <%= link_to "Voir", project_path(project), class: "btn btn-primary btn-sm" %>
+            </li>
+          </div>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>Vous n'avez aucune demande en attente.</p>
+    <% end %>
   <% end %>
-  </div>
-
-<% end %>
 
 
   <h2 class="mt-100 mb-5"> Projet en cours </h2>
@@ -127,7 +135,7 @@
       <% @current_projects.each do |project|%>
       <%=project.title%><br>
       <%= project.description%>
-      <%= link_to "Voir", project_path(project) %>
+      <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
       <%end%>
     </div>
   <%else%>
@@ -148,7 +156,7 @@
       <% @completed_projects.each do |project|%>
       <%=project.title%><br>
       <%= project.description%>
-      <%= link_to "Voir", project_path(project) %>
+      <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
 
       <%end%>
     </div>
@@ -156,22 +164,23 @@
     <p> Pas de projet terminé </p>
   <%end%>
 
+
   <!--fonctionnalité archi-->
-    <% if current_user.role == "architect" && current_user.architect.present? %>
+  <% if current_user.role == "architect" && current_user.architect.present? %>
 
-      <h2 class="mt-100 mb-5"> Portfolio </h2>
-      <% if @portfolio_projects.present? %>
-        <div class="card p-5">
-          <% @portfolio_projects.each do |project|%>
-          <%=project.title%> <br>
-          <%= truncate(project.description, length: 100)%> <br>
-          <%= link_to "Voir", project_path(project) %>
-          <%end%>
-        </div>
-      <%else%>
-        <p> Pas de projet dans le portfolio </p>
-      <%end%>
-      <%= link_to 'Ajouter un projet au portfolio', new_project_path(user_id: current_user, architect_id: current_user.architect.id), class: "btn btn-primary" %>
+    <h2 class="mt-100 mb-5"> Portfolio </h2>
+    <% if @portfolio_projects.present? %>
+      <div class="card p-5">
+        <% @portfolio_projects.each do |project|%>
+        <%=project.title%> <br>
+        <%= truncate(project.description, length: 100)%> <br>
+        <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+        <%end%>
+      </div>
+    <%else%>
+      <p> Pas de projet dans le portfolio </p>
     <%end%>
-
+    <!-- <%= link_to 'Ajouter un projet au portfolio', new_project_path(user_id: current_user, architect_id: current_user.architect.id), class: "btn btn-primary" %> -->
+  <%end%>
+</div>
 
