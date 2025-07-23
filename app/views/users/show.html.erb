@@ -202,6 +202,7 @@
                       <% if media.description.present? %>
                         <p class="small text-muted mt-1"><%= media.description %></p>
                       <% end %>
+                      <%= button_to "Supprimer", multimedia_path(media), method: :delete, data: { confirm: "Es-tu sûr de vouloir supprimer ce média ?" }, class: "btn btn-danger btn-sm mt-2" %>
                     </div>
                   <% end %>
                 <% end %>

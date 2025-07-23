@@ -17,6 +17,12 @@ class MultimediasController < ApplicationController
     end
   end
 
+  def destroy
+    @media = Multimedia.find(params[:id])
+    @media.destroy
+    redirect_back fallback_location: root_path, notice: "Média supprimé avec succès."
+  end
+
   private
 
   def media_params
