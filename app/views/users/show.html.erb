@@ -83,6 +83,7 @@
   <% if current_user.role == "architect" && current_user.architect.present? %>
 
     <h2 class="mt-5 mb-5"> Nouvelles demandes </h2>
+    <div class="card p-5">
     <% if @incoming_requests.present? %>
       <% @incoming_requests.each do |request|%>
       <%= request.title%><br>
@@ -94,10 +95,12 @@
       <p> Pas de nouvelle demande </p>
     <%end%>
   <%end%>
+  </div>
 
 <!--demande en attente de validation client-->
 <% if current_user.role == "client" %>
   <h2 class="mt-5 mb-5">Mes demandes en attente de validation</h2>
+  <div class="card p-5">
   <% if @incoming_requests.present? %>
     <ul>
       <% @incoming_requests.each do |project| %>
@@ -111,8 +114,9 @@
   <% else %>
     <p>Vous n'avez aucune demande en attente.</p>
   <% end %>
-<% end %>
+  </div>
 
+<% end %>
 
 
   <h2 class="mt-100 mb-5"> Projet en cours </h2>
