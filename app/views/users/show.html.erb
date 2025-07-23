@@ -92,8 +92,8 @@
         <ul class="list-unstyled">
           <% @incoming_requests.each do |request|%>
             <li class="card mb-5 p-5">
-              <h4 class="mb-5"><strong><%= request.title%></strong></h4>
-              <p class="mb-5"><%= request.description%></p>
+              <h4 class="mb-4"><%= request.title%></h4>
+              <p class="mb-4"><%= request.description%></p>
               <div>
                 <%= link_to "Voir", project_path(request), class: "btn btn-primary" %>
               </div>
@@ -112,13 +112,15 @@
     <h2 class="mt-5 mb-5">Mes demandes en attente de validation</h2>
     
     <% if @incoming_requests.present? %>
-      <ul>
+      <ul class="list-unstyled">
         <% @incoming_requests.each do |project| %>
           <div class="card p-5">
             <li>
-              <strong><%= project.title %></strong><br>
-              <%= truncate(project.description, length: 100) %><br>
-              <%= link_to "Voir", project_path(project), class: "btn btn-primary btn-sm" %>
+              <h4><%= project.title %></h4>
+              <p><%= truncate(project.description, length: 100) %></p>
+              <div>
+                <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+              </div>
             </li>
           </div>
         <% end %>
@@ -128,16 +130,22 @@
     <% end %>
   <% end %>
 
-
+<!-- Projet en cours pour archi et client  -->
   <h2 class="mt-100 mb-5"> Projet en cours </h2>
   <% if @current_projects.present? %>
-    <div class="card p-5">
+    <ul class="list-unstyled">
       <% @current_projects.each do |project|%>
-      <%=project.title%><br>
-      <%= project.description%>
-      <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+        <div class="card p-5">
+          <li>
+            <h4><%=project.title%></h4>
+            <p><%= project.description%></p>
+            <div>
+              <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+            </div>
+          </li>
+        </div>
       <%end%>
-    </div>
+    </ul>
   <%else%>
     <p> Pas de projet en cours </p>
   <%end%>
@@ -152,14 +160,19 @@
 
   <h2 class="mt-100 mb-5"> Historique des projets </h2>
   <% if @completed_projects.present? %>
-    <div class="card p-5">
+    <ul class="list-unstyled">
       <% @completed_projects.each do |project|%>
-      <%=project.title%><br>
-      <%= project.description%>
-      <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
-
+        <div class="card p-5">
+          <li>
+            <h4><%=project.title%></h4>
+            <p><%= project.description%></p>
+            <div>
+              <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+            </div>
+          </li>
+        </div>
       <%end%>
-    </div>
+    </ul>
   <%else%>
     <p> Pas de projet terminé </p>
   <%end%>
@@ -170,13 +183,17 @@
 
     <h2 class="mt-100 mb-5"> Portfolio </h2>
     <% if @portfolio_projects.present? %>
-      <div class="card p-5">
+      <ul class="list-unstyled">
         <% @portfolio_projects.each do |project|%>
-        <%=project.title%> <br>
-        <%= truncate(project.description, length: 100)%> <br>
-        <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+          <div class="card p-5">
+            <h4><%=project.title%></h4> 
+            <p><%= truncate(project.description, length: 100)%></p>
+            <div>
+              <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+            </div>
+          </div>
         <%end%>
-      </div>
+      </ul>
     <%else%>
       <p> Pas de projet dans le portfolio </p>
     <%end%>
