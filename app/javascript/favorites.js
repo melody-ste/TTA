@@ -13,6 +13,13 @@ function initializeFavorites() {
 
       fav_icon.addEventListener("click", (event) => {
         event.preventDefault();
+
+        const canLike = container.dataset.userCanLike === "true";
+        if (!canLike) {
+          console.log("User non autorisé à liker");
+          return; // Ne fait rien
+        }
+
         const architectId = container.dataset.architectId;
         const isLiked = fav_icon.dataset.liked === "true";
 
