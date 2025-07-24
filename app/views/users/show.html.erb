@@ -148,13 +148,6 @@
     <p> Pas de projet en cours </p>
   <%end%>
 
-  <!--Fonctionnalité client-->
-    <!-- <% if current_user.role == "client" %>
-      <h3> favoris </h3>
-      <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
-      <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
-      <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
-  <% end %> -->
 
   <h2 class="mt-100 mb-5"> Historique des projets </h2>
   <% if @completed_projects.present? %>
@@ -241,3 +234,48 @@
   <%end%>
 </div>
 
+    <!--Fonctionnalité client - Favoris-->
+<% if current_user.role == "client" %>
+  <h2 class="mt-100 mb-5">Mes favoris</h2>
+  <% if @favorite_architects.present? %>
+    <div class="row g-3">
+      <% @favorite_architects.each do |architect| %>
+        <div class="col-lg-4 col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="me-3">
+                  <i class="fas fa-user-circle fa-2x text-primary"></i>
+                </div>
+                <div>
+                  <h6 class="card-title mb-1"><%= architect.user.fullname %></h6>
+                  <% if architect.user.city %>
+                    <small class="text-muted"><%= architect.user.city.name %></small>
+                  <% end %>
+                </div>
+              </div>
+              
+              <% if architect.description.present? %>
+                <p class="card-text small text-muted mb-3">
+                  <%= truncate(architect.description, length: 60) %>
+                </p>
+              <% end %>
+              
+              <div class="d-flex justify-content-between align-items-center">
+                <%= link_to "Voir", architect_path(architect), 
+                    class: "btn btn-outline-primary btn-sm" %>
+                <%= render 'shared/favorites_button', architect: architect %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="card p-4 text-center">
+      <p class="text-muted mb-3">Vous n'avez pas encore d'architectes favoris.</p>
+      <%= link_to "Découvrir des architectes", architects_path, 
+          class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,8 @@
+const heartIcon = document.querySelector('[data-architect-id="<%= @architect.id %>"] .heart-icon');
+heartIcon.classList.remove('fa-solid', 'text-danger');
+heartIcon.classList.add('fa-regular', 'text-muted');
+heartIcon.setAttribute('data-liked', 'false');
+heartIcon.setAttribute('title', 'Ajouter aux favoris');
+
+let likesCount = document.querySelector('[data-architect-id="<%= @architect.id %>"] .likes-count');
+likesCount.textContent = '<%= architect_likes_count(@architect) %>';

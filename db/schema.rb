@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_18_131850) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_23_133216) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -66,6 +66,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_18_131850) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_cities_on_user_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "client_id", null: false
+    t.integer "architect_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["architect_id"], name: "index_likes_on_architect_id"
+    t.index ["client_id", "architect_id"], name: "index_likes_on_client_id_and_architect_id", unique: true
+    t.index ["client_id"], name: "index_likes_on_client_id"
   end
 
   create_table "multimedias", force: :cascade do |t|
@@ -132,6 +142,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_18_131850) do
   add_foreign_key "architect_specializations", "specializations", on_delete: :cascade
   add_foreign_key "architects", "users", on_delete: :cascade
   add_foreign_key "cities", "users"
+  add_foreign_key "likes", "architects"
+  add_foreign_key "likes", "users", column: "client_id"
   add_foreign_key "multimedias", "projects", on_delete: :cascade
   add_foreign_key "projects", "architects", on_delete: :cascade
   add_foreign_key "projects", "users", on_delete: :cascade
