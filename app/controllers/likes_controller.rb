@@ -1,6 +1,10 @@
 class LikesController < ApplicationController
   before_action :authenticate_user!
-  before_action :only_for_clients, only: [ :create, :destroy ]
+  before_action :only_for_clients, only: [ :create, :destroy, :index ]
+
+  def index
+    @favorite_architects = current_user.likes.includes(:architect).map(&:architect)
+  end
 
   def create
     @architect = Architect.find(params[:id])
