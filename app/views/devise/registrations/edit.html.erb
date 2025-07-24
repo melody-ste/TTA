@@ -4,7 +4,7 @@
 <div class="container mt-5 mb-5">
   <h1 class="mt-100 mb-5">Modifier email et mot de passe</h1>
 
-  <div class="card position-relative m-5 p-5">
+  <div class="card position-relative m-3 m-md-5 p-2 p-md-5">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 

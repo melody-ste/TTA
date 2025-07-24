@@ -1,7 +1,7 @@
 <div class="container mt-100 mb-5">
   <h2 class="mb-5">Renvoyer les instructions de confirmation</h2>
 
-  <div class="card position-relative p-5">
+  <div class="card position-relative m-3 m-md-5 p-4 p-md-5">
     <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
