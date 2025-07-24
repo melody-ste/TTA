@@ -1,5 +1,10 @@
 module MultimediasHelper
   def random_media
-    Multimedia.all.sample(3)
+    Multimedia
+      .includes(:file_attachment, project: :architect)
+      .joins(:file_attachment)
+      .where(projects: { portfolio: true, status: "termine" })
+      .references(:projects)
+      .sample(3)
   end
 end

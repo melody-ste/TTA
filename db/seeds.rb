@@ -1,4 +1,5 @@
 require 'faker'
+require 'open-uri'
 
 puts "🧹 Nettoyage de la base..."
 Multimedia.destroy_all
@@ -82,7 +83,7 @@ clients = 50.times.map do |i|
 end
 
 # === ARCHITECTS + PORTFOLIOS + PROJECTS ===
-puts "🏗️ Création des architectes et projets..."
+puts "🏗️ Création des multimédias et diplômes..."
 
 medias_by_specialization = {
   "Résidentielle" => [
@@ -94,6 +95,7 @@ medias_by_specialization = {
     "https://archmodeler.com/wp-content/uploads/2023/02/Interior-model-7.jpg",
     "https://cdn.bluent.com/images/architectural-construction-drawing-portfolio-5-2.jpg",
     "https://img.freepik.com/photos-premium/maison-minimaliste-moderne-paysage-naturel_62754-4317.jpg",
+    "https://img.freepik.com/photos-gratuite/maison-verte-moderne-entouree-paysage-luxuriant-chemin-pierre-mene-entree_191095-99768.jpg?t=st=1753302238~exp=1753305838~hmac=997aad83419c6552977d6f5129de8c63a4e12ff4c6604d6570db09a0424d1171&w=900",
     "https://img.freepik.com/vecteurs-libre/conception-fond-architecture_1168-209.jpg"
   ],
 
@@ -107,7 +109,12 @@ medias_by_specialization = {
     "https://s3.eu-west-3.amazonaws.com/cdn.kipli/blog/deco-interieur/comment-choisir-accessoires-indispensables-decoration-interieur-1.jpg",
     "https://www.eyrc.com/hubfs/Imported_Blog_Media/EYRC%20Architects%20Irvine%20Cove%20Residence%20Interior%20Courtyards%202-3.jpg",
     "https://sdg-migration-id.s3.amazonaws.com/Interior-Design-Aidlin-Darling-Design-idx210101_boy_CountryHouse_Desert01-01.21.jpg",
-    "https://mariakillam.com/wp-content/uploads/2020/09/step-one-design-1024x768.jpg"
+    "https://mariakillam.com/wp-content/uploads/2020/09/step-one-design-1024x768.jpg",
+    "https://img.freepik.com/photos-gratuite/piece-moderne-vide-meubles_23-2149178338.jpg?t=st=1753302024~exp=1753305624~hmac=0472f5e6116b008afb4c03c1dc6e247423b71e74c8f4bbece47b9b34d9c79164&w=996",
+    "https://img.freepik.com/photos-gratuite/interieur-cuisine-scandinave-moderne-elegant-accessoires-cuisine-cuisine-blanche-lumineuse-articles-menagers_169016-4558.jpg",
+    "https://img.freepik.com/photos-gratuite/piece-moderne-vide-meubles_23-2149178886.jpg?t=st=1753301533~exp=1753305133~hmac=d5a9f4b6b95a7ab85d7ff92c13b5009c624d26430c357bc5fac14454cb721b86&w=900",
+    "https://img.freepik.com/photos-gratuite/design-interieur-baignoire-vintage_23-2148291600.jpg?t=st=1753301494~exp=1753305094~hmac=ecf1afeb51e924039abd91a9bf2201f2fe56748537e1654d845dd0d713d25106&w=360",
+    "https://img.freepik.com/photos-gratuite/interieur-style-boheme-mur-briques_23-2149637986.jpg"
   ],
 
   "Paysagère" => [
@@ -117,7 +124,10 @@ medias_by_specialization = {
     "https://www.outsideinfluencedesign.com/wp-content/uploads/2021/01/Residential_Landscape2.jpg",
     "https://images.adsttc.com/media/images/6099/9983/f91c/812c/b300/0007/newsletter/%28c%29_Frans_Parthesius__-_02_Villa_Fifty-Fifty_Design_Studioninedots_Photography_Frans_Parthesius.jpg?1620679031=",
     "https://images.adsttc.com/media/images/6099/9ead/f91c/812c/b300/000a/newsletter/%28c%29_Paul_Dyer_Tierwelthaus_%2815%29.jpg?1620680355=",
-    "https://images.squarespace-cdn.com/content/v1/5987c76cf5e231e93c7abd43/6d1a378c-54c0-477a-85d4-dbcfcf2864aa/9.jpg"
+    "https://images.squarespace-cdn.com/content/v1/5987c76cf5e231e93c7abd43/6d1a378c-54c0-477a-85d4-dbcfcf2864aa/9.jpg",
+    "https://img.freepik.com/photos-gratuite/belle-vue-nature-envoutante-dans-jardins-japonais-style-traditionnel-adelaide-himeji_181624-34903.jpg?t=st=1753301833~exp=1753305433~hmac=6a74e3144459a71e1caab8dfd5b7531459aa5bd9cc85d2ce9cd8109c1ad78af8&w=826",
+    "https://img.freepik.com/photos-gratuite/piscine_74190-7325.jpg?t=st=1753302608~exp=1753306208~hmac=14b714ed7420b1fc37df4838185a0e0b01fdd6727ec6d68787d907bddb0d0797&w=900",
+    "https://img.freepik.com/photos-gratuite/terrasse-exterieure-construction_1203-2586.jpg?t=st=1753302690~exp=1753306290~hmac=cd66285673b801e4d893e12ec4cc1c676704cebc636b25cfaf05db2908fed3ae&w=360"
   ]
 }
 
@@ -167,27 +177,71 @@ puts "🏗️ Création des architectes et projets..."
     ArchitectSpecialization.create!(architect: architect, specialization: spec)
   end
 
-  rand(1..10).times do
-    project = Project.create!(
+    # ✅ Projet "portfolio" garanti pour chaque architecte
+  project = Project.create!(
+    user: clients.sample,
+    architect: architect,
+    title: "#{Faker::Construction.material} #{Faker::Address.city} #{rand(100..999)}",
+    start_date: Faker::Date.backward(days: 1000),
+    description: Faker::Lorem.paragraph(sentence_count: 10),
+    status: "termine",
+    portfolio: true
+  )
+
+  specs.each do |spec|
+    media_urls = medias_by_specialization[spec.name]
+    next unless media_urls.present?
+
+    media_urls.sample(rand(1..[media_urls.size, 3].min)).each_with_index do |url, idx|
+      begin
+        file = URI.open(url)
+        media = Multimedia.new(
+          project: project,
+          type_media: "image",
+          description: "#{spec.name} - Image #{idx + 1}"
+        )
+        media.file.attach(
+          io: file,
+          filename: "media_#{spec.name.parameterize}_#{idx + 1}.jpg",
+          content_type: "image/jpeg"
+        )
+        media.save!
+      rescue => e
+        puts "    ⚠️ Erreur attachement #{spec.name} image #{idx + 1} : #{e.message}"
+      end
+    end
+  end
+
+  # ⚙️ Autres projets aléatoires (0 à 2) sans portfolio
+  rand(0..2).times do
+    prj = Project.create!(
       user: clients.sample,
       architect: architect,
       title: "#{Faker::Construction.material} #{Faker::Address.city} #{rand(100..999)}",
       start_date: Faker::Date.backward(days: 1000),
-      description: Faker::Lorem.paragraph(sentence_count: 10),
-      status: Project.statuses.keys.sample
-      # status: %w[en_validation accepte refuse en_cours termine annule].sample
+      description: Faker::Lorem.paragraph(sentence_count: 8),
+      status: (Project.statuses.keys - ["termine"]).sample,
+      portfolio: false
     )
-
     specs.each do |spec|
       media_urls = medias_by_specialization[spec.name]
       next unless media_urls.present?
 
-      media_urls.sample(rand(2..[ media_urls.size, 5 ].min)).each_with_index do |url, index|
-        Multimedia.create!(
-          project: project,
-          type_media: url,
-          description: "#{spec.name} - Image #{index + 1} - #{Faker::Lorem.sentence}"
-        )
+      media_urls.sample(rand(2..[media_urls.size, 5].min)).each_with_index do |url, idx|
+        begin
+          file = URI.open(url)
+          media = Multimedia.new(
+            project: prj,
+            type_media: "image",
+            description: "#{spec.name} - Image #{idx + 1}"
+          )
+          media.file.attach(io: file,
+                            filename: "media_#{spec.name.parameterize}_#{idx + 1}.jpg",
+                            content_type: "image/jpeg")
+          media.save!
+        rescue => e
+          puts "    ⚠️ Erreur attachement pour projet secondaire: #{e.message}"
+        end
       end
     end
   end

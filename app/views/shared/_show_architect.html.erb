@@ -1,7 +1,7 @@
 <h1 class="mt-100 mb-5"><%= @architect.fullname %></h1>
 <div class="card p-5 mb-5">
   <div class="d-flex align-items-start gap-4">
-    <% if @architect.user.avatar.attached? %>
+    <% if @architect.user&.avatar&.attached? %>
       <%= image_tag url_for(@architect.user.avatar), class: "avatar" %>
     <% else %>
       <%= image_tag "default-avatar.jpg", class: "avatar" %>

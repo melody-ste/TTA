@@ -7,13 +7,12 @@
   <div class="card p-5 mb-5">
     <div class="d-flex align-items-start gap-4">
 
-      <div>
-        <!--avatar actuel-->
-        <div class= "avatar">
+      <div class="text-center">
+        <div class="avatar mb-3">
           <%= user_avatar_or_default %>
         </div>
 
-        <!--bouton ajout/modification photo : display: none pour écraser "choisir un fichier" dans le bouton par défaut-->
+        <!-- Bouton Modifier -->
         <div class="profil-photo-actions">
           <%= form_tag user_avatars_path(current_user), multipart: true do %>
             <label for="avatar_input" class="btn btn-warning btn-sm">Modifier l'avatar</label>
@@ -21,10 +20,10 @@
           <% end %>
         </div>
       </div>
-
+      
       <div>
         <!-- Informations utilisateur -->
-        <div class="user-info">
+        <div>
           <h5>Informations personelles :</h5>
           <p><%= current_user.email %></p>
           <p><% if current_user.city.present? %>
@@ -85,95 +84,155 @@
   <% if current_user.role == "architect" && current_user.architect.present? %>
 
     <h2 class="mt-5 mb-5"> Nouvelles demandes </h2>
-    <div class="card p-5">
-    <% if @incoming_requests.present? %>
-      <% @incoming_requests.each do |request|%>
-      <%= request.title%><br>
-      <%= request.description%>
-      <%= link_to "Voir", project_path(request) %>
-    <%end%>
-      
-    <%else%>
-      <p> Pas de nouvelle demande </p>
-    <%end%>
-  <%end%>
-  </div>
-
-<!--demande en attente de validation client-->
-<% if current_user.role == "client" %>
-  <h2 class="mt-5 mb-5">Mes demandes en attente de validation</h2>
-  <div class="card p-5">
-  <% if @incoming_requests.present? %>
-    <ul>
-      <% @incoming_requests.each do |project| %>
-        <li>
-          <strong><%= project.title %></strong><br>
-          <%= truncate(project.description, length: 100) %><br>
-          <%= link_to "Voir", project_path(project), class: "btn btn-link btn-sm" %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>Vous n'avez aucune demande en attente.</p>
-  <% end %>
-  </div>
-
-
-<% end %>
-
-
-  <h2 class="mt-100 mb-5"> Projet en cours </h2>
-  <div class="card p-5">
-    <% if @current_projects.present? %>
-        <% @current_projects.each do |project|%>
-        <%=project.title%><br>
-        <%= project.description%>
-        <%= link_to "Voir", project_path(project) %>
-        <%end%>
+    
+      <% if @incoming_requests.present? %>
+         
+        <ul class="list-unstyled">
+          <% @incoming_requests.each do |request|%>
+            <li class="card mb-5 p-5">
+              <h4 class="mb-4"><%= request.title%></h4>
+              <p class="mb-4"><%= request.description%></p>
+              <div>
+                <%= link_to "Voir", project_path(request), class: "btn btn-primary" %>
+              </div>
+            </li>
+          <%end%>
+        </ul>
+        
       <%else%>
-        <p> Pas de projet en cours </p>
+        <p> Pas de nouvelle demande </p>
       <%end%>
-    </div>
+  <%end%>
+  
 
-  <!--Fonctionnalité client-->
-    <!-- <% if current_user.role == "client" %>
-      <h3> favoris </h3>
-      <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
-      <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
-      <img src="https://img.freepik.com/photos-gratuite/quartier-residentiel-moderne-toit-vert-balcon-genere-par-ia_188544-10276.jpg" allt = "">
-  <% end %> -->
+  <!--demande en attente de validation client-->
+  <% if current_user.role == "client" %>
+    <h2 class="mt-5 mb-5">Mes demandes en attente de validation</h2>
+    
+    <% if @incoming_requests.present? %>
+      <ul class="list-unstyled">
+        <% @incoming_requests.each do |project| %>
+          <div class="card p-5">
+            <li>
+              <h4><%= project.title %></h4>
+              <p><%= truncate(project.description, length: 100) %></p>
+              <div>
+                <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+              </div>
+            </li>
+          </div>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>Vous n'avez aucune demande en attente.</p>
+    <% end %>
+  <% end %>
+
+<!-- Projet en cours pour archi et client  -->
+  <h2 class="mt-100 mb-5"> Projet en cours </h2>
+  <% if @current_projects.present? %>
+    <ul class="list-unstyled">
+      <% @current_projects.each do |project|%>
+        <div class="card p-5">
+          <li>
+            <h4><%=project.title%></h4>
+            <p><%= project.description%></p>
+            <div>
+              <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+            </div>
+          </li>
+        </div>
+      <%end%>
+    </ul>
+  <%else%>
+    <p> Pas de projet en cours </p>
+  <%end%>
+
 
   <h2 class="mt-100 mb-5"> Historique des projets </h2>
-  <div class="card p-5">
-    <% if @completed_projects.present? %>
-        <% @completed_projects.each do |project|%>
-        <%=project.title%><br>
-        <%= project.description%>
-        <%= link_to "Voir", project_path(project) %>
+  <% if @completed_projects.present? %>
+    <ul class="list-unstyled">
+      <% @completed_projects.each do |project|%>
+        <div class="card p-5">
+          <li>
+            <h4><%=project.title%></h4>
+            <p><%= project.description%></p>
+            <div>
+              <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+            </div>
+          </li>
+        </div>
+      <%end%>
+    </ul>
+  <%else%>
+    <p> Pas de projet terminé </p>
+  <%end%>
 
-        <%end%>
-    <%else%>
-      <p> Pas de projet terminé </p>
-    <%end%>
-    </div>
 
   <!--fonctionnalité archi-->
-    <% if current_user.role == "architect" && current_user.architect.present? %>
+  <% if current_user.role == "architect" && current_user.architect.present? %>
 
-      <h2 class="mt-100 mb-5"> Portfolio </h2>
-      <% if @portfolio_projects.present? %>
-        <div class="card p-5">
-          <% @portfolio_projects.each do |project|%>
-          <%=project.title%> <br>
-          <%= truncate(project.description, length: 100)%> <br>
-          <%= link_to "Voir", project_path(project) %>
-          <%end%>
-        </div>
-      <%else%>
-        <p> Pas de projet dans le portfolio </p>
-      <%end%>
-      <%= link_to 'Ajouter un projet au portfolio', new_project_path(user_id: current_user, architect_id: current_user.architect.id), class: "btn btn-primary" %>
+    <h2 class="mt-100 mb-5"> Portfolio </h2>
+    <% if @portfolio_projects.present? %>
+      <ul class="list-unstyled">
+        <% @portfolio_projects.each do |project|%>
+          <div class="card p-5">
+            <h4><%=project.title%></h4> 
+            <p><%= truncate(project.description, length: 100)%></p>
+            <div>
+              <%= link_to "Voir", project_path(project), class: "btn btn-primary btn-sm" %>
+            </div>
+
+            <!-- Média deja ajouté -->
+            <% if project.multimedias.any? %>
+              <div class="row mb-3 mt-3">
+                <% project.multimedias.each do |media| %>
+                  <% if media.file.attached? %>
+                    <div class="col-6 col-md-4 mb-2">
+                      <%= image_tag media.file, class: "img-fluid" %>
+                      <% if media.description.present? %>
+                        <p class="small text-muted mt-1"><%= media.description %></p>
+                      <% end %>
+                      <%= button_to "Supprimer", multimedia_path(media), method: :delete, data: { confirm: "Es-tu sûr de vouloir supprimer ce média ?" }, class: "btn btn-danger btn-sm mt-2" %>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            <% else %>
+              <p class="text-muted">Aucune image pour ce projet.</p>
+            <% end %>
+
+            <hr>
+            <!-- Formulaire d'ajout multimedia -->
+             <div class="mt-2">
+              <h5 class="mb-4">Ajouter un media au projet</h5>
+
+              <%= form_with model: Multimedia.new, url: multimedias_path, local: true, html: { multipart: true } do |form| %>
+                <%= form.hidden_field :project_id, value: project.id %>
+
+                <div class="mb-3">
+                  <%= form.label :description, "Description de l'image" %>
+                  <%= form.text_field :description, class: "form-control" %>
+                </div>
+
+                <div class="mb-3">
+                  <%= form.label :file, "Image / Vidéo" %>
+                  <%= form.file_field :file, class: "form-control" %>
+                </div>
+
+                <%= form.submit "Ajouter un média", class: "btn btn-primary btn-sm" %>
+              <% end %>
+            </div>
+
+          </div>
+        <%end%>
+      </ul>
+    <%else%>
+      <p> Pas de projet dans le portfolio </p>
     <%end%>
+    <!-- <%= link_to 'Ajouter un projet au portfolio', new_project_path(user_id: current_user, architect_id: current_user.architect.id), class: "btn btn-primary" %> -->
+  <%end%>
+</div>
 
     <!--Fonctionnalité client - Favoris-->
 <% if current_user.role == "client" %>
@@ -220,5 +279,3 @@
     </div>
   <% end %>
 <% end %>
-
-
