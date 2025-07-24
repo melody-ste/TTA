@@ -3,27 +3,30 @@
 
   
   <% if @favorite_architects.present? %>
-    <div class="row g-5">
+    <div class="d-flex flex-wrap justify-content-start gap-3">
       <% @favorite_architects.each do |architect| %>
-        <div class="col-lg-4 col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex align-items-center mb-3">
-                
-                <div>
-                  <h6 class="card-title mb-1"><%= architect.user.fullname %></h6>
-                  <% if architect.user.city %>
-                    <small class="text-muted"><%= architect.user.city.name %></small>
-                  <% end %>
-                </div>
-              </div>
-              
-              <div class="d-flex justify-content-between align-items-center gap-2">
-                <%= link_to "Voir", architect_path(architect), class: "btn btn-primary btn-sm" %>
-                <%= render 'shared/favorites_button', architect: architect %>
-              </div>
+        <div class="custom-card me-3 mb-4">
+          
+          <% multimedia = architect.projects.flat_map(&:multimedias).first %>
+
+          <% if multimedia&.file&.attached? %>
+            <%= image_tag url_for(multimedia.file), class: "card-image" %>
+          <% else %>
+            <%= image_tag "placeholder.jpg", class: "card-image" %>
+          <% end %>
+
+          <div class="card-body">
+            <h6 class="card-name mb-1"><%= architect.user.fullname %></h6>
+            <% if architect.user.city %>
+              <small class="text-muted"><%= architect.user.city.name %></small>
+            <% end %>
+
+            <div class="d-flex justify-content-between align-items-center gap-2">
+              <%= link_to "Voir", architect_path(architect), class: "btn btn-primary btn-sm" %>
+              <%= render 'shared/favorites_button', architect: architect %>
             </div>
           </div>
+        
         </div>
       <% end %>
     </div>
