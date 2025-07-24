@@ -61,10 +61,10 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "example.com" }
     config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'in-v3.mailjet.com',
+    address: "in-v3.mailjet.com",
     port: 587,
-    user_name: ENV['MAILJET_API_KEY'],
-    password: ENV['MAILJET_SECRET_KEY'],
+    user_name: ENV["MAILJET_API_KEY"],
+    password: ENV["MAILJET_SECRET_KEY"],
     authentication: :plain,
     enable_starttls_auto: true
   }

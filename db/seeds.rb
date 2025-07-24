@@ -123,10 +123,10 @@ medias_by_specialization = {
 
 
 degrees = [
-  { name: "Diplôme d'État d'Architecte", acronym: "DEA"},
+  { name: "Diplôme d'État d'Architecte", acronym: "DEA" },
   { name: "Diplôme d'Architecte de l'École Spéciale", acronym: "DESA" },
   { name: "Master en Architecture", acronym: "MA" },
-  { name: "Master Architecture et Habitat", acronym: "MAH"},
+  { name: "Master Architecture et Habitat", acronym: "MAH" },
   { name: "Master Architecture Résidentielle", acronym: "MAR" },
   { name: "Diplôme Supérieur d'Arts Appliqués Architecture d'Intérieur", acronym: "DSAA-AI" },
   { name: "Master Design d'Espace et Architecture d'Intérieur", acronym: "MDEAI" },
@@ -182,7 +182,7 @@ puts "🏗️ Création des architectes et projets..."
       media_urls = medias_by_specialization[spec.name]
       next unless media_urls.present?
 
-      media_urls.sample(rand(2..[media_urls.size, 5].min)).each_with_index do |url, index|
+      media_urls.sample(rand(2..[ media_urls.size, 5 ].min)).each_with_index do |url, index|
         Multimedia.create!(
           project: project,
           type_media: url,

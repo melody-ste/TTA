@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, only: [:new, :create]
-  before_action :authorize_user!, only: [:edit, :update]
+  before_action :authenticate_user!, only: [ :new, :create ]
+  before_action :authorize_user!, only: [ :edit, :update ]
 
 
   # GET /projects or /projects.json
@@ -11,7 +11,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1 or /projects/1.json
   def show
-
   end
 
   # GET /projects/new
@@ -28,7 +27,6 @@ class ProjectsController < ApplicationController
 
   # POST /projects or /projects.json
   def create
-
     @project = Project.new(project_params)
     @project.user = current_user
     if current_user.role == "client"
@@ -68,11 +66,11 @@ class ProjectsController < ApplicationController
       # Changement de statut (accepter, refuser, terminer)
       if attrs.key?(:status) && @project.update(attrs)
         notice = case @project.status
-                when "en_cours" then "Projet accepté, il est maintenant en cours."
-                when "refuse" then "Projet refusé."
-                when "termine" then "Projet terminé."
-                else "Projet mis à jour."
-                end
+        when "en_cours" then "Projet accepté, il est maintenant en cours."
+        when "refuse" then "Projet refusé."
+        when "termine" then "Projet terminé."
+        else "Projet mis à jour."
+        end
         redirect_to @project, notice: notice and return
       elsif attrs.key?(:status)
         render :show, status: :unprocessable_entity and return
@@ -87,7 +85,7 @@ class ProjectsController < ApplicationController
       end
     end
   end
- 
+
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
@@ -108,15 +106,14 @@ class ProjectsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def project_params
       params.require(:project).permit(
-        :title, 
-        :description, 
-        :start_date, 
-        :architect_id, 
-        :status, 
-        :portfolio, 
+        :title,
+        :description,
+        :start_date,
+        :architect_id,
+        :status,
+        :portfolio,
         :user_id
       )
-
     end
 
      def status_params

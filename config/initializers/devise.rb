@@ -24,7 +24,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = ENV['SENDMAIL_USERNAME']
+  config.mailer_sender = ENV["SENDMAIL_USERNAME"]
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -185,53 +185,53 @@ Devise.setup do |config|
   # to give user feedback and not to assert the e-mail validity.
   config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
 
-  # ==> Configuration for :timeoutable
-  # The time you want to timeout the user session without activity. After this
-  # time the user will be asked for credentials again. Default is 30 minutes.
-  # config.timeout_in = 30.minutes
+# ==> Configuration for :timeoutable
+# The time you want to timeout the user session without activity. After this
+# time the user will be asked for credentials again. Default is 30 minutes.
+# config.timeout_in = 30.minutes
 
-  # ==> Configuration for :lockable
-  # Defines which strategy will be used to lock an account.
-  # :failed_attempts = Locks an account after a number of failed attempts to sign in.
-  # :none            = No lock strategy. You should handle locking by yourself.
-  # config.lock_strategy = :failed_attempts
+# ==> Configuration for :lockable
+# Defines which strategy will be used to lock an account.
+# :failed_attempts = Locks an account after a number of failed attempts to sign in.
+# :none            = No lock strategy. You should handle locking by yourself.
+# config.lock_strategy = :failed_attempts
 
-  # Defines which key will be used when locking and unlocking an account
-  # config.unlock_keys = [:email]
+# Defines which key will be used when locking and unlocking an account
+# config.unlock_keys = [:email]
 
-  # Defines which strategy will be used to unlock an account.
-  # :email = Sends an unlock link to the user email
-  # :time  = Re-enables login after a certain amount of time (see :unlock_in below)
-  # :both  = Enables both strategies
-  # :none  = No unlock strategy. You should handle unlocking by yourself.
-  # config.unlock_strategy = :both
+# Defines which strategy will be used to unlock an account.
+# :email = Sends an unlock link to the user email
+# :time  = Re-enables login after a certain amount of time (see :unlock_in below)
+# :both  = Enables both strategies
+# :none  = No unlock strategy. You should handle unlocking by yourself.
+# config.unlock_strategy = :both
 
-  # Number of authentication tries before locking an account if lock_strategy
-  # is failed attempts.
-  # config.maximum_attempts = 20
+# Number of authentication tries before locking an account if lock_strategy
+# is failed attempts.
+# config.maximum_attempts = 20
 
-  # Time interval to unlock the account if :time is enabled as unlock_strategy.
-  # config.unlock_in = 1.hour
+# Time interval to unlock the account if :time is enabled as unlock_strategy.
+# config.unlock_in = 1.hour
 
-  # Warn on the last attempt before the account is locked.
-  # config.last_attempt_warning = true
+# Warn on the last attempt before the account is locked.
+# config.last_attempt_warning = true
 
-  # ==> Configuration for :lockable  
+# ==> Configuration for :lockable
 config.lock_strategy = :failed_attempts
-config.unlock_keys = [:email]
+config.unlock_keys = [ :email ]
 config.unlock_strategy = :email
 config.maximum_attempts = 3
 config.unlock_in = 15.minutes
 
-  # ==> Configuration for :recoverable
-  #
-  # Defines which key will be used when recovering the password for an account
-  # config.reset_password_keys = [:email]
+# ==> Configuration for :recoverable
+#
+# Defines which key will be used when recovering the password for an account
+# config.reset_password_keys = [:email]
 
-  # Time interval you can reset your password with a reset password key.
-  # Don't put a too small interval or your users won't have the time to
-  # change their passwords.
-config.reset_password_keys = [:email]
+# Time interval you can reset your password with a reset password key.
+# Don't put a too small interval or your users won't have the time to
+# change their passwords.
+config.reset_password_keys = [ :email ]
 config.reset_password_within = 6.hours
 config.sign_in_after_reset_password = true
 
