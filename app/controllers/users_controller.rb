@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
 
 
-    def show
+  def show
     redirect_to user_path(current_user) if params[:id].to_i != current_user.id
 
     @user = current_user
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       @current_projects = @projects.where(status: :en_cours)
 
       if current_user.client?
-  @favorite_architects = current_user.liked_architects.includes(:user, :specializations)
+        @favorite_architects = current_user.liked_architects.includes(:user, :specializations)
       end
     end
   end

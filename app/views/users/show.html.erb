@@ -5,7 +5,7 @@
   <h1 class="mb-5"><%= current_user.fullname %></h1>
 
   <div class="card p-2 p-md-5 mb-5">
-    <div class="d-flex align-items-start gap-4">
+    <div class="d-flex flex-column flex-md-row align-items-start gap-4 w-100">
 
       <div class="text-center">
         <div class="avatar mb-3">
@@ -21,7 +21,7 @@
         </div>
       </div>
       
-      <div>
+      <div class="container-fluid w-100 w-md-auto">
         <!-- Informations utilisateur -->
         <div>
           <h5>Informations personelles :</h5>
@@ -69,9 +69,9 @@
 
         <!--modifier ou supprimer son compte-->
         <div class="d-flex gap-3 mt-4">
-          <%= link_to "Modifier", edit_user_path(@user), class: "btn btn-warning" %>
+          <%= link_to "Modifier", edit_user_path(@user), class: "btn btn-warning btn-sm" %>
           <%= form_with url: user_registration_path, method: :delete, local: true do %>
-            <%= submit_tag "Supprimer mon compte", class: "btn btn-danger", 
+            <%= submit_tag "Supprimer mon compte", class: "btn btn-danger btn-sm", 
                 data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
           <% end %>
         </div>
@@ -275,10 +275,9 @@
         </div>
       </div>
     <% else %>
-      <div class="card p-4 text-center">
+      <div class="text-center">
         <p class="text-muted mb-3">Vous n'avez pas encore d'architectes favoris.</p>
-        <%= link_to "Découvrir des architectes", architects_path, 
-            class: "btn btn-primary" %>
+        <%= link_to "Découvrir des architectes", architects_path, class: "btn btn-primary" %>
       </div>
     <% end %>
   <% end %>
