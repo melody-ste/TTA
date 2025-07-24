@@ -1,4 +1,41 @@
 # README
+# Trouve Ton Architecte
+
+**TTA** est une application Ruby on Rails permettant aux clients de trouver des architectes, de consulter leurs portfolios et de leur soumettre des projets en ligne.
+cahier des charge : https://docs.google.com/document/d/15_coCOfKQWbx-plhF4neyv2I3l2zjxs_T10r_CZQBO8/edit?tab=t.0
+site en production : https://trouve-ton-architecte.onrender.com/ 
+---
+
+## Fonctionnalités
+
+- Recherche d'architectes par spécialisation
+- Rôles user : 'client', 'architecte'
+- Portfolio visuel pour chaque architecte
+- Création de projets par les clients
+- Acceptation / refus des projets par les architectes
+- Statuts de projets : 'en_validation', 'en_cours', 'termine', 'refuse', 'annule'
+- Ajout d'avatars et de médias (images/vidéos)
+- Ajout aux favoris pour les client
+- Dashboard client et architecte
+
+---
+
+## Technologies utilisées
+Ruby on Rails 8
+
+SQLite (dev) / PostgreSQL (prod)
+
+Devise (authentification)
+
+ActiveStorage (fichiers, images)
+
+Bootstrap 5
+
+Faker (génération de données seed)
+
+Mailjet
+
+
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
