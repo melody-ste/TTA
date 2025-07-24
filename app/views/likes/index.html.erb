@@ -1,0 +1,40 @@
+<div class="container mt-5 mb-5">
+  <h1 class="mt-100 mb-100">Mes architectes favoris</h1>
+
+  
+  <% if @favorite_architects.present? %>
+    <div class="d-flex flex-wrap justify-content-start gap-3">
+      <% @favorite_architects.each do |architect| %>
+        <div class="custom-card me-3 mb-4">
+          
+          <% multimedia = architect.projects.flat_map(&:multimedias).first %>
+
+          <% if multimedia&.file&.attached? %>
+            <%= image_tag url_for(multimedia.file), class: "card-image" %>
+          <% else %>
+            <%= image_tag "placeholder.jpg", class: "card-image" %>
+          <% end %>
+
+          <div class="card-body">
+            <h6 class="card-name mb-1"><%= architect.user.fullname %></h6>
+            <% if architect.user.city %>
+              <small class="text-muted"><%= architect.user.city.name %></small>
+            <% end %>
+
+            <div class="d-flex justify-content-between align-items-center gap-2">
+              <%= link_to "Voir", architect_path(architect), class: "btn btn-primary btn-sm" %>
+              <%= render 'shared/favorites_button', architect: architect %>
+            </div>
+          </div>
+        
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="card p-4 text-center">
+      <p class="text-muted mb-3">Vous n'avez pas encore d'architectes favoris.</p>
+      <%= link_to "Découvrir des architectes", architects_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+</div>

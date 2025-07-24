@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
   resources :specializations
   resources :multimedias
-
+  resources :likes, only: [ :index]
   devise_for :users
   resources :users, only: [ :show, :edit, :update, :destroy ] do
     resources :avatars, only: [ :create, :edit, :update, :destroy ]

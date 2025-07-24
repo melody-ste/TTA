@@ -1,6 +1,8 @@
-<% if user_signed_in? && current_user.client? %>
-    <div class="favorite-container" data-architect-id="<%= architect.id %>">
-        <%= heart_icon(architect) %>
-        <span class="likes-count ms-1"><%= architect.likes_count %></span>
-    </div>
-<% end %>
+<div class="favorite-container" 
+     data-architect-id="<%= architect.id %>" 
+     data-user-can-like="<%= user_signed_in? && current_user.client? %>">
+  
+  <%= heart_icon(architect) %>
+  <span class="likes-count ms-1"><%= architect.likes_count %></span>
+
+</div>
