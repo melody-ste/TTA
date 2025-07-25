@@ -43,8 +43,59 @@
 
     <div class="d-flex flex-column align-items-center">
       <div>
-        <%= form.submit "Contacter", class: "btn btn-primary" %>
+        <%= form.submit(
+          if controller.action_name == "edit"
+            "Modifier"
+          elsif current_user.role == "architect"
+            "Créer un projet"
+          else
+            "Contacter"
+          end,
+          class: "btn btn-primary"
+        ) %>
       </div>
     </div>
   <% end %>
 </div>
+
+            <!-- Média deja ajouté -->
+            <% if project.multimedias.any? %>
+              <div class="row mb-3 mt-3">
+                <% project.multimedias.each do |media| %>
+                  <% if media.file.attached? %>
+                    <div class="col-6 col-md-4 mb-2">
+                      <%= image_tag media.file, class: "img-fluid" %>
+                      <% if media.description.present? %>
+                        <p class="small text-muted mt-1"><%= media.description %></p>
+                      <% end %>
+                      <%= button_to "Supprimer", multimedia_path(media), method: :delete, data: { confirm: "Es-tu sûr de vouloir supprimer ce média ?" }, class: "btn btn-danger btn-sm mt-2" %>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            <% else %>
+              <p class="text-muted">Aucune image pour ce projet.</p>
+            <% end %>
+
+            <hr>
+            <!-- Formulaire d'ajout multimedia -->
+             <div class="mt-2">
+              <h5 class="mb-4">Ajouter un media au projet</h5>
+
+              <%= form_with model: Multimedia.new, url: multimedias_path, local: true, html: { multipart: true } do |form| %>
+                <%= form.hidden_field :project_id, value: project.id %>
+
+                <div class="mb-3">
+                  <%= form.label :description, "Description de l'image" %>
+                  <%= form.text_field :description, class: "form-control" %>
+                </div>
+
+                <div class="mb-3">
+                  <%= form.label :file, "Image / Vidéo" %>
+                  <%= form.file_field :file, class: "form-control" %>
+                </div>
+
+                <%= form.submit "Ajouter un média", class: "btn btn-primary btn-sm" %>
+              <% end %>
+            </div>
+

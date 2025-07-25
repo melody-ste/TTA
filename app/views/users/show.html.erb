@@ -173,6 +173,8 @@
   <% if current_user.role == "architect" && current_user.architect.present? %>
 
     <h2 class="mt-100 mb-5"> Portfolio </h2>
+    <%= link_to 'Ajouter un projet au portfolio', new_project_path(user_id: current_user, architect_id: current_user.architect.id), class: "btn btn-primary" %>
+    <hr>
     <% if @portfolio_projects.present? %>
       <ul class="list-unstyled">
         <% @portfolio_projects.each do |project|%>
@@ -203,26 +205,6 @@
             <% end %>
 
             <hr>
-            <!-- Formulaire d'ajout multimedia -->
-             <div class="mt-2">
-              <h5 class="mb-4">Ajouter un media au projet</h5>
-
-              <%= form_with model: Multimedia.new, url: multimedias_path, local: true, html: { multipart: true } do |form| %>
-                <%= form.hidden_field :project_id, value: project.id %>
-
-                <div class="mb-3">
-                  <%= form.label :description, "Description de l'image" %>
-                  <%= form.text_field :description, class: "form-control" %>
-                </div>
-
-                <div class="mb-3">
-                  <%= form.label :file, "Image / Vidéo" %>
-                  <%= form.file_field :file, class: "form-control" %>
-                </div>
-
-                <%= form.submit "Ajouter un média", class: "btn btn-primary btn-sm" %>
-              <% end %>
-            </div>
 
           </div>
         <%end%>
@@ -230,7 +212,6 @@
     <%else%>
       <p> Pas de projet dans le portfolio </p>
     <%end%>
-     <%= link_to 'Ajouter un projet au portfolio', new_project_path(user_id: current_user, architect_id: current_user.architect.id), class: "btn btn-primary" %>
   <%end%>
 
   <!--Fonctionnalité client - Favoris-->
