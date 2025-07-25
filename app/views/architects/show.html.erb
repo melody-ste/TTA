@@ -2,14 +2,6 @@
 <% content_for :meta_description, "Page d'un architecte avec ses informations,son portfolio et un bouton pour le contacter" %>
 
 <div class="container mt-5 mb-5 px-4">
-  
-
-  <!-- <div>
-    <%= link_to "Edit this architect", edit_architect_path(@architect) %> |
-    <%= link_to "Back to architects", architects_path %>
-    <%= button_to "Destroy this architect", @architect, method: :delete %>
-  </div> -->
-
   <section>
   <%= render 'shared/show_architect' %>
   <%= render 'shared/architect_projects' %>
