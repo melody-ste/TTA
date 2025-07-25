@@ -3,7 +3,7 @@
 
 **TTA** is a Ruby on Rails application that allows clients to find architects, browse their portfolios, and submit projects online.
 [View PDF](https://drive.google.com/file/d/1HfiI2k1e2NMPfCapolGFQAa1RxHKRXY2/view?usp=drive_link)
-Live site: : https://trouve-ton-architecte.onrender.com/ 
+ Live site: ](https://ttaforkv2.fly.dev/architects)
 ---
 
 ### Features
