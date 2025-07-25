@@ -13,6 +13,25 @@
   <p><strong>Date de début du projet : </strong> <%= project.start_date%></p>
   <p><strong>Description : </strong><%= project.description%></p>
 
+<!--affichage ds photos si présentes -->
+              <% if project.multimedias.any? %>
+              <div class="row mb-3 mt-3">
+                <% project.multimedias.each do |media| %>
+                  <% if media.file.attached? %>
+                    <div class="col-6 col-md-4 mb-2">
+                      <%= image_tag media.file, class: "img-fluid" %>
+                      <% if media.description.present? %>
+                        <p class="small text-muted mt-1"><%= media.description %></p>
+                      <% end %>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            <% else %>
+              <p class="text-muted">Aucune image pour ce projet.</p>
+            <% end %>
+
+
   <!--Seul le user qui a crée le projet peut le modifier-->
   <% if current_user == @project.user && @project.status != "termine" || current_user == @project.architect.user && @project.status == "termine"%>
   <div class="d-flex gap-3 mt-4">

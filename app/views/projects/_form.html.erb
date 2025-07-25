@@ -43,7 +43,16 @@
 
     <div class="d-flex flex-column align-items-center">
       <div>
-        <%= form.submit "Contacter", class: "btn btn-primary" %>
+        <%= form.submit(
+          if controller.action_name == "edit"
+            "Modifier"
+          elsif current_user.role == "architect"
+            "Créer un projet"
+          else
+            "Contacter"
+          end,
+          class: "btn btn-primary"
+        ) %>
       </div>
     </div>
   <% end %>
