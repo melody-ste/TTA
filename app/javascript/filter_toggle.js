@@ -1,10 +1,8 @@
 document.addEventListener('turbo:load', () => {
-  console.log("JS chargé avec Turbo !");
   const toggleBtn = document.getElementById('toggle-filter-btn');
   const filterForm = document.getElementById('filter-form-container');
 
   if (!toggleBtn || !filterForm) {
-    console.log("toggleBtn ou filterForm introuvable");
     return;
   }
 
@@ -14,7 +12,6 @@ document.addEventListener('turbo:load', () => {
 
   newToggleBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    console.log("Bouton toggle cliqué");
     filterForm.classList.toggle('d-none');
   });
 });

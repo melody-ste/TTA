@@ -220,7 +220,7 @@ Devise.setup do |config|
 config.lock_strategy = :failed_attempts
 config.unlock_keys = [ :email ]
 config.unlock_strategy = :email
-config.maximum_attempts = 3
+config.maximum_attempts = 5
 config.unlock_in = 15.minutes
 
 # ==> Configuration for :recoverable

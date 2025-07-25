@@ -16,7 +16,6 @@ function initializeFavorites() {
 
         const canLike = container.dataset.userCanLike === "true";
         if (!canLike) {
-          console.log("User non autorisé à liker");
           return; // Ne fait rien
         }
 
