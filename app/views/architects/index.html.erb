@@ -38,7 +38,9 @@
 
           <h6 class="card-name"><%= architect.user.fullname %></h6>
           <p><%= truncate(architect.description, length: 80) %></p>
-          <%= render 'shared/favorites_button', architect: architect %>
+          <% if current_user.role == "client"%>
+            <%= render 'shared/favorites_button', architect: architect %>
+          <%end%>
           <%= link_to "Voir plus", architect_path(architect), class: "btn btn-primary" %>
             
         </div>
