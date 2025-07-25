@@ -1,55 +1,38 @@
-# README
-# Trouve Ton Architecte
-
-**TTA** est une application Ruby on Rails permettant aux clients de trouver des architectes, de consulter leurs portfolios et de leur soumettre des projets en ligne.
-cahier des charge : https://docs.google.com/document/d/15_coCOfKQWbx-plhF4neyv2I3l2zjxs_T10r_CZQBO8/edit?tab=t.0
-site en production : https://trouve-ton-architecte.onrender.com/ 
+## Trouve Ton Architecte
 ---
 
-## Fonctionnalités
-
-- Recherche d'architectes par spécialisation
-- Rôles user : 'client', 'architecte'
-- Portfolio visuel pour chaque architecte
-- Création de projets par les clients
-- Acceptation / refus des projets par les architectes
-- Statuts de projets : 'en_validation', 'en_cours', 'termine', 'refuse', 'annule'
-- Ajout d'avatars et de médias (images/vidéos)
-- Ajout aux favoris pour les client
-- Dashboard client et architecte
-
+**TTA** is a Ruby on Rails application that allows clients to find architects, browse their portfolios, and submit projects online.
+[View PDF](https://drive.google.com/file/d/1HfiI2k1e2NMPfCapolGFQAa1RxHKRXY2/view?usp=drive_link)
+Live site: : https://trouve-ton-architecte.onrender.com/ 
 ---
 
-## Technologies utilisées
-Ruby on Rails 8
+### Features
 
-SQLite (dev) / PostgreSQL (prod)
+- Search for architects by specialization  
+- User roles: 'client', 'architect'  
+- Visual portfolio for each architect  
+- Project creation by clients  
+- Project acceptance/refusal by architects  
+- Project statuses: 'en_validation', 'en_cours', 'termine', 'refuse', 'annule' 
+- Avatar and media (images/videos) upload  
+- Favorites system for clients  
+- Client and architect dashboards  
+---
 
-Devise (authentification)
+### Technologies Used
 
-ActiveStorage (fichiers, images)
+- Ruby on Rails 8
+- SQLite (dev) / PostgreSQL (prod)
+- Devise (authentification)
+- ActiveStorage (fichiers, images)
+- Bootstrap 5
+- gem Faker
+- Mailjet
+- AWS
+---
 
-Bootstrap 5
+### Configuration
 
-Faker (génération de données seed)
-
-Mailjet
-
-
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-  ```bash
-  Ruby 3.4.2
-  ```
-
-* System dependencies
-  - SQLite3 (>= 2.1) - Database
-* Configuration
  1. Clone the repository
  2. Install the gems: bundle install
  3. Configure environment variables in a .env file:
@@ -57,76 +40,23 @@ Things you may want to cover:
    - Mailjet variables (MAILJET_API_KEY, MAILJET_SECRET_KEY)
    - Localhost variable (MAIL_HOST)
 
-* Database creation
-  ```bash
-  rails db:create
-  ```
 * Database initialization
   ```bash
+  rails db:create
   rails db:migrate
   rails db:seed
   ```
-
-* To reset everything including indexes:
-  ```bash
-  rails db:reset
+  
+* To see in dev
+ ```bash
+  rails s
   ```
+Then go to : http://localhost:3000/
 
-* Rollbacks
-    1. To undo the last migration (one step at a time)
-  ```bash
-  rails db:rollback
-  ```
-    2. To undo a specific migration (replace version_number with the actual version)
-  ```bash
-  rails db:migrate:down VERSION=version_number
-  ```
+---
+### Team
 
-* How to run the test suite
-# Unit and functional tests
-```bash
-rails test
-```
-# System tests (with Capybara and Selenium)
-```bash
-rails test:system
-```
-# All tests
-```bash
-rails test:all
-```
-# Specific tests
-```bash
-rails test test/models/
-rails test test/controllers/
-rails test test/system/
-```
+This project was developed by a team of three people. You can check out my collaborators' profiles here:
 
-* Services (job queues, cache servers, search engines, etc.)
-
-    * Solid Queue: Background job processing
-    * Solid Cache: Database-backed caching system
-    * Solid Cable: WebSockets for Action Cable
-    * Mailjet: Email sending service
-    * Devise: User authentication
-
-
-* Deployment instructions
-```bash
-# Local development
-rails server
-
-# Using Docker
-docker build -t tta .
-docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name tta tta
-
-# Using Kamal (production deployment)
-kamal setup    # First-time setup
-kamal deploy   # Subsequent deployments
-```
-```bash
-```
-```bash
-```
-```bash
-```
+- [@RosaBen](https://github.com/RosaBen)
+- [@brainycodings](https://github.com/brainycodings)
