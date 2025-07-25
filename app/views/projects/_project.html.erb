@@ -14,12 +14,15 @@
   <p><strong>Description : </strong><%= project.description%></p>
 
   <!--Seul le user qui a crée le projet peut le modifier-->
-  <% if current_user == @project.user && @project.status != "termine" %>
+  <% if current_user == @project.user && @project.status != "termine" || current_user == @project.architect.user && @project.status == "termine"%>
+  
   <div class="d-flex gap-3 mt-4">
     <%= link_to "Modifier le projet", edit_project_path(project),class: "btn btn-warning" %> 
     <%= button_to "Supprimer le projet", project, method: :delete, class: "btn btn-danger" %>
   </div>
   <%end%>
+
+  
 
   <!-- Pour l’architecte, en fonction du statut du projet -->
   <% if current_user.architect? && current_user.architect&.id == @project.architect_id %>
