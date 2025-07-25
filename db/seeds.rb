@@ -99,7 +99,7 @@ medias_by_specialization = {
     "https://img.freepik.com/vecteurs-libre/conception-fond-architecture_1168-209.jpg"
   ],
 
-  "Intérieure" => [
+  "Intérieur" => [
     "https://img.freepik.com/photos-premium/dessin-salle-sejour-vue-ville_337384-123322.jpg",
     "https://img.freepik.com/photos-gratuite/petite-entree-style-moderne_23-2150713049.jpg",
     "https://img.freepik.com/photos-gratuite/interieur-design-cuisine-moderne_23-2150954758.jpg",
