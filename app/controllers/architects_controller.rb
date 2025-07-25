@@ -1,7 +1,7 @@
 class ArchitectsController < ApplicationController
   before_action :set_architect, only: %i[ show edit update destroy ]
 
-  # GET /architects or /architects.json
+ 
   def index
     @architects = Architect.joins(:user)
                          .left_joins(user: :city)
@@ -23,22 +23,22 @@ class ArchitectsController < ApplicationController
     end
   end
 
-  # GET /architects/1 or /architects/1.json
+ 
   def show
     # si architecte a un portfolio, on récupères ses medias
     @multimedias = @architect.projects.includes(:multimedias).map(&:multimedias).flatten
   end
 
-  # GET /architects/new
+
   def new
     @architect = Architect.new
   end
 
-  # GET /architects/1/edit
+  
   def edit
   end
 
-  # POST /architects or /architects.json
+  
   def create
     @architect = Architect.new(architect_params)
 
@@ -53,7 +53,7 @@ class ArchitectsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /architects/1 or /architects/1.json
+  
   def update
     respond_to do |format|
       if @architect.update(architect_params)
@@ -66,7 +66,7 @@ class ArchitectsController < ApplicationController
     end
   end
 
-  # DELETE /architects/1 or /architects/1.json
+ 
   def destroy
     @architect.destroy!
 

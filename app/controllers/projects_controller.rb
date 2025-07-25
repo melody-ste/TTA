@@ -4,16 +4,16 @@ class ProjectsController < ApplicationController
   before_action :authorize_user!, only: [ :edit, :update ]
 
 
-  # GET /projects or /projects.json
+
   def index
     @projects = Project.all
   end
 
-  # GET /projects/1 or /projects/1.json
+  
   def show
   end
 
-  # GET /projects/new
+ 
   def new
     @project = Project.new
     @project.architect_id = params[:architect_id]
@@ -21,11 +21,9 @@ class ProjectsController < ApplicationController
   end
 
 
-  # GET /projects/1/edit
   def edit
   end
 
-  # POST /projects or /projects.json
   def create
     @project = Project.new(project_params)
     @project.user = current_user
@@ -49,7 +47,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /projects/1 or /projects/1.json
+ 
   def update
     if current_user.architect?
       attrs = status_params
@@ -87,7 +85,7 @@ class ProjectsController < ApplicationController
   end
 
 
-  # DELETE /projects/1 or /projects/1.json
+ 
   def destroy
     @project.destroy!
 

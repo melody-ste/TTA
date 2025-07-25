@@ -45,11 +45,13 @@
             </ul>
           </li>
         <% end %>
-        <li class="nav-item">
-          <%= link_to likes_path, class: "nav-link" do %>
-            <iconify-icon icon="fluent:heart-32-filled" width="24" height="24"></iconify-icon>
-          <% end %>
-        </li>
+        <% if current_user && current_user.role == "client" %>
+          <li class="nav-item">
+            <%= link_to likes_path, class: "nav-link" do %>
+              <iconify-icon icon="fluent:heart-32-filled" width="24" height="24"></iconify-icon>
+            <% end %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>
