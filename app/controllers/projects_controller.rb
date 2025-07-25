@@ -64,7 +64,9 @@ class ProjectsController < ApplicationController
       # Changement de statut (accepter, refuser, terminer)
       if attrs.key?(:status) && @project.update(attrs)
         notice = case @project.status
-        when "en_cours" then "Projet accepté, il est maintenant en cours."
+        when "en_cours" 
+          ValidatedMailMailer.project_validated_client(@project).deliver_now
+          "Projet accepté, il est maintenant en cours."
         when "refuse" then "Projet refusé."
         when "termine" then "Projet terminé."
         else "Projet mis à jour."
