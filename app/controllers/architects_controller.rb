@@ -26,7 +26,6 @@ class ArchitectsController < ApplicationController
   # GET /architects/1 or /architects/1.json
   def show
     # si architecte a un portfolio, on récupères ses medias
-    # @multimedias = @architect.project.multimedias if @architect.project
     @multimedias = @architect.projects.includes(:multimedias).map(&:multimedias).flatten
   end
 
