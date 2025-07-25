@@ -173,6 +173,8 @@
   <% if current_user.role == "architect" && current_user.architect.present? %>
 
     <h2 class="mt-100 mb-5"> Portfolio </h2>
+    <%= link_to 'Ajouter un projet au portfolio', new_project_path(user_id: current_user, architect_id: current_user.architect.id), class: "btn btn-primary" %>
+    <hr>
     <% if @portfolio_projects.present? %>
       <ul class="list-unstyled">
         <% @portfolio_projects.each do |project|%>
@@ -183,13 +185,33 @@
               <%= link_to "Voir", project_path(project), class: "btn btn-primary btn-sm" %>
             </div>
 
+            <!-- Média deja ajouté -->
+            <% if project.multimedias.any? %>
+              <div class="row mb-3 mt-3">
+                <% project.multimedias.each do |media| %>
+                  <% if media.file.attached? %>
+                    <div class="col-6 col-md-4 mb-2">
+                      <%= image_tag media.file, class: "img-fluid" %>
+                      <% if media.description.present? %>
+                        <p class="small text-muted mt-1"><%= media.description %></p>
+                      <% end %>
+                      <%= button_to "Supprimer", multimedia_path(media), method: :delete, data: { confirm: "Es-tu sûr de vouloir supprimer ce média ?" }, class: "btn btn-danger btn-sm mt-2" %>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            <% else %>
+              <p class="text-muted">Aucune image pour ce projet.</p>
+            <% end %>
+
+            <hr>
+
           </div>
         <%end%>
       </ul>
     <%else%>
       <p> Pas de projet dans le portfolio </p>
     <%end%>
-     <%= link_to 'Ajouter un projet au portfolio', new_project_path(user_id: current_user, architect_id: current_user.architect.id), class: "btn btn-primary" %>
   <%end%>
 
   <!--Fonctionnalité client - Favoris-->
