@@ -1,7 +1,4 @@
 module UsersHelper
-  def user_is_architect_with_data?
-    current_user.role == "architect" && current_user.architect.present?
-  end
 
   def user_avatar_or_default
     if current_user.avatar.attached?
@@ -13,17 +10,6 @@ module UsersHelper
     end
   end
 
-  def projects_by_status(status)
-    current_user.projects.where(status: status)
-  end
-
-  def project_status_sections
-    [
-      { title: "Nouvelles demandes", status: "en_validation" },
-      { title: "Projets en cours", status: "en_cours" },
-      { title: "Historique des projets", status: "termine" }
-    ]
-  end
 
   def degree_options
     [

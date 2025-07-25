@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // console.log("Profil.js loaded - DOM ready");
+
 
   function initializeAvatar() {
     const fileInput = document.getElementById("avatar_input");
@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }
-
   }
 
   initializeAvatar();
