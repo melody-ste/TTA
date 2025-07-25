@@ -32,9 +32,9 @@
       <p><%= @architect.description %></p>
       <div class="d-flex gap-3 mt-4">
         <%= link_to 'Contacter', new_project_path(architect_id: @architect.id), class: "btn btn-primary" %>
-        <% if current_user.role == "client"%>
-          <%= render 'shared/favorites_button', architect: @architect %>
-        <%end%>
+        
+        <%= render 'shared/favorites_button', architect: @architect %>
+        
       </div>
     </div>
   </div>
