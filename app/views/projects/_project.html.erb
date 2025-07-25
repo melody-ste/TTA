@@ -39,7 +39,7 @@
   </div>
   <%end%>
 <hr>
-  <% if current_user == @project.user%>
+  <% if current_user == @project.user && @project.status != "termine"%>
     <%= button_to "Supprimer le projet", project, method: :delete, class: "btn btn-danger" %>
   <%end%>
 
