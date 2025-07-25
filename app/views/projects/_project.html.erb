@@ -1,5 +1,5 @@
 <h1 class="mt-100 mb-5">Récapitulatif du projet</h1>
-<div class="card p-5">
+<div class="card m-3 m-md-5 p-3 p-md-5">
   <div id="<%= dom_id project %>">
   </div>
   
@@ -13,7 +13,7 @@
   <p><strong>Date de début du projet : </strong> <%= project.start_date%></p>
   <p><strong>Description : </strong><%= project.description%></p>
 
-  <% if current_user == @project.user %>
+  <% if current_user == @project.user && @project.status != "termine" %>
   <div class="d-flex gap-3 mt-4">
     <%= link_to "Modifier le projet", edit_project_path(project),class: "btn btn-warning" %> 
     <%= button_to "Supprimer le projet", project, method: :delete, class: "btn btn-danger" %>
@@ -21,19 +21,19 @@
   <%end%>
 
   <%# === Pour l’architecte, en fonction du statut du projet === %>
-<% if current_user.architect? && current_user.architect&.id == @project.architect_id %>
-  <% if @project.status == "en_validation" %>
-    <%= button_to "Accepter", project_path(@project, project: { status: "en_cours" }), method: :patch, class: "btn btn-success" %>
-    <%= button_to "Refuser", project_path(@project, project: { status: "refuse" }), method: :patch, class: "btn btn-danger" %>
-  <% elsif @project.status == "en_cours" %>
-    <%= button_to "Marquer comme terminé", project_path(@project, project: { status: "termine" }), method: :patch, class: "btn btn-primary" %>
-  <% elsif @project.status == "termine" %>
-    <% unless @project.portfolio? %>
-      <%= button_to "Ajouter au portfolio", project_path(@project, project: { portfolio: true }), method: :patch, class: "btn btn-warning" %>
-    <% else %>
-      <p>Ce projet est dans votre portfolio</p>
+  <% if current_user.architect? && current_user.architect&.id == @project.architect_id %>
+    <% if @project.status == "en_validation" %>
+      <%= button_to "Accepter", project_path(@project, project: { status: "en_cours" }), method: :patch, class: "btn btn-success" %>
+      <%= button_to "Refuser", project_path(@project, project: { status: "refuse" }), method: :patch, class: "btn btn-danger" %>
+    <% elsif @project.status == "en_cours" %>
+      <%= button_to "Marquer comme terminé", project_path(@project, project: { status: "termine" }), method: :patch, class: "btn btn-primary" %>
+    <% elsif @project.status == "termine" %>
+      <% unless @project.portfolio? %>
+        <%= button_to "Ajouter au portfolio", project_path(@project, project: { portfolio: true }), method: :patch, class: "btn btn-warning" %>
+      <% else %>
+        <p>Ce projet est dans votre portfolio</p>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
 </div>
 

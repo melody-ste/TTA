@@ -1,8 +1,8 @@
 :root {
   --color-primary-color: #e5e2d9;
-  --color-dark-gray: #536059;
-  --color-medium-gray: #72827f;
-  --color-light-gray: #849994;
+  --color-dark-gray: #4d5852;
+  --color-medium-gray: #687774;
+  --color-light-gray: #819691;
   --color-danger: #916868;
   --color-warning: #a7977c;
   --color-success: #618866;
@@ -28,7 +28,9 @@ li {
 }
 
 .lead {
-  font-size: 1.7rem;
+  font-size: 1.2rem;
+  color: var(--color-medium-gray);
+  font-weight: bold;
 }
 
 .mt-100 {
@@ -39,15 +41,16 @@ li {
   margin-bottom: 100px;
 }
 
+.text-primary {
+  color: var(--color-dark-gray)!important;
+}
+
 /* --------------------------------- */
 /*              HEADER               */
 /* --------------------------------- */
 
 nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  background-color: transparent !important;
   z-index: 10; /* au-dessus du header */
 }
 
@@ -64,7 +67,7 @@ nav {
   background-position: center;
   background-repeat: no-repeat;
   z-index: 1;
-  padding-top: 170px;
+  padding-top: 110px;
   padding-bottom: 500px; 
 }
 
@@ -197,7 +200,7 @@ nav {
 }
 
 .custom-card {
-  width: 400px; 
+  width: 380px; 
   border-radius: 0;
   overflow: hidden; 
   background-color: white;
