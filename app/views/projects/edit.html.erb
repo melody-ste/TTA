@@ -36,7 +36,7 @@
       <h5 class="mb-4">Ajouter un media au projet</h5>
 
       <%= form_with model: Multimedia.new, url: multimedias_path, local: true, html: { multipart: true } do |form| %>
-        <%= form.hidden_field @project, value: @project %>
+        <%= form.hidden_field :project_id, value: @project.id %> 
 
         <div class="mb-3">
           <%= form.label :description, "Description de l'image" %>
