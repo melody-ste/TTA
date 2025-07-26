@@ -84,19 +84,6 @@
         </section>
       <% end %>
       
-      <!-- Section Villes -->
-      <% if @cities.any? %>
-        <section class="card p-5">
-          <h2 class="mb-5">Villes (<%= @cities.count %>)</h2>
-          <div>
-            <% @cities.each do |city| %>
-              <div>
-                <h3><%= city.name %></h3>
-              </div>
-            <% end %>
-          </div>
-        </section>
-      <% end %>
       
       <!-- Message si aucun résultat -->
       <% if @architects.empty? && @specializations.empty? && @cities.empty? %>

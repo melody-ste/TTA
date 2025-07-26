@@ -4,16 +4,16 @@ class ProjectsController < ApplicationController
   before_action :authorize_user!, only: [ :edit, :update ]
 
 
-  # GET /projects or /projects.json
+
   def index
     @projects = Project.all
   end
 
-  # GET /projects/1 or /projects/1.json
+  
   def show
   end
 
-  # GET /projects/new
+ 
   def new
     @project = Project.new
     @project.architect_id = params[:architect_id]
@@ -21,11 +21,9 @@ class ProjectsController < ApplicationController
   end
 
 
-  # GET /projects/1/edit
   def edit
   end
 
-  # POST /projects or /projects.json
   def create
     @project = Project.new(project_params)
     @project.user = current_user
@@ -49,7 +47,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /projects/1 or /projects/1.json
+ 
   def update
     if current_user.architect?
       attrs = status_params
@@ -66,7 +64,9 @@ class ProjectsController < ApplicationController
       # Changement de statut (accepter, refuser, terminer)
       if attrs.key?(:status) && @project.update(attrs)
         notice = case @project.status
-        when "en_cours" then "Projet accepté, il est maintenant en cours."
+        when "en_cours" 
+          ValidatedMailMailer.project_validated_client(@project).deliver_now
+          "Projet accepté, il est maintenant en cours."
         when "refuse" then "Projet refusé."
         when "termine" then "Projet terminé."
         else "Projet mis à jour."
@@ -87,7 +87,7 @@ class ProjectsController < ApplicationController
   end
 
 
-  # DELETE /projects/1 or /projects/1.json
+ 
   def destroy
     @project.destroy!
 

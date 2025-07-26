@@ -50,8 +50,13 @@ li {
 /* --------------------------------- */
 
 nav {
-  background-color: transparent !important;
   z-index: 10; /* au-dessus du header */
+  background: rgba(229, 226, 217, 0.9);
+  backdrop-filter: blur(30px);
+  background: linear-gradient(
+    to top,
+     rgba(0,0,0,0) 1%,
+     var(--color-primary-color) );
 }
 
 .hero-header {
@@ -297,12 +302,16 @@ nav {
 /* --------------------------------- */
 
 .avatar {
-  width: 20rem;
-  height: 20rem;
+  width: 18rem;
+  height: 18rem;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .project-block {
   margin-bottom: 10rem; 
+}
+
+.favorite-container {
+  cursor: pointer;
 }

@@ -34,7 +34,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 2rem;
-  background-color: var(--color-primary-color);
+  background-color: transparent;
   color: var(--color-light-gray);
   border: none;
   border-radius: 20px;
@@ -44,11 +44,11 @@
 }
 
 .prev {
-  left: -45px;
+  left: -33px;
 }
 
 .next {
-  right: -45px;
+  right: -33px;
 }
 
 .btn-more {

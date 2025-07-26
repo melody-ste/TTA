@@ -6,7 +6,7 @@
       <!-- ---------- SPÉCIALITÉ 1 : en cards ---------- -->
       <% if i == 0 %>
         <div class="card-layout">
-          <h2 class="mt-100 mb-100"><%= specialization.name %></h2>
+          <h2 class="mt-100 mb-100">Architecture <%= specialization.name %></h2>
           <div class="card-row">
             <% specialization_medias.limit(3).each do |media| %>
               <% project = media.project %>
@@ -34,7 +34,7 @@
       <!-- ---------- SPÉCIALITÉ 2 : deux carrousels côte à côte ---------- -->
       <% elsif i == 1 %>
         <div class="carousel-double mt-5">
-          <h2 class="mb-100 mt-100"><%= specialization.name %></h2>
+          <h2 class="mb-100 mt-100">Architecture <%= specialization.name %></h2>
           <div class="row">
             <% medias1 = specialization_medias.limit(5) %>
             <% medias2 = specialization_medias.offset(5).limit(5) %>
@@ -72,7 +72,7 @@
       <!-- ---------- SPÉCIALITÉ 3 : en cards de nouveau ---------- -->
       <% elsif i == 2 %>
         <div class="card-layout">
-          <h2 class="mb-100 mt-100"><%= specialization.name %></h2>
+          <h2 class="mb-100 mt-100">Architecture <%= specialization.name %></h2>
           <div class="card-row">
             <% specialization_medias.limit(3).each do |media| %>
               <% architect = media.project&.architect %>
