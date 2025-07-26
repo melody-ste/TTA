@@ -1,0 +1,66 @@
+<h1 class="mt-100 mb-5">Récapitulatif du projet</h1>
+
+<div class="card m-3 m-md-5 p-3 p-md-5">
+  
+  <h3 class="mb-4"><%= project.title%> </h3>
+  <p> 
+    <span class="btn btn-outline btn-sm d-inline-block w-auto">
+      <%= project.status %>
+    </span>
+  </p>
+  <p><strong>Nom : </strong><%= project.architect.user.fullname%> </p>
+  <p><strong>Date de début du projet : </strong> <%= project.start_date%></p>
+  <p><strong>Description : </strong><%= project.description%></p>
+
+ <!--affichage ds photos si présentes -->
+  <% if project.multimedias.any? %>
+    <div class="row mb-3 mt-3">
+      <% project.multimedias.each do |media| %>
+        <% if media.file.attached? %>
+          <div class="col-6 col-md-4 mb-2">
+            <%= image_tag media.file, class: "img-fluid" %>
+            <% if media.description.present? %>
+              <p class="small text-muted mt-1"><%= media.description %></p>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-muted">Aucune image pour ce projet.</p>
+  <% end %>
+
+
+  <!--Seul le user qui a crée le projet peut le modifier-->
+  <% if current_user == @project.user && @project.status != "termine" || current_user == @project.architect.user && @project.status == "termine"%>
+    <div class="d-flex gap-3 mt-4">
+      <div class="mt-4">
+        <%= link_to "Modifier le projet", edit_project_path(project),class: "btn btn-warning" %> 
+      </div>
+      <div>
+        <% if current_user == @project.user && @project.status != "termine"%>
+          <%= button_to "Supprimer le projet", project, method: :delete, class: "btn btn-danger mt-4" %>
+        <%end%>
+      </div>
+    </div>
+  <%end%>
+
+  <!-- Pour l’architecte, en fonction du statut du projet -->
+  <% if current_user.architect? && current_user.architect&.id == @project.architect_id %>
+    <% if @project.status == "en_validation" %>
+      <div class="d-flex gap-3 mt-4">
+        <%= button_to "Accepter", project_path(@project, project: { status: "en_cours" }), method: :patch, class: "btn btn-success" %>
+        <%= button_to "Refuser", project_path(@project, project: { status: "refuse" }), method: :patch, class: "btn btn-danger" %>
+      </div>
+    <% elsif @project.status == "en_cours" %>
+      <%= button_to "Marquer comme terminé", project_path(@project, project: { status: "termine" }), method: :patch, class: "btn btn-primary" %>
+    <% elsif @project.status == "termine" %>
+      <% unless @project.portfolio? %>
+        <%= button_to "Ajouter au portfolio", project_path(@project, project: { portfolio: true }), method: :patch, class: "btn btn-success mt-4" %>
+      <% else %>
+        <p class="mt-4">Ce projet est dans votre portfolio</p>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+

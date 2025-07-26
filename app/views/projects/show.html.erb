@@ -1,0 +1,11 @@
+<% content_for :title, "Ton projet" %>
+<% content_for :meta_description, "Page récapitulatif de la demande de projet envoyé" %>
+
+<div class="container mt-100 mb-5 px-3">
+
+  <%= render @project %>
+
+  <div class="mt-5 mb-5">
+    <%= link_to "Retour", :back, class: "btn btn-primary" %>
+  </div>
+</div>

@@ -1,0 +1,264 @@
+<% content_for :title, "Dashboard" %>
+<% content_for :meta_description, "Dashboard relié au profil de l'utilisateur connecté" %>
+
+<div class="container mt-100 mb-5 px-4">
+  <h1 class="mb-5"><%= current_user.fullname %></h1>
+
+  <div class="card p-2 p-md-5 mb-5">
+    <div class="d-flex flex-column flex-md-row align-items-start gap-4 w-100">
+
+      <div class="text-center">
+        <div class="avatar mb-3">
+          <%= user_avatar_or_default %>
+        </div>
+
+        <!-- Bouton Modifier -->
+        <div class="profil-photo-actions">
+          <%= form_tag user_avatars_path(current_user), multipart: true do %>
+            <label for="avatar_input" class="btn btn-warning btn-sm">Modifier l'avatar</label>
+            <%= file_field_tag :avatar, id: "avatar_input", style: "display: none;" %>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="container-fluid w-100 w-md-auto">
+        <!-- Informations utilisateur -->
+        <div>
+          <h5>Informations personelles :</h5>
+          <p><%= current_user.email %></p>
+          <p><% if current_user.city.present? %>
+            <%= current_user.city.name %> (<%= current_user.city.zip_code %>)<br>
+          <% end %>
+          </p>
+        </div>
+
+        <!-- Informations spécifiques aux architectes -->
+        <% if current_user.role == "architect" && current_user.architect.present? %>
+          <div class="architect-info">
+
+            <% if current_user.architect.specializations.any? %>
+              <div>
+                <h5>spécialité :</h5>
+                <ul class="list-unstyled">
+                  <% current_user.architect.specializations.each do |specialization| %>
+                    <li><%= specialization.name %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <% if current_user.architect.degree_names_array.any? %>
+              <div class="degrees">
+                <h5>Diplôme :</h5>
+                <ul class="list-unstyled">
+                  <% current_user.architect.degree_names_array.each do |degree| %>
+                    <li class="degree-tag"><%= degree %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <% if current_user.architect.description.present? %>
+              <h5>Description :</h5>
+              <p><%= current_user.architect.description %></p>
+            <% end %>
+
+          </div>
+        <% end %> 
+
+
+        <!--modifier ou supprimer son compte-->
+        <div class="d-flex gap-3 mt-4">
+          <%= link_to "Modifier", edit_user_path(@user), class: "btn btn-warning btn-sm" %>
+          <%= form_with url: user_registration_path, method: :delete, local: true do %>
+            <%= submit_tag "Supprimer mon compte", class: "btn btn-danger btn-sm", 
+                data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <!--fonctionnalité archi-->
+  <% if current_user.role == "architect" && current_user.architect.present? %>
+
+    <h2 class="mt-5 mb-5"> Nouvelles demandes </h2>
+    
+      <% if @incoming_requests.present? %>
+         
+        <ul class="list-unstyled">
+          <% @incoming_requests.each do |request|%>
+            <li class="card mb-5 p-3 p-md-5">
+              <h4 class="mb-4"><%= request.title%></h4>
+              <p class="mb-4"><%= request.description%></p>
+              <div>
+                <%= link_to "Voir", project_path(request), class: "btn btn-primary" %>
+              </div>
+            </li>
+          <%end%>
+        </ul>
+        
+      <%else%>
+        <p> Pas de nouvelle demande </p>
+      <%end%>
+  <%end%>
+  
+
+  <!--demande en attente de validation client-->
+  <% if current_user.role == "client" %>
+    <h2 class="mt-5 mb-5">Mes demandes en attente de validation</h2>
+    
+    <% if @incoming_requests.present? %>
+      <ul class="list-unstyled">
+        <% @incoming_requests.each do |project| %>
+          <div class="card p-3 p-md-5 mt-4">
+            <li>
+              <h4><%= project.title %></h4>
+              <p><%= truncate(project.description, length: 100) %></p>
+              <div>
+                <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+              </div>
+            </li>
+          </div>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>Vous n'avez aucune demande en attente.</p>
+    <% end %>
+  <% end %>
+
+<!-- Projet en cours pour archi et client  -->
+  <h2 class="mt-100 mb-5"> Projet en cours </h2>
+  <% if @current_projects.present? %>
+    <ul class="list-unstyled">
+      <% @current_projects.each do |project|%>
+        <div class="card p-3 p-md-5 mb-4">
+          <li>
+            <h4><%=project.title%></h4>
+            <p><%= project.description%></p>
+            <div>
+              <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+            </div>
+          </li>
+        </div>
+      <%end%>
+    </ul>
+  <%else%>
+    <p> Pas de projet en cours </p>
+  <%end%>
+
+
+  <h2 class="mt-100 mb-5"> Historique des projets </h2>
+  <% if @completed_projects.present? %>
+    <ul class="list-unstyled">
+      <% @completed_projects.each do |project|%>
+        <div class="card p-3 p-md-5 mt-4">
+          <li>
+            <h4><%=project.title%></h4>
+            <p><%= project.description%></p>
+            <div>
+              <%= link_to "Voir", project_path(project), class: "btn btn-primary" %>
+            </div>
+          </li>
+        </div>
+      <%end%>
+    </ul>
+  <%else%>
+    <p> Pas de projet terminé </p>
+  <%end%>
+
+
+  <!--fonctionnalité archi-->
+  <% if current_user.role == "architect" && current_user.architect.present? %>
+
+    <h2 class="mt-100 mb-5"> Portfolio </h2>
+    <%= link_to 'Ajouter un projet au portfolio', new_project_path(user_id: current_user, architect_id: current_user.architect.id), class: "btn btn-primary" %>
+    <hr>
+    <% if @portfolio_projects.present? %>
+      <ul class="list-unstyled">
+        <% @portfolio_projects.each do |project|%>
+          <div class="card p-3 p-md-5 mb-4">
+            <h4><%=project.title%></h4> 
+            <p><%= truncate(project.description, length: 100)%></p>
+            <div>
+              <%= link_to "Voir", project_path(project), class: "btn btn-primary btn-sm" %>
+            </div>
+
+            <!-- Média deja ajouté -->
+            <% if project.multimedias.any? %>
+              <div class="row mb-3 mt-3">
+                <% project.multimedias.each do |media| %>
+                  <% if media.file.attached? %>
+                    <div class="col-6 col-md-4 mb-2">
+                      <%= image_tag media.file, class: "img-fluid" %>
+                      <% if media.description.present? %>
+                        <p class="small text-muted mt-1"><%= media.description %></p>
+                      <% end %>
+                      <%= button_to "Supprimer", multimedia_path(media), method: :delete, data: { confirm: "Es-tu sûr de vouloir supprimer ce média ?" }, class: "btn btn-danger btn-sm mt-2" %>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            <% else %>
+              <p class="text-muted">Aucune image pour ce projet.</p>
+            <% end %>
+          </div>
+        <%end%>
+      </ul>
+    <%else%>
+      <p> Pas de projet dans le portfolio </p>
+    <%end%>
+  <%end%>
+
+  <!--Fonctionnalité client - Favoris-->
+  <% if current_user.role == "client" %>
+    <h2 class="mt-100 mb-5">Mes favoris</h2>
+    <% if @favorite_architects.present? %>
+      <div class="row g-3">
+        <% @favorite_architects.first(3).each do |architect| %>
+          <div class="col-lg-4 col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="me-3">
+                    <i class="fas fa-user-circle fa-2x"></i>
+                  </div>
+                  <div>
+                    <h6 class="card-title mb-1"><%= architect.user.fullname %></h6>
+                    <% if architect.user.city %>
+                      <small class="text-muted"><%= architect.user.city.name %></small>
+                    <% end %>
+                  </div>
+                </div>
+                
+                <% if architect.description.present? %>
+                  <p class="card-text small text-muted mb-3">
+                    <%= truncate(architect.description, length: 60) %>
+                  </p>
+                <% end %>
+                
+                <div class="d-flex justify-content-between align-items-center gap-2">
+                  <%= link_to "Voir", architect_path(architect), 
+                      class: "btn btn-primary btn-sm" %>
+                  <%= render 'shared/favorites_button', architect: architect %>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        <% end %>
+        <div class="mt-5">
+          <%= link_to "Voir tous mes favoris", likes_path, class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% else %>
+      <div class="text-center">
+        <p class="text-muted mb-3">Vous n'avez pas encore d'architectes favoris.</p>
+        <%= link_to "Découvrir des architectes", architects_path, class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+

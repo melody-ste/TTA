@@ -1,0 +1,21 @@
+<div class="container mt-100 mb-5">
+  <h2 class="mb-5">Renvoyer les instructions de déverrouillage</h2>
+
+  <div class="card position-relative m-3 m-md-5 p-4 p-md-5">
+    
+    <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",class:"form-control" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Renvoyer les instructions", class:"btn btn-primary mt-4" %>
+      </div>
+    <% end %>
+
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

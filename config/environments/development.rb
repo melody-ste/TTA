@@ -29,16 +29,30 @@ Rails.application.configure do
   config.cache_store = :memory_store
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
+  # https://www.bogotobogo.com/RubyOnRails/RubyOnRails_Devise_Authentication_Sending_Confirmation_Email.php
+  # In development environments, emails won't be sent by default. We will still be able to see their contents in the console though. To enable sending, we need to add the following line
+  config.action_mailer.perform_deliveries = true
 
   # Set localhost to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+
+  config.action_mailer.default_url_options = { host: ENV["MAIL_HOST"] }
+  config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+    user_name:      ENV["SENDMAIL_USERNAME"],
+    password:       ENV["SENDMAIL_PASSWORD"],
+    domain:         ENV["MAIL_HOST"],
+    address:       "smtp.gmail.com",
+    port:          "587",
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

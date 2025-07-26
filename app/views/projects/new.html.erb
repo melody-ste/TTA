@@ -1,0 +1,16 @@
+<% content_for :title, "Nouveau projet" %>
+<% content_for :meta_description, "Formulaire de nouveau projet envoyé à l'architecte" %>
+
+<div class="container mt-100 mb-100">
+  <% content_for :title, "New project" %>
+
+  <h1 class="mt-5 mb-5">Votre projet</h1>
+
+  <%= render "form", project: @project %>
+
+  <br>
+
+  <div class="mt-5 mb-5">
+    <%= link_to "retour au profil", projects_path, class:"btn btn-primary" %>
+  </div>
+</div>

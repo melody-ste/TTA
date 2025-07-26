@@ -1,0 +1,30 @@
+# --- ops/staging/docker-compose.yml ---
+# Usage: docker compose -f ops/staging/docker-compose.yml up -d
+
+services:
+  web:
+    build: .
+    container_name: tta-staging
+    environment:
+      RAILS_ENV: production
+    env_file:
+      - ../../.env
+    volumes:
+      - tta-staging-data:/rails/db
+    ports:
+      - "3002:3000"
+    labels:
+      - "traefik.enable=false"
+      - "traefik.http.routers.tta-staging.rule=Host(`staging.example.com`)"
+      - "traefik.http.routers.tta-staging.entrypoints=websecure"
+      - "traefik.http.routers.tta-staging.tls=true"
+      - "traefik.http.routers.tta-staging.tls.certresolver=letsencrypt"
+    networks:
+      - traefik
+
+volumes:
+  tta-staging-data:
+
+networks:
+  traefik:
+    external: true

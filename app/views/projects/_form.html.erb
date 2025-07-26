@@ -1,0 +1,59 @@
+<div class="card position-relative m-3 m-md-5 p-2 p-md-5">
+  <%= form_with(model: project) do |form| %>
+    <% if project.errors.any? %>
+      <div style="color: #916868">
+        <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+        <ul>
+          <% project.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="m-5">
+      <div class="field">
+        <%= form.label :architect_id, "Architecte", class: "form-label" %>
+        <p class="form-control"><%= project.architect&.user&.fullname || "Architecte inconnu" %></p>
+        <%= form.hidden_field :architect_id %>
+      </div>
+    </div>
+
+    <div class="m-5">
+      <div class="field">
+        <%= form.label :title, class: "form-label" %><br>
+        <%= form.text_field :title, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="m-5">
+      <div class="field">
+        <%= form.label :start_date, class: "form-label" %><br>
+        <%= form.date_field :start_date %>
+      </div>
+    </div>
+
+    <div class="m-5">
+      <div class="field">
+        <%= form.label :description %><br>
+        <%= form.text_area :description, class:"form-control" %>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+      <div>
+        <%= form.submit(
+          if controller.action_name == "edit"
+            "Modifier"
+          elsif current_user.role == "architect"
+            "Créer un projet"
+          else
+            "Contacter"
+          end,
+          class: "btn btn-primary"
+        ) %>
+      </div>
+    </div>
+  <% end %>
+</div>

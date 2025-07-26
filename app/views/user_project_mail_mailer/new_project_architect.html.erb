@@ -1,0 +1,22 @@
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color: #e5e2d9; padding: 4rem; font-family: 'Roboto', Helvetica, sans-serif;">
+  <tr>
+    <td>
+      <h1 style="color: #536059;">Bonjour <%= @architect.fullname %>,</h1>
+
+      <p style="color: #72827f; padding-bottom: 10px; font-size: 16px;">Un nouveau projet a été soumis par <%= @project.user.fullname %>.</p>
+      
+      <p style="color: #72827f; padding-bottom: 5px; font-size: 16px;">Voici les détails du projet :</p>
+
+      <p style="color: #72827f; padding-bottom: 5px; font-size: 16px;">Titre : <%= @project.title %></p>
+
+      <p style="color: #72827f; padding-bottom: 5px; font-size: 16px;">Date de début : <%= @project.start_date %></p>
+
+      <p style="color: #72827f; padding-bottom: 10px; font-size: 16px;">Description : <%= @project.description %></p>
+
+      <p style="color: #72827f; padding-bottom: 5px; font-size: 16px;">Merci de le consulter et de le valider dès que possible sur votre profil.</p>
+
+      <p style="color: #72827f; padding-bottom: 5px; font-size: 16px;">Merci de votre confiance,</p>
+      <p>L'équipe de Trouve Ton Architecte.</p>
+    </td>
+  </tr>
+</table>

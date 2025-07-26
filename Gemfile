@@ -61,3 +61,14 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "faker"
+gem "devise"
+gem "stripe"
+gem "dotenv-rails"
+
+gem "mailjet"
+gem "rails-i18n"
+
+
+gem "aws-sdk-s3", require: false

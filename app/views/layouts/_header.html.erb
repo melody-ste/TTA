@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container-fluid">
+    <%= link_to root_path, class: "navbar-brand d-flex align-items-center" do %>
+      <%= image_tag('/icon_new.png', alt: 'TTA', height: 30, class: "me-2") %>
+      <strong class="text-primary">TTA</strong>
+    <% end %>
+
+    <!-- Burger button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible menu -->
+    <div class="collapse navbar-collapse justify-content-between" id="mainNavbar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><%= link_to 'Architecte', architects_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "Architecte d'intérieur", architects_path(specialization_id: 2), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "Architecte paysagiste", architects_path(specialization_id: 3), class: "nav-link" %></li>
+      </ul>
+
+      <!-- Menu utilisateur -->
+      <ul class="navbar-nav d-flex gap-3">
+        <% if current_user %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <iconify-icon icon="bxs:user" width="24" height="24"></iconify-icon>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserDropdown">
+              <li><%= link_to "Mon profil", user_path(current_user), class: "dropdown-item" %></li>
+              <li>
+                <%= form_with url: destroy_user_session_path, method: :delete, local: true do %>
+                  <%= submit_tag "Déconnexion", class: "dropdown-item btn btn-link btn-sm", data: { turbo: false } %>
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        <% else %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarGuestDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <iconify-icon icon="bxs:user" width="24" height="24"></iconify-icon>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarGuestDropdown">
+              <li><%= link_to "Connexion", new_user_session_path, class: "dropdown-item" %></li>
+              <li><%= link_to "Inscription", new_user_registration_path, class: "dropdown-item" %></li>
+            </ul>
+          </li>
+        <% end %>
+        <% if current_user && current_user.role == "client" %>
+          <li class="nav-item">
+            <%= link_to likes_path, class: "nav-link" do %>
+              <iconify-icon icon="fluent:heart-32-filled" width="24" height="24"></iconify-icon>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

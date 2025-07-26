@@ -1,0 +1,17 @@
+<header class="hero-header text-center d-flex flex-column">
+  <div>
+    <div class="text-end custom-position px-3 pt-3 pt-md-5">
+      <h1>TROUVE TON ARCHITECTE</h1>
+      <p class="lead">Trouvez l'architecte idéal pour vos projets de construction, rénovation ou décoration.</p>
+      
+      <div class="search-container mt-4">
+        <span>
+          <iconify-icon icon="gravity-ui:magnifier" class="iconify"></iconify-icon>
+        </span>
+        <%= form_with(url: search_path, method: :get, class: "search-form", data: {turbo_frame: "search_results", turbo_action: "advance"}) do |form| %>
+          <%= form.text_field :query, placeholder: "Rechercher un architecte, une ville...", class: "search-input" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</header>

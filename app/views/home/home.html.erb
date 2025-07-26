@@ -1,0 +1,14 @@
+<% content_for :title, "Accueil" %>
+<% content_for :meta_description, "La page d'accueil de trouve ton architecte, il est possible de faire une recherche par ville et spécialité et de voir quelques images d'architectes" %>
+
+<section>
+  <%= render 'shared/jumbotron' %>
+</section>
+<section class="container mt-5 px-5">
+  <div >
+    <%= render 'shared/home_architects' %>
+  </div>
+  <div >
+    <%= render 'shared/home_specializations' %>
+  </div>
+</section>

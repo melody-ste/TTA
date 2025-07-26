@@ -1,0 +1,102 @@
+<div class="mt-5 mb-5">
+  <% @specializations.limit(3).each_with_index do |specialization, i| %>
+    <% specialization_medias = specialization.multimedias %>
+    <% if specialization_medias.any? %>
+
+      <!-- ---------- SPÉCIALITÉ 1 : en cards ---------- -->
+      <% if i == 0 %>
+        <div class="card-layout">
+          <h2 class="mt-100 mb-100">Architecture <%= specialization.name %></h2>
+          <div class="card-row">
+            <% specialization_medias.limit(3).each do |media| %>
+              <% project = media.project %>
+              <% architect = project&.architect %>
+
+              <div class="custom-sm-card">
+                <% if media.file.attached? %>
+                  <%= image_tag url_for(media.file), alt: "Image ##{media.id}", class: "card-sm-image" %>
+                <% else %>
+                  <%= image_tag "placeholder.jpg", alt: "Image manquante", class: "card-sm-image" %>
+                <% end %>
+
+                <div class="card-sm-body">
+                  <% if architect&.user %>
+                    <span class="card-name"><%= architect.user.fullname %></span>
+                    <%= link_to "Voir plus", architect_path(architect), class: "btn btn-more btn-sm" %>
+                  <% else %>
+                    <span class="card-name text-muted">Architecte inconnu</span>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <!-- ---------- SPÉCIALITÉ 2 : deux carrousels côte à côte ---------- -->
+      <% elsif i == 1 %>
+        <div class="carousel-double mt-5">
+          <h2 class="mb-100 mt-100">Architecture <%= specialization.name %></h2>
+          <div class="row">
+            <% medias1 = specialization_medias.limit(5) %>
+            <% medias2 = specialization_medias.offset(5).limit(5) %>
+
+            <% [medias1, medias2].each_with_index do |group, idx| %>
+              <div class="col-12 col-md-6">
+                <div class="carousel carousel-double__carousel" id="carouselSpeciality_<%= idx %>">
+                  <button class="prev">&#10094;</button>
+                  <div class="carousel-images">
+                    <% group.each_with_index do |media, index| %>
+                      <% project = media.project %>
+                      <% architect = project&.architect %>
+
+                      <div class="carousel-image <%= 'active' if index == 0 %>">
+                        <% if media.file.attached? %>
+                          <%= image_tag url_for(media.file), alt: "Image ##{media.id}" %>
+                        <% else %>
+                          <%= image_tag "placeholder.jpg", alt: "Image manquante" %>
+                        <% end %>
+                        <% if architect %>
+                          <%= link_to "Voir plus", architect_path(architect), class: "btn btn-more" %>
+                        <% else %>
+                          <span class="card-name text-muted">Architecte inconnu</span>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <button class="next">&#10095;</button>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+      <!-- ---------- SPÉCIALITÉ 3 : en cards de nouveau ---------- -->
+      <% elsif i == 2 %>
+        <div class="card-layout">
+          <h2 class="mb-100 mt-100">Architecture <%= specialization.name %></h2>
+          <div class="card-row">
+            <% specialization_medias.limit(3).each do |media| %>
+              <% architect = media.project&.architect %>
+              <div class="custom-sm-card">
+                 <% if media.file.attached? %>
+                  <%= image_tag url_for(media.file), alt: "Image ##{media.id}", class: "card-sm-image" %>
+                <% else %>
+                  <%= image_tag "placeholder.jpg", alt: "Image manquante", class: "card-sm-image" %>
+                <% end %>
+                <div class="card-sm-body">
+                  <% if architect %>
+                    <span class="card-name"><%= architect.user.fullname %></span>
+                    
+                  <% else %>
+                    <span class="card-name text-muted">Architecte inconnu</span>
+                  <% end %>
+                  <%= link_to "Voir plus", architect_path(architect), class: "btn btn-more btn-sm" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+    <% end %>
+  <% end %>
+</div>

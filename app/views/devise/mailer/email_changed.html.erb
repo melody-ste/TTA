@@ -1,0 +1,15 @@
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color: #e5e2d9; padding: 4rem; font-family: 'Roboto', Helvetica, sans-serif;">
+  <tr>
+    <td>
+      <h2 style="color: #536059;">Bonjour !</h2>
+
+      <% if @resource.try(:unconfirmed_email?) %>
+        <p style="color: #72827f; padding-bottom: 5px; font-size: 16px;">Nous vous informons que votre adresse e-mail va être modifiée pour <%= @resource.unconfirmed_email %>.</p>
+      <% else %>
+        <p style="color: #72827f; padding-bottom: 10px; font-size: 16px;">Nous vous confirmons que votre adresse e-mail a été modifiée pour <%= @resource.email %>.</p>
+      <% end %>
+
+      <p style="color: #72827f; padding-bottom: 10px; font-size: 14px;">L'équipe de <strong>Trouve ton architecte</strong>.</p>
+    </td>
+  </tr>
+</table>

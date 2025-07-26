@@ -1,0 +1,113 @@
+<% content_for :title, "Résultat de recherche" %>
+<% content_for :meta_description, "Page des résultats de ta recherche ( liste des architectes correspondant )" %>
+
+<div class="container mt-5 mb-5">
+  <% content_for :title, "Résultats de recherche" %>
+
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="mt-100 mb-100">Résultats de recherche</h1>
+    
+    <!-- Formulaire de recherche -->
+      <div class="search-container custom-position mt-4 mb-5">
+        <span>
+          <iconify-icon icon="gravity-ui:magnifier" class="iconify"></iconify-icon>
+        </span>
+        <%= form_with(url: search_path, method: :get, class: "search-form w-full", data: { turbo_frame: "search_results", turbo_action: "advance" }) do |form| %>
+          <%= form.text_field :query,
+              placeholder: "Rechercher un architecte, une spécialité, une ville...",
+              class: "search-input",
+              value: @query %>
+        <% end %>
+      </div>
+
+    
+    <div id="search_results">
+      <% if @query.present? %>
+        <p class="lead">Résultats pour : "<strong><%= @query %></strong>"</p>
+      
+      <!-- Section Architectes -->
+      <% if @architects.any? %>
+        <section class="card p-5 mb-5">
+          <h2 class="mb-5">Architectes (<%= @architects.count %>)</h2>
+          <div>
+            <% @architects.each do |architect| %>
+              <div>
+                <h3>
+                  <%= architect.user.first_name %> <%= architect.user.last_name %>
+                </h3>
+                <% if architect.user.city %>
+                  <p class="lead"><%= architect.user.city.name %></p>
+                <% end %>
+                <% if architect.description.present? %>
+                  <p>
+                    <%= truncate(architect.description, length: 100) %>
+                  </p>
+                <% end %>
+                <% if architect.specializations.any? %>
+                  <div class="mt-2">
+                    <% architect.specializations.each do |spec| %>
+                      <span>
+                        <%= spec.name %>
+                      </span>
+                    <% end %>
+                  </div>
+                <% end %>
+                <div class="mt-4 mb-2">
+                  <%= link_to "Voir le profil", architect_path(architect), 
+                      class: "btn btn-primary" %>
+                </div>
+                <hr>
+              </div>
+            <% end %>
+          </div>
+        </section>
+      <% end %>
+      
+      <!-- Section Spécialisations -->
+      <% if @specializations.any? %>
+        <section class="card p-5 mb-5">
+          <h2 class="mb-5">Spécialisations (<%= @specializations.count %>)</h2>
+          <div>
+            <% @specializations.each do |specialization| %>
+              <div>
+                <h3><%= specialization.name %></h3>
+                <p>
+                  <%= specialization.architects.count %> architecte(s)
+                </p>
+                <div class="mt-4">
+                  <%= link_to "Voir les architectes", specialization_path(specialization), 
+                      class: "btn btn-primary" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </section>
+      <% end %>
+      
+      
+      <!-- Message si aucun résultat -->
+      <% if @architects.empty? && @specializations.empty? && @cities.empty? %>
+        <div class="d-flex flex-column align-items-center" >
+          
+          <h2 class="mt-5 mb-2">Aucun résultat trouvé</h2>
+          <p>
+            Essayez avec d'autres mots-clés ou vérifiez l'orthographe.
+          </p>
+          <div class="mt-5">
+            <%= link_to "Voir tous les architectes", architects_path, class: "btn btn-primary btn-lg" %>
+          </div>
+        </div>
+      <% end %>
+      
+    <% else %>
+      <div class="d-flex flex-column align-items-center">
+        
+        <h2 class="mt-5 mb-2">Recherchez un architecte</h2>
+        <p>
+          Utilisez la barre de recherche pour trouver des architectes, spécialisations ou villes.
+        </p>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>
