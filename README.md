@@ -44,6 +44,7 @@
    - Email account variables (password: SENDMAIL_PASSWORD, email: SENDMAIL_USERNAME)
    - Mailjet variables (MAILJET_API_KEY, MAILJET_SECRET_KEY)
    - Localhost variable (MAIL_HOST)
+   - AWS storage (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
 
 4. Database initialization
   ```bash
